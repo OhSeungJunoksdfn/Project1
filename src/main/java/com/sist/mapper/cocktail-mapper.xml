@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cocktail-mapper">
+<resultMap type="CocktailVO" id="cocktailMap">
+	<result property="crivo.volume" column="volume" />
+	<result property="crivo.unit" column="unit" />
+	<result property="civo.comments" column="comments" />
+	<result property="civo.ingname" column="ingname" />
+	<result property="civo.ciimage" column="ciimage" />
+	<result property="civo.ingtag" column="ingtag" />
+</resultMap>
+
+<resultMap type="CocktailVO" id="tagMap">
+	<result property="ctvo.value" column="value"/>
+</resultMap>
+
+<resultMap type="CocktailVO" id="ingredientsMap">
+	<result property="civo.ing_no" column="ing_no" />
+	<result property="civo.ingname" column="ingname" />
+	<result property="civo.comments" column="comments" />
+	<result property="civo.alc" column="alc" />
+	<result property="civo.ingtag" column="ingtag" />
+	<result property="civo.ciimage" column="ciimage" />
+	<result property="civo.ename" column="ename" />
+</resultMap>
+
+	<select id="cocktailData12" resultType="CocktailVO">
+		SELECT *
+		FROM (SELECT * FROM cocktail WHERE detail='y' ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=12
+	</select>
+	
+	<select id="cocktailRecipeData" resultMap="cocktailMap" parameterType="int">
+		SELECT ingname,cocktail_ingredients.comments,ciimage,ingtag,volume,unit
+		FROM cocktail,cocktail_ingredients ,COCKTAIL_RECIPE
+		WHERE cocktail.cocktail_no=COCKTAIL_RECIPE.cocktail_no
+		AND cocktail_ingredients.ing_no = COCKTAIL_RECIPE.ing_no
+		AND cocktail.cocktail_no=#{cno}
+	</select>
+	
+	<select id="cocktailListData" resultType="CocktailVO" parameterType="hashmap" >
+		SELECT cocktail_no,id,name,alc,detail,image,ename,comments,num
+		FROM (SELECT cocktail_no,id,name,alc,detail,image,ename,comments,rownum as num
+		FROM (SELECT /*+ INDEX_DESC(cocktail COCKTAIL_NO_PK)*/ cocktail_no,id,name,alc,detail,image,ename,comments
+		FROM cocktail WHERE detail='y'))
+		WHERE num BETWEEN #{start} AND #{end}
+		
+	</select>
+	
+	<select id="cocktailTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM cocktail WHERE detail='y'
+	</select>
+	
+	<select id="cocktailDetailData" resultType="CocktailVO" parameterType="int" >
+		SELECT *
+		FROM cocktail
+		WHERE cocktail_no=#{cno}
+	</select>
+	<update id="cocktailHitIncrement" parameterType="int">
+	UPDATE cocktail SET
+	hit= hit+1
+	WHERE cocktail_no=#{cno}
+	</update>
+	
+	<select id="cocktailTagData" resultMap="tagMap" parameterType="int">
+		SELECT value FROM cocktail,cocktail_tag 
+		WHERE cocktail.cocktail_no = cocktail_tag.cocktail_no
+		AND cocktail.cocktail_no = #{cno}
+	</select>
+	<select id="cocktailFindData" resultType="CocktailVO" parameterType="hashmap">
+		SELECT cocktail_no,id,name,alc,detail,image,ename,comments,num
+		FROM (SELECT cocktail_no,id,name,alc,detail,image,ename,comments,rownum as num
+		FROM (SELECT /*+ INDEX_DESC(cocktail COCKTAIL_NO_PK)*/ cocktail_no,id,name,alc,detail,image,ename,comments
+		FROM cocktail))
+		WHERE num BETWEEN #{start} AND #{end}
+		AND REGEXP_LIKE(name,#{fd})
+	</select>
+	
+	<select id="ingredientsHouseData12" resultMap="ingredientsMap" >
+			SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename 
+		FROM (SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename FROM COCKTAIL_INGREDIENTS ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=12
+	</select>
+		<select id="cocktailHouseData12" resultType="CocktailVO">
+		SELECT *
+		FROM (SELECT * FROM cocktail WHERE detail='n' ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=12
+	</select>
+</mapper>

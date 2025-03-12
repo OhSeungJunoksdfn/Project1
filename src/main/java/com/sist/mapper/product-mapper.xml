@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.product-mapper">
+	<select id="productHouseData12" resultType="ProductVO">
+		SELECT * FROM (SELECT * FROM cocktail_product WHERE type IN('레드','화이트','스파클링') ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=12
+	</select>
+</mapper>

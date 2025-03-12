@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cocktailbar-mapper">
+	<select id="cocktailbarHouseData" resultType="CocktailbarVO">
+		SELECT * FROM (SELECT * FROM cocktailbar ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=1
+	</select>
+	<select id="cocktailbarHouseData12" resultType="CocktailbarVO">
+		SELECT * FROM (SELECT * FROM cocktailbar ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE rownum&lt;=12
+	</select>
+</mapper>

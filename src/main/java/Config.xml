@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ <properties resource="db.properties" />
+  <typeAliases >
+  <typeAlias type="com.sist.vo.CocktailbarVO" alias="CocktailbarVO"/>
+  <typeAlias type="com.sist.vo.CocktailVO" alias="CocktailVO"/>
+  <typeAlias type="com.sist.vo.ProductVO" alias="ProductVO"/>
+  <typeAlias type="com.sist.vo.NewsVO" alias="NewsVO"/>
+  </typeAliases>
+  <environments default="development">
+  	<environment id="development">
+  		<transactionManager type="JDBC" />
+  		<dataSource type="POOLED">
+  			<property name="driver" value="${driver}"/>
+  			<property name="url" value="${url}"/>
+  			<property name="username" value="${username}"/>
+  			<property name="password" value="${password}"/>
+  		</dataSource>
+  	</environment>
+  </environments>
+  <mappers>
+  	<mapper resource="com/sist/mapper/cocktailbar-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/cocktail-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/product-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/news-mapper.xml"/>
+  </mappers>
+ </configuration>
