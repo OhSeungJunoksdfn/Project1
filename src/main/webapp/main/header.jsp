@@ -32,10 +32,10 @@
                       <ul>
                             <li><a href="#">칵테일</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="cocktail/cocktail_list.do">칵테일 목록</a></li>
-                                    <li><a href="./shoping-cart.html">재료 목록</a></li>
-                                    <li><a href="./shoping-cart.html">칵테일 검색</a></li>
-                                    <li><a href="./checkout.html">나만의 칵테일</a></li>
+                                    <li><a href="../cocktail/cocktail_list.do">칵테일 목록</a></li>
+                                    <li><a href="../cocktail/cocktail_ingredients.do">재료 목록</a></li>
+                                    <li><a href="../cocktail/cocktail_my.do">나만의 칵테일</a></li>
+                                    <li><a href="../cocktail/cocktail_find.do">칵테일 검색</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">칵테일바</a>
@@ -127,8 +127,9 @@
                             <li><a href="#">칵테일</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="../cocktail/cocktail_list.do">칵테일 목록</a></li>
-                                    <li><a href="./shoping-cart.html">재료 목록</a></li>
-                                    <li><a href="./checkout.html">나만의 칵테일</a></li>
+                                    <li><a href="../cocktail/cocktail_ingredients.do">재료 목록</a></li>
+                                    <li><a href="../cocktail/cocktail_my.do">나만의 칵테일</a></li>
+                                    <li><a href="../cocktail/cocktail_find.do">칵테일 검색</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">칵테일바</a>

@@ -7,51 +7,90 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="cockstyle.css"> 
+<style type="text/css">
+.nice-select {
+  height: 30px;
+  line-height: 30px;
+  font-size:16px;
+  margin: 0 5px;
+  }
+
+</style>
 </head>
 <body>
- <section class="bg-light" >
-      <div class="container">
-        <div class="row">
-						<c:forEach var="vo" items="${list }">
-							<div class="col-md-3 col-sm-6 mb-4" style="cursor:pointer">
-  							<img  src="${vo.image }" alt="Card image" style="width:100%;height:250px;" >
- 									<div>
-    								<h4 class="">${vo.name }</h4>
-    								<p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${vo.comments }</p>
-  								</div>
-							</div>
-						</c:forEach>
-        </div>
-      </div>
- </section>
- 
-    <section class="ftco-section bg-light" style="padding:0 0 3rem" id="section-offer">
-      <div class="container">
-        <div class="row justify-content-center">
-                    <div class="pagination-area d-sm-flex mt-15">
-                        <nav aria-label="#">
-                            <ul class="pagination">
-                            <c:if test="${curpage>1 }">
-                            	<li class="page-item">
-                                    <a class="page-link" href="../cocktail/cocktail_list.do?page=${curpage-1 }"><i class="fa fa-angle-double-left" aria-hidden="true"></i> 이전</a>
-                                </li>
-                                </c:if>
-																	<div class="page-status px-3 align-items-center">
-                            				<p style="margin:0; line-height:35px">Page ${ curpage } of ${totalpage } results</p>
-                        					</div>
-																<c:if test="${curpage<totalpage }">
-                                <li class="page-item">
-                                    <a class="page-link" href="../cocktail/cocktail_list.do?page=${curpage+1 }">다음 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                                </li>
-                                </c:if>
-                            </ul>
-                        </nav>
-                 
+<section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>칵테일 목록</h2>
                     </div>
                 </div>
+            </div>
         </div>
-   	</section>
-      
-   
+    </section>
+    
+	<section class="product spad">
+            		<div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5">
+                                <div class="filter__sort">
+                                    <span>정렬</span>
+                                    <select>
+                                        <option value="0">조회수 높은순</option>
+                                        <option value="0">조회수 낮은순</option>
+                                        <option value="0">도수 높은순</option>
+                                        <option value="0">도수 낮은순</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="filter__found">
+                                    <h6>총<span>${count }</span>개</h6>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-3">
+                                <div class="filter__found">
+                                    <h6> <span>${curpage }</span>페이지 / <span>${totalpage }</span>총 페이지</h6>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="row">
+                    <c:forEach var="vo" items="${list }">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"  data-setbg="${vo.image }">
+                                    <ul class="product__item__pic__hover">
+                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }">${vo.name }</a></h6>
+                                    <h5>${vo.ename }</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    </div>
+
+           <div class="container">
+           		<div class="row justify-content-end">
+    	                    <div class="product__pagination">
+                        <c:if test="${curpage>1 }">
+                        <a href="../cocktail/cocktail_list.do?page=${curpage-1 }"><i class="fa fa-long-arrow-left"></i></a>
+                        </c:if>
+                        <c:if test="${curpage<totalpage }">
+                        <a href="../cocktail/cocktail_list.do?page=${curpage+1 }"><i class="fa fa-long-arrow-right"></i></a>
+                        </c:if>
+                    </div>
+           		</div>
+         </div>
+                </div>
+            </div>
+    </section>
 </body>
 </html>

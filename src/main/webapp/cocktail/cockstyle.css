@@ -6,3 +6,13 @@
   .hoef:hover {
    text-decoration: underline !important; /* hover 시 확대 */
   }
+
+  .wrap {
+  	margin-top: 50px; 
+  }
+  #line{
+  	border: 1px solid #ccc;
+  	margin-top: 10px;
+  	margin-bottom: 10px;
+  }
+  

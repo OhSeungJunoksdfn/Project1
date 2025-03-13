@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>칵테일 목록</h2>
+                        <h2>나만의칵테일 목록</h2>
                     </div>
                 </div>
             </div>
@@ -65,15 +65,15 @@
                     <c:forEach var="vo" items="${list }">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" style="background-size: contain;" data-setbg="${vo.civo.ciimage }">
+                                <div class="product__item__pic set-bg"  data-setbg="${vo.image }">
                                     <ul class="product__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">${vo.civo.ingname }</a></h6>
-                                    <h5>${vo.civo.ename }</h5>
+                                    <h6><a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }">${vo.name }</a></h6>
+                                    <h5>${vo.ename }</h5>
                                 </div>
                             </div>
                         </div>
@@ -84,13 +84,13 @@
            		<div class="row justify-content-center">
     	                    <div class="product__pagination">
                         <c:if test="${startPage>1 }">
-                        <a href="../cocktail/cocktail_ingredients.do?page=${startPage-1 }"><i class="fa fa-long-arrow-left"></i></a>
+                        <a href="../cocktail/cocktail_my.do?page=${startPage-1 }"><i class="fa fa-long-arrow-left"></i></a>
                         </c:if>
                         <c:forEach begin="${startPage }" end="${endPage }" var="i" step="1">
-                        	<a class="${curpage==i?'checked':'' }" href="../cocktail/cocktail_ingredients.do?page=${i }">${i }</a>
+                        	<a class="${curpage==i?'checked':'' }" href="../cocktail/cocktail_my.do?page=${i}">${i }</a>
                         </c:forEach>
                         <c:if test="${endPage<totalpage}">
-                        <a href="../cocktail/cocktail_ingredients.do?page=${endPage+1 }"><i class="fa fa-long-arrow-right"></i></a>
+                        <a href="../cocktail/cocktail_my.do?page=${endPage+1 }"><i class="fa fa-long-arrow-right"></i></a>
                         </c:if>
                     </div>
            		</div>
