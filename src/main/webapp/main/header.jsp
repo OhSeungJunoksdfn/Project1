@@ -57,7 +57,7 @@
                             </li>
                             <li><a href="#">커뮤니티</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">자유게시판</a></li>
+                                    <li><a href="../community/freeboard_list.do">자유게시판</a></li>
                                     <li><a href="./shoping-cart.html">묻고 답하기</a></li>
                                     <li><a href="./checkout.html">공지사항</a></li>
                                     <c:if test="${sessionScope.id!=null }">
@@ -150,7 +150,7 @@
                             </li>
                             <li><a href="#">커뮤니티</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="#">자유게시판</a></li>
+                                    <li><a href="../community/freeboard_list.do">자유게시판</a></li>
                                     <li><a href="#">묻고 답하기</a></li>
                                     <li><a href="#">공지사항</a></li>
                                     <c:if test="${sessionScope.id!=null }">
