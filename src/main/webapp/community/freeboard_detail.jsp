@@ -54,9 +54,9 @@
         <table class="table">
 			<tr>
 				<td class="text-right">
-				<a href="#" class="">수정</a> 
-				<a href="#" class="">삭제</a> 
-				<a href="#" class="">목록</a> 
+				<a href="#" class="site-btn">수정</a> 
+				<a href="#" class="site-btn">삭제</a> 
+				<a href="#" class="site-btn">목록</a> 
 				</td>
 			</tr>
 		</table>

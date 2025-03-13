@@ -21,7 +21,6 @@ const quill = new Quill('#editor', options);
 
 $(document).ready(function(){
 	$('.ql-toolbar.ql-snow').css('text-align','left')
-	$('.nice-select').remove()
 });
 
 $("#test").click(()=>{

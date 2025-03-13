@@ -11,6 +11,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<style type="text/css">
+</style>
 </head>
 <body>
 	<section class="">
@@ -22,25 +24,21 @@
 					
 					<div class="hero__search__form" style="float:none;width:100%;margin-bottom:20px">
                             <form action="#">
-                                <div class="hero__search__categories" style="width:120px;float:left;text-align:left;padding-left:25px;padding-top:13px">
-                                    일상
-                                    <span class="arrow_carrot-down"></span>
+                                <div class="hero__search__categories" style="width:120px;float:left;text-align:left;">
+                                    <select class="" style="width:80px;padding:0px;border:none;text-align:center">
+										<option value="일상">일상</option>
+										<option value="질문">질문</option>
+										<option value="정보">정보</option>
+										<option value="후기">후기</option>
+										<option value="맛집">맛집</option>
+										<option value="기타">기타</option>
+									</select>
                                 </div>
-                                <input type="text" placeholder="Seach" style="float:left">
+                                <input type="text" placeholder="제목" style="float:left;color:black">
                             </form>
                     </div>
-                    <div style="height=:200px;float:none">
-                    	<select >
-						<option value="일상">일상</option>
-						<option value="일상">일상</option>
-						<option value="일상">일상</option>
-						<option value="일상">일상</option>
-						<option value="일상">일상</option>
-						<option value="일상">일상</option>
-						</select>
-                    </div>
                     
-					<div id="editor" style="height: 500px;">
+					<div id="editor" style="height: 500px;color:black">
 						<p>Hello World!</p>
 						<p>
 							Some initial <strong>bold</strong> text

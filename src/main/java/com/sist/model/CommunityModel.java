@@ -59,6 +59,7 @@ public class CommunityModel {
 			request.setAttribute("totalpage", totalpage);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("page", page);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

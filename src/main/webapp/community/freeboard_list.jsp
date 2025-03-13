@@ -8,7 +8,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script>
 
+</script>
 </head>
 <body>
 <div>
@@ -32,7 +34,7 @@
 					<td class="text-center" width=5%>${vo.board_no }</td>
 					<td class="text-center" width=5%>${vo.tag }</td>
 					<td  width=45%>
-						<a href="../community/freeboard_detail.do?board_no=${vo.board_no }">${vo.subject }</a>
+						<a href="../community/freeboard_detail.do?board_no=${vo.board_no }" style="color:black">${vo.subject }</a>
 					</td>
 					<td class="text-center" width=15%>${vo.id }</td>
 					<td class="text-center" width=20%><fmt:formatDate value="${vo.regdate }" pattern="yyyy-MM-dd"/></td>
@@ -45,11 +47,18 @@
            <table class="table">
 				<tr>
 					<td class="product__pagination blog__pagination" style="border:none">
-						<a href="../community/freeboard_list.do?page=${curpage>1?curpage-1:curpage }" class="" style="width:50px;border:none;color:black">이전</a>
+						<a href="../community/freeboard_list.do?page=${curpage>1?curpage-1:curpage }" class="" style="width:50px;border:none;color:black"
+						onmouseover="this.style.color='white'" 
+							onmouseout="this.style.color='black';">이전</a>
+						<c:set var="underline" value="underline" />
+						<c:set var="none" value="" />
 						<c:forEach var="i" begin="${startPage }" end="${endPage }">
-                        	<a class="" href="../community/freeboard_list.do?page=${i }" style="margin:5px;border:none">${i }</a>
+							
+                        	<a class="pagelist" href="../community/freeboard_list.do?page=${i }" style="margin:5px;border:none;text-decoration:${curpage==i?underline:none}">${i }</a>
                         </c:forEach>
-						<a href="../community/freeboard_list.do?page=${curpage<totalpage?curpage+1:curpage }" class="ml-4" style="width:50px;border:none;color:black">다음</a>
+						<a href="../community/freeboard_list.do?page=${curpage<totalpage?curpage+1:curpage }" class="ml-4" style="width:50px;border:none;color:black"
+							onmouseover="this.style.color='white'" 
+							onmouseout="this.style.color='black';">다음</a>
 						
 					</td>
 					<td class="product__pagination blog__pagination" style="border:none;"><a href="../community/freeboard_insert.do" class="site-btn" style="border:none;height:40px;width:100px;padding:5px;font-size:17px;color:white">글쓰기</a></td>
