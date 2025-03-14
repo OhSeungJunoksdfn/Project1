@@ -74,10 +74,26 @@ public class CommunityModel {
 	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
 	{	
 		
+		CommunityFreeboardVO tempVO = new CommunityFreeboardVO();
+		
+		//board_no,id,subject,tag,htmlfile,poststate
+		tempVO.setSubject("temppost");
+		tempVO.setTag("temppost");
+		tempVO.setHtmlfile("temppost");
+		tempVO.setPostState("UNSAVED");
+		
+		CommunityDAO.boardInsertNewPost(tempVO);
+		request.setAttribute("temp_board_no", tempVO.getBoard_no());
 		request.setAttribute("main_jsp", "../community/freeboard_insert.jsp");
 		return "../main/main.jsp";
 	}
-	
+	@RequestMapping("community/freeboard_delete_unsaved.do")
+	public void freeboard_delete_unsaved(HttpServletRequest request, HttpServletResponse response)
+	{	
+		
+		String board_no = request.getParameter("board_no");
+		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
+	}
 	@RequestMapping("community/freeboard_detail.do")
 	public String freeboard_detail(HttpServletRequest request, HttpServletResponse response)
 	{	

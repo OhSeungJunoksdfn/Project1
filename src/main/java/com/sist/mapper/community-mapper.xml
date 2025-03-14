@@ -30,11 +30,15 @@
 		WHERE board_no=#{board_no}
 	</select>
 	<!-- 글쓰기 버튼으로 insert페이지로 이동하면 깡통 게시물 하나 추가 -->
-	<insert id="boardInsertNewPost" parameterType="hashmap">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE">
-			SELECT NVL(MAX(no)+1,1) as no FROM cocktail_board
+	<insert id="boardInsertNewPost" useGeneratedKeys="true" keyProperty="board_no" parameterType="CommunityFreeboardVO">
+		<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(board_no)+1,1) as no FROM cocktail_board
 		</selectKey>
-		INSERT INTO cocktail_board(board_no,id,subject,tag,htmlfile,poststate)
-		 VALUES(#{no},#{id},'temppost','temptag','temppost','UNSAVED')
+		INSERT INTO cocktail_board(board_no,subject,tag,htmlfile,poststate)
+		 VALUES(#{board_no},#{subject},#{tag},#{htmlfile},#{postState})
 	</insert>
+	<delete id="boardDeleteUnsaved" parameterType="int">
+		DELETE FROM cocktail_board
+		WHERE board_no=#{board_no}
+	</delete>
 </mapper>

@@ -50,4 +50,19 @@ public class CommunityDAO {
 		session.close();
 		return vo;
 	}
+	//새 게시물 추가
+	public static void boardInsertNewPost(CommunityFreeboardVO vo)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardInsertNewPost",vo);
+		session.close();
+	}
+	//저장되지 않은 게시물 삭제
+	public static void boardDeleteUnsaved(int board_no)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardDeleteUnsaved",board_no);
+		session.close();
+	}
+	
 }

@@ -11,8 +11,32 @@
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<style type="text/css">
-</style>
+<script type="text/javascript">
+console.log("adfasdf")
+let isSaving = false
+/* $(window).on('beforeunload', function() {
+	alert("페이지가 언로드됩니다!");
+	console.log("jstl","${temp_board_no}")
+	$.ajax({
+		type:'post',
+		url:'../community/freeboard_delete_unsaved.do',
+		data:{"board_no":"${temp_board_no}"},
+		success:function(result){
+			
+		}
+	}) */
+window.addEventListener('beforeunload', function (event) {
+            // 여기서 alert 메시지를 표시할 수 있습니다
+            alert("페이지를 떠나려고 합니다!");
+
+            // 경고창 메시지 추가 (브라우저에 따라 다르게 동작)
+            event.returnValue = "정말 떠나시겠습니까?";  // 브라우저가 표시할 경고 메시지
+
+            // 사용자가 페이지를 떠나려고 할 때 보여지는 메시지 처리
+            // 브라우저마다 동작이 다를 수 있음.
+        });
+});
+</script>
 </head>
 <body>
 	<section class="">

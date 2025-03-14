@@ -61,8 +61,7 @@
 							onmouseout="this.style.color='black';">다음</a>
 						
 					</td>
-					<c:set var="user" value="user" /><!-- 유저아이디 세션에서 가져오도록 이후에 변경 -->
-					<td class="product__pagination blog__pagination" style="border:none;"><a href="../community/freeboard_insert.do?user=${user} }" class="site-btn" style="border:none;height:40px;width:100px;padding:5px;font-size:17px;color:white">글쓰기</a></td>
+					<td class="product__pagination blog__pagination" style="border:none;"><a href="../community/freeboard_insert.do" class="site-btn" style="border:none;height:40px;width:100px;padding:5px;font-size:17px;color:white">글쓰기</a></td>
 				</tr>
 			</table>
           </div>
