@@ -28,15 +28,6 @@ public class CommunityDAO {
 		session.close();
 		return total;
 	}
-//	public static void boardInsert(BoardVO vo)
-//	{
-//		SqlSession session=ssf.openSession(true);//autocommit
-//		// 커밋이 없다
-//		session.insert("boardInsert",vo);
-//		session.commit(); // update, insert, delete
-//		// 데이터가 갱신 
-//		session.close();
-//	}
 //	// 상세보기
 	public static CommunityFreeboardVO boardDetailData(int no)
 	{
@@ -49,6 +40,20 @@ public class CommunityDAO {
 		// 반환
 		session.close();
 		return vo;
+	}
+	//이미지 db에 추가
+	public static void boardInsertImage(Map map)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardInsertImage",map);
+		session.close();
+	}
+	//이미지 db에서 삭제
+	public static void boardDeleteImage(String[] imageNames)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardDeleteImage",imageNames);
+		session.close();
 	}
 	//새 게시물 추가
 	public static void boardInsertNewPost(CommunityFreeboardVO vo)

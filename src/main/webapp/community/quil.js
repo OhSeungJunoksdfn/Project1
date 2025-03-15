@@ -47,7 +47,7 @@ const uploadImage = (file,id) =>{//이미지를 서버에 업로드
 	const formData = new FormData();
 	//formData에 문자열도 보낼 수 있게 해서 게시물번호도 전송할 수 있도록 처리
 	formData.append("userfile", file);
-	formData.append("postID",1234);
+	formData.append("postID",$("#editor").data('postid'));
 	axios.post(`${serverURL}/community/image_convert.do`, formData, 
 	{
 		headers: {
@@ -102,7 +102,7 @@ let imageId=0;//있는 문서 수정하는 경우일 때는 미리 이미지 리
 quill.on('text-change', function() {
 
 	
-	
+	console.log("postid",$("#editor").data('postid'))
 	//quill에 추가된 요소중에 이미지만 리스트에 모으고 아이디를 추가하는 코드
 	const changedImage = Array.from(quill.root.querySelectorAll("*"))
 		    				.filter((child)=>{

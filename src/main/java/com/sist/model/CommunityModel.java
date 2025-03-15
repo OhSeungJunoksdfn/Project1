@@ -93,6 +93,7 @@ public class CommunityModel {
 		
 		String board_no = request.getParameter("board_no");
 		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
+		//delete cascade 제약조건으로 게시물 삭제시 이미지 자동 삭제
 	}
 	@RequestMapping("community/freeboard_detail.do")
 	public String freeboard_detail(HttpServletRequest request, HttpServletResponse response)
@@ -121,8 +122,6 @@ public class CommunityModel {
             upload.setFileSizeMax(1024*1024);
             upload.setSizeMax(1024*1024);
 
-            
-
             try {
             	//폴더 생성하면 이클립스 폴더 안에 upload 폴더 생성됨
                 File uploadDir = new File(uploadPath);
@@ -131,6 +130,7 @@ public class CommunityModel {
                 String postId ="";//이미지를 가지고 있는 게시물 아이디
             	//request객체를 이 코드 앞에서 사용하고 있으면 여기 리스트에 데이터 안들어감
                 List<FileItem> formItems = upload.parseRequest(request);
+                Map map = new HashMap();
                 if (formItems != null /*&& formItems.size() > 0*/) {
                     for (FileItem item : formItems) {
                         if (!item.isFormField()) {
@@ -140,17 +140,23 @@ public class CommunityModel {
                             UUID uuid = UUID.randomUUID();
                             fileName=uuid.toString()+extension;
                             item.write(Path.of(uploadPath, fileName));
+                            map.put("file_size", item.getSize());
                             JSONObject obj=new JSONObject();
                     		obj.put("imageName", fileName);
+                    		map.put("file_name",fileName);
                     		response.setContentType("application/x-json; charset=utf-8");
                             response.getWriter().print(obj);
                         }
                         else
                         {
                         	postId = item.getString();
+                        	map.put("board_no", postId);
                         }
                     }
                 }
+                
+                
+                CommunityDAO.boardInsertImage(map);
             } catch (Exception ex) {
                 System.out.println("There was an error: " + ex.getMessage());
             }
@@ -215,5 +221,21 @@ public class CommunityModel {
 			e.printStackTrace();
 		}
 	}
-	
+	@RequestMapping("community/delete_image.do")//이미지파일 삭제
+	public void delete_image(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String[] imageNames = ((String)request.getParameter("imageNames")).split(",");
+		try {
+			
+			for(String imageName:imageNames)
+			{
+				File file=new File(uploadPath+imageName);
+				file.delete();
+			}
+			CommunityDAO.boardDeleteImage(imageNames);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

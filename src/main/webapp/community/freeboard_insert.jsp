@@ -12,11 +12,13 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
-console.log("adfasdf")
-let isSaving = false
-/* $(window).on('beforeunload', function() {
-	alert("페이지가 언로드됩니다!");
-	console.log("jstl","${temp_board_no}")
+
+const handleBeforeUnload = () => {//페이지를 떠날 때 경고창 띄우기
+	const message = "저장하지 않은 내용이 있습니다. 페이지를 떠나시겠습니까?";
+    event.returnValue = message;
+    return message;
+}
+window.onunload = function(){//페이지가 실제로 닫힐 때 수행할 작업
 	$.ajax({
 		type:'post',
 		url:'../community/freeboard_delete_unsaved.do',
@@ -24,18 +26,17 @@ let isSaving = false
 		success:function(result){
 			
 		}
-	}) */
-window.addEventListener('beforeunload', function (event) {
-            // 여기서 alert 메시지를 표시할 수 있습니다
-            alert("페이지를 떠나려고 합니다!");
+	}) 
+}
+window.addEventListener('beforeunload', handleBeforeUnload); 
 
-            // 경고창 메시지 추가 (브라우저에 따라 다르게 동작)
-            event.returnValue = "정말 떠나시겠습니까?";  // 브라우저가 표시할 경고 메시지
-
-            // 사용자가 페이지를 떠나려고 할 때 보여지는 메시지 처리
-            // 브라우저마다 동작이 다를 수 있음.
-        });
-});
+const save = () =>{
+	
+	window.removeEventListener('beforeunload', handleBeforeUnload);
+	window.onunload=null
+	//게시물 저장 코드 수행
+	location.href="../community/freeboard_list.do"
+}
 </script>
 </head>
 <body>
@@ -62,7 +63,7 @@ window.addEventListener('beforeunload', function (event) {
                             </form>
                     </div>
                     
-					<div id="editor" style="height: 500px;color:black">
+					<div id="editor" style="height: 500px;color:black" data-postid="${temp_board_no }">
 						<p>Hello World!</p>
 						<p>
 							Some initial <strong>bold</strong> text
@@ -73,8 +74,8 @@ window.addEventListener('beforeunload', function (event) {
 					</div>
 					<script type="text/javascript" src="quil.js?v=<%=System.currentTimeMillis() %>"></script>
 					<div style="margin-top:20px">
-						<span><a href="#" class="site-btn" style="float:left">목록</a> </span>
-						<span><button onclick="javascript:history.back()" class="site-btn ml-3" style="float:right">완료</button> </span>
+						<span><a href="../community/freeboard_list.do" class="site-btn" style="float:left">목록</a> </span>
+						<span><button onclick="save()" class="site-btn ml-3" style="float:right">완료</button> </span>
 						<span><button onclick="javascript:history.back()" class="site-btn" style="float:right">취소</button> </span>
 						
 					</div>

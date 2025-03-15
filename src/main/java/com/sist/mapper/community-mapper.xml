@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sist.mapper.community-mapper">
+<mapper namespace="com.sist.mapper.community-mapper"> 
 <sql id="where-no">
 		WHERE no=#{no}
 	</sql>
@@ -29,6 +29,21 @@
 		FROM cocktail_board
 		WHERE board_no=#{board_no}
 	</select>
+	<!-- 이미지 db에 넣기 -->
+	<insert id="boardInsertImage" parameterType="hashmap">
+		INSERT INTO board_img
+		 VALUES(#{file_name},#{file_size},#{board_no})
+	</insert>
+	<!-- 이미지 삭제하기 -->
+	<delete id="boardDeleteImage" parameterType="string">
+	    DELETE FROM board_img
+	    WHERE file_name IN 
+	    <trim prefix="(" suffix=")">
+	    	<foreach item="image_name" collection="array"  separator="," >
+	        	#{image_name}
+	    	</foreach>
+	    </trim>
+	</delete>
 	<!-- 글쓰기 버튼으로 insert페이지로 이동하면 깡통 게시물 하나 추가 -->
 	<insert id="boardInsertNewPost" useGeneratedKeys="true" keyProperty="board_no" parameterType="CommunityFreeboardVO">
 		<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
