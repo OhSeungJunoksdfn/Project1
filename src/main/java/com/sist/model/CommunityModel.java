@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -70,8 +71,8 @@ public class CommunityModel {
 		return "../main/main.jsp";
 	}
 	
-	@RequestMapping("community/freeboard_insert.do")
-	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping("community/freeboard_insert_newpost.do")
+	public String freeboard_insertNewPost(HttpServletRequest request, HttpServletResponse response)
 	{	
 		
 		CommunityFreeboardVO tempVO = new CommunityFreeboardVO();
@@ -87,10 +88,68 @@ public class CommunityModel {
 		request.setAttribute("main_jsp", "../community/freeboard_insert.jsp");
 		return "../main/main.jsp";
 	}
+	@RequestMapping("community/freeboard_insert.do")
+	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
+	{	
+		
+		// 게시물 삭제 url 이상한거 고치기
+		// 게시물 시간 표시 고치기
+		//quill 게시물 내용 길면 확장되도록 바꾸기
+		if (JakartaServletFileUpload.isMultipartContent(request)) {
+            DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+            JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
+            upload.setFileSizeMax(20971520);
+            upload.setSizeMax(20971520);
+            
+            try {
+            	
+            	//폴더 생성하면 이클립스 폴더 안에 upload 폴더 생성됨
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) uploadDir.mkdir();
+            	
+                String board_no ="";
+                String id = "";
+                String tag="";
+                String subject="";
+            	//request객체를 이 코드 앞에서 사용하고 있으면 여기 리스트에 데이터 안들어감
+                List<FileItem> formItems = upload.parseRequest(request);
+                Charset charset = Charset.forName("UTF-8");
+                Map map = new HashMap();
+                if (formItems != null /*&& formItems.size() > 0*/) {
+                    for (FileItem item : formItems) {
+                        if (!item.isFormField()) {
+                            String fileName = new File(item.getName()).getName();
+                            String extension = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                            //추후에 db insert
+                            UUID uuid = UUID.randomUUID();
+                            fileName=uuid.toString()+extension;
+                            item.write(Path.of(uploadPath, fileName));
+                            map.put("htmlfile_size", item.getSize());
+                    		map.put("htmlfile",fileName);
+                        }
+                        else
+                        {
+                        	String fieldName = item.getFieldName();
+                            String fieldValue = item.getString(charset);  // 텍스트 값
+                            System.out.println(fieldName+":"+fieldValue);
+                        	map.put(fieldName, fieldValue);
+                        }
+                    }
+                }
+                
+                
+                CommunityDAO.boardInsert(map);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+		
+		request.setAttribute("main_jsp", "../community/freeboard_insert.jsp");
+		return "../main/main.jsp";
+	}
 	@RequestMapping("community/freeboard_delete_unsaved.do")
 	public void freeboard_delete_unsaved(HttpServletRequest request, HttpServletResponse response)
 	{	
-		
 		String board_no = request.getParameter("board_no");
 		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
 		//delete cascade 제약조건으로 게시물 삭제시 이미지 자동 삭제
@@ -119,8 +178,8 @@ public class CommunityModel {
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
-            upload.setFileSizeMax(1024*1024);
-            upload.setSizeMax(1024*1024);
+            upload.setFileSizeMax(20971520);
+            upload.setSizeMax(20971520);
 
             try {
             	//폴더 생성하면 이클립스 폴더 안에 upload 폴더 생성됨
@@ -158,7 +217,7 @@ public class CommunityModel {
                 
                 CommunityDAO.boardInsertImage(map);
             } catch (Exception ex) {
-                System.out.println("There was an error: " + ex.getMessage());
+                ex.printStackTrace();
             }
         }
 		

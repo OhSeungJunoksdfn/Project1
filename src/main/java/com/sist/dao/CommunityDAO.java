@@ -62,6 +62,12 @@ public class CommunityDAO {
 		session.insert("boardInsertNewPost",vo);
 		session.close();
 	}
+	public static void boardInsert(Map map)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardInsert",map);
+		session.close();
+	}
 	//저장되지 않은 게시물 삭제
 	public static void boardDeleteUnsaved(int board_no)
 	{

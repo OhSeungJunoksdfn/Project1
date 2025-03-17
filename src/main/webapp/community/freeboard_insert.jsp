@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,31 +13,20 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
-
+console.log("no","${temp_board_no}")
 const handleBeforeUnload = () => {//페이지를 떠날 때 경고창 띄우기
 	const message = "저장하지 않은 내용이 있습니다. 페이지를 떠나시겠습니까?";
     event.returnValue = message;
     return message;
 }
-window.onunload = function(){//페이지가 실제로 닫힐 때 수행할 작업
-	$.ajax({
-		type:'post',
-		url:'../community/freeboard_delete_unsaved.do',
-		data:{"board_no":"${temp_board_no}"},
-		success:function(result){
-			
-		}
-	}) 
-}
-window.addEventListener('beforeunload', handleBeforeUnload); 
+window.onunload= function () {//페이지가 실제로 닫힐 때 수행할 작업
+	navigator.sendBeacon('../community/freeboard_delete_unsaved.do?board_no=${temp_board_no}');
+};
+$(document).ready(function(){
+	window.addEventListener('beforeunload', handleBeforeUnload); 
+});
 
-const save = () =>{
-	
-	window.removeEventListener('beforeunload', handleBeforeUnload);
-	window.onunload=null
-	//게시물 저장 코드 수행
-	location.href="../community/freeboard_list.do"
-}
+
 </script>
 </head>
 <body>
@@ -59,11 +49,12 @@ const save = () =>{
 										<option value="기타">기타</option>
 									</select>
                                 </div>
-                                <input type="text" placeholder="제목" style="float:left;color:black">
+                                <input type="text" name="subject" placeholder="제목" style="float:left;color:black">
                             </form>
                     </div>
-                    
-					<div id="editor" style="height: 500px;color:black" data-postid="${temp_board_no }">
+                    <!-- 유저아이디 세션에서 가져오도록 처리 -->
+                    <c:set var="userid" value="user"/>
+					<div id="editor" style="height: 500px;color:black" data-postid="${temp_board_no }" data-userid="${userid }">
 						<p>Hello World!</p>
 						<p>
 							Some initial <strong>bold</strong> text
@@ -77,7 +68,6 @@ const save = () =>{
 						<span><a href="../community/freeboard_list.do" class="site-btn" style="float:left">목록</a> </span>
 						<span><button onclick="save()" class="site-btn ml-3" style="float:right">완료</button> </span>
 						<span><button onclick="javascript:history.back()" class="site-btn" style="float:right">취소</button> </span>
-						
 					</div>
 					
 					

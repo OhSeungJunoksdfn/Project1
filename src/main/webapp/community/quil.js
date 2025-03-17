@@ -133,5 +133,29 @@ quill.on('text-change', function() {
 	//console.log("imageTags",imageTags)
 });
 
-
+const save = () =>{
+	window.removeEventListener('beforeunload', handleBeforeUnload);
+	window.onunload=null;
+	
+	let htmlcontent = quill.root.innerHTML;
+	let htmlBlob = new Blob([htmlcontent], { type: 'text/html' });
+	let htmlFile = new File([htmlBlob], 'quill_content.html', { type: 'text/html' });
+	let formData = new FormData();
+	formData.append('file', htmlFile);  // 파일이 HTML 형식일 경우
+	formData.append('board_no', $("#editor").data('postid'));
+	formData.append('id', $("#editor").data('userid'));
+	formData.append('subject', $("input[name=subject]").val());
+	formData.append('tag', $("select").val());
+	$.ajax({
+		type:'post',
+		url:'../community/freeboard_insert.do',
+		data:formData,
+		contentType: false,
+		processData: false,
+		success:function(result){
+			location.href="../community/freeboard_list.do"
+		}
+	}) 
+	
+}
 

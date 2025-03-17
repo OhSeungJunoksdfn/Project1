@@ -52,6 +52,13 @@
 		INSERT INTO cocktail_board(board_no,subject,tag,htmlfile,poststate)
 		 VALUES(#{board_no},#{subject},#{tag},#{htmlfile},#{postState})
 	</insert>
+	<insert id="boardInsert" parameterType="hashmap">
+		<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(board_no)+1,1) as no FROM cocktail_board
+		</selectKey>
+		INSERT INTO cocktail_board(board_no,id,subject,tag,htmlfile,htmlfile_size,poststate)
+		 VALUES(#{board_no},#{id},#{subject},#{tag},#{htmlfile},#{htmlfile_size},'SAVED')
+	</insert>
 	<delete id="boardDeleteUnsaved" parameterType="int">
 		DELETE FROM cocktail_board
 		WHERE board_no=#{board_no}
