@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cocktail_member-mapper">
+ <select id="memberIdcheck" resultType="int" parameterType="string">
+   SELECT COUNT(*) FROM cocktail_member
+    WHERE id=#{id}
+ </select>
+ <!-- 
+    ID             NOT NULL VARCHAR2(20)  
+	PWD            NOT NULL VARCHAR2(30)  
+	NAME           NOT NULL VARCHAR2(51)  
+	SEX            NOT NULL CHAR(6)       
+	EMAIL                   VARCHAR2(100) 
+	BIRTHDAY       NOT NULL VARCHAR2(10)  
+	POST           NOT NULL VARCHAR2(10)  
+	ADDRESS        NOT NULL VARCHAR2(100) 
+	ADDRESS_DETAIL          VARCHAR2(100) 
+	REGDATE                 DATE          
+	COMENT                  CLOB          
+	ADMIN                   VARCHAR2(1)   
+	LOGIN                   VARCHAR2(1)   
+	PHONE                   VARCHAR2(13)  
+	AVATAR  
+  -->
+   <insert id="memberInsert" parameterType="CocktailMemberVO">
+    INSERT INTO cocktail_member VALUES(
+      #{id},#{pwd},#{name},#{sex},#{email},#{birthday},
+      #{post},#{address},#{address_detail},SYSDATE,
+      #{coment},'n','n',#{phone},#{avatar}
+    )
+  </insert>
+  <!-- 로그인 -->
+  <select id="memberIdCheckCount" resultType="int" parameterType="string">
+    SELECT COUNT(*) FROM cocktail_member
+    WHERE id=#{id}
+  </select>
+  <select id="memberGetPassword" resultType="CocktailMemberVO" parameterType="string">
+   SELECT id,pwd,name,sex,admin
+   FROM cocktail_member
+   WHERE id=#{id}
+  </select>
+</mapper>
