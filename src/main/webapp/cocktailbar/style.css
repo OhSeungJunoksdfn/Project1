@@ -57,8 +57,12 @@ body {
 
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
-li {
-  margin: 0;
-  padding: 0;
-  float: left;
+li.page-item{
+	float: left;
+}
+il.page-link{
+	float: left;
+}
+ul.pagination{
+	margin-bottom: 50px;
 }

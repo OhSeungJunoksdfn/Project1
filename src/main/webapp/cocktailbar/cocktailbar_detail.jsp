@@ -11,7 +11,7 @@ a.updates{
   cursor: pointer;
 }
 </style>
-<link rel="stylesheet" href="../cocktailbar/map.css">
+<link rel="stylesheet" href="../cocktailbar/style.css"/>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bce0da4aa16d6105ec492eb0855addfd&libraries=services"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
@@ -439,7 +439,6 @@ $(function(){
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
