@@ -22,6 +22,11 @@
           background-color: #858894;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+
+
+</script>
 </head>
 <body>
 <div>
@@ -31,7 +36,18 @@
         <div class="row">
           <div class="col-md-12 text-center mb-5 ftco-animate">
             <h2 class="display-4">자유게시판</h2>
-            <h4 class="text-left" style="float:left;vertical-align:bottom;margin-top:30px">[${vo.tag }] ${vo.subject }</h4>
+            <table class="table">
+			<tr>
+				<td><h4 class="text-left" style="float:left;vertical-align:bottom;margin-top:30px">[${vo.tag }] ${vo.subject }</h4></td>
+				<td class="text-right">
+				<a href="#" class="site-btn">수정</a> 
+				<a href="#" class="site-btn">삭제</a> 
+				<a href="#" class="site-btn">목록</a> 
+				</td>
+			</tr>
+			</table>
+            
+            
             <table class="table">
 				<tr>
 					<th class="text-center item" width=5%>${vo.id }</th>
@@ -40,7 +56,8 @@
 				</tr>
            </table>
            <hr>
-           <iframe src="../community/get_htmlfile.do?htmlfile=${vo.htmlfile }" style="width:100%;height:100%;margin-bottom:200px;border:none"></iframe>
+           	<iframe class="ifr" src="../community/get_htmlfile.do?htmlfile=${vo.htmlfile }" scrolling="no" style="width:100%;height:${vo.documentheight}px;margin-bottom:200px;border:none;"></iframe>
+          
            <!-- <table class="table">
            	
 				<tr>
@@ -51,15 +68,7 @@
 			</table> -->
           </div>
         </div>
-        <table class="table">
-			<tr>
-				<td class="text-right">
-				<a href="#" class="site-btn">수정</a> 
-				<a href="#" class="site-btn">삭제</a> 
-				<a href="#" class="site-btn">목록</a> 
-				</td>
-			</tr>
-		</table>
+        
       </div>
     </section>
 </div>

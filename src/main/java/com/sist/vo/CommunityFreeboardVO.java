@@ -19,7 +19,7 @@ HTMLFILE_SIZE          NUMBER
  */
 @Data
 public class CommunityFreeboardVO {
-	int board_no, hit;
+	int board_no, hit,documentheight;
 	String id, subject, tag, htmlfile, postState;//postState CHECK IN ('SAVED','UNSAVED')
 	Date regdate;
 }

@@ -25,7 +25,7 @@
 		WHERE board_no=#{board_no}
 	</update>
 	<select id="boardDetailData" resultType="CommunityFreeboardVO" parameterType="int">
-		SELECT board_no, id, subject, hit, regdate, tag, htmlfile
+		SELECT board_no, id, subject, hit, regdate, tag, htmlfile, documentheight
 		FROM cocktail_board
 		WHERE board_no=#{board_no}
 	</select>
@@ -54,7 +54,7 @@
 	</insert>
 	<update id="boardInsert" parameterType="hashmap">
 		UPDATE cocktail_board
-		SET id = #{id}, subject = #{subject}, tag = #{tag}, htmlfile = #{htmlfile}, htmlfile_size = #{htmlfile_size}, poststate = 'SAVED'
+		SET id = #{id}, subject = #{subject}, tag = #{tag}, htmlfile = #{htmlfile}, htmlfile_size = #{htmlfile_size}, poststate = 'SAVED', documentheight= #{documentheight}
 		WHERE board_no = #{board_no}
 	</update>
 	<delete id="boardDeleteUnsaved" parameterType="int">

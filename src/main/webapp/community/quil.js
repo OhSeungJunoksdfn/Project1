@@ -21,6 +21,7 @@ const quill = new Quill('#editor', options);
 
 $(document).ready(function(){
 	$('.ql-toolbar.ql-snow').css('text-align','left')
+	$(".ql-editor").css({"overflow":"hidden"})
 });
 
 $("#test").click(()=>{
@@ -57,6 +58,7 @@ const uploadImage = (file,id) =>{//이미지를 서버에 업로드
 		(res)=>{
 			const imageURL = `${serverURL}/community/get_converted_image.do?image=${res.data.imageName}`
 			$(`#${id}`).attr('src',imageURL)
+			$(`#${id}`).css({"max-width":"100%","max-height":"100%"})
 		}
 	
 	);
@@ -131,13 +133,16 @@ quill.on('text-change', function() {
   
 	imageTags=changedImage
 	//console.log("imageTags",imageTags)
+	console.log(quill.root.innerHTML)
+	let contentHeight = quill.root.scrollHeight;
+	$("#editor").css({"height":contentHeight})
 });
 
 const save = () =>{
 	window.removeEventListener('beforeunload', handleBeforeUnload);
 	window.onunload=null;
 	
-	let htmlcontent = quill.root.innerHTML;
+	let htmlcontent = `<div class="quillcontentcontainer" data-height="${quill.root.scrollHeight}">${quill.root.innerHTML}<div>`;
 	let htmlBlob = new Blob([htmlcontent], { type: 'text/html' });
 	let htmlFile = new File([htmlBlob], 'quill_content.html', { type: 'text/html' });
 	let formData = new FormData();
@@ -146,6 +151,7 @@ const save = () =>{
 	formData.append('id', $("#editor").data('userid'));
 	formData.append('subject', $("input[name=subject]").val());
 	formData.append('tag', $("select").val());
+	formData.append('documentheight',quill.root.scrollHeight)
 	$.ajax({
 		type:'post',
 		url:'../community/freeboard_insert.do',
