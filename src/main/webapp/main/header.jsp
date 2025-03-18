@@ -109,7 +109,7 @@
                         <div class="header__top__right">
             
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> 로그인</a>
+                                <a href="../member/login.do"><i class="fa fa-user"></i> 로그인</a>
                                  <span>/</span>
                                 <a href="../member/join.do">회원가입</a>
                             </div>
