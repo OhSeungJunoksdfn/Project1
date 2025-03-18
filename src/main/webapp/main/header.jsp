@@ -49,12 +49,12 @@
                                     </c:if>
                                 </ul>
                             </li>
-                            <li><a href="#">상품</a>
+                             <li><a href="#">상품</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">주류상품 목록</a></li>
-                                    <li><a href="./shoping-cart.html">용품 목록</a></li>
+                                    <li><a href="../product2/product_list.do">칵테일용품 목록</a></li>
                                     <li><a href="./shoping-cart.html">주류상품 검색</a></li>
-                                    <li><a href="./shoping-cart.html">용품 검색</a></li>
+                                    <li><a href="../product2/product_find.do">칵테일용품 검색</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">커뮤니티</a>
@@ -109,7 +109,7 @@
                         <div class="header__top__right">
             
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> 로그인</a>
+                                <a href="../member/login.do"><i class="fa fa-user"></i> 로그인</a>
                                  <span>/</span>
                                 <a href="../member/join.do">회원가입</a>
                             </div>
@@ -147,10 +147,12 @@
                             </li>
                             <li><a href="#">상품</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">주류상품 목록</a></li>
+                                    <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
+                                    <li><a href="../product2/product_list.do">칵테일용품 목록</a></li>
+                                    <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
                                     <li><a href="./shoping-cart.html">용품 목록</a></li>
                                     <li><a href="./shoping-cart.html">주류상품 검색</a></li>
-                                    <li><a href="./shoping-cart.html">용품 검색</a></li>
+                                    <li><a href="../product2/product_find.do">칵테일용품 검색</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">커뮤니티</a>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.product2-mapper">
+	<select id="productListData" resultType="Product2VO" parameterType="hashmap">
+		SELECT product_no,name,poster,price,cno,delivery_fee,likecount,replycount,num
+		FROM (SELECT product_no,name,poster,price,cno,delivery_fee,likecount,replycount,rownum as num
+		FROM (SELECT /*+INDEX_ASC(cocktail_product2 cp2_product_no_pk)*/product_no,name,poster,price,cno,delivery_fee,likecount,replycount
+		FROM cocktail_product2))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="productTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM cocktail_product2
+	</select>
+	<select id="productDetailData" resultType="Product2VO" parameterType="int">
+		SELECT * FROM cocktail_product2
+		WHERE product_no=#{product_no}
+	</select>
+	<update id="productHitIncrement" parameterType="int">
+		UPDATE cocktail_product2 SET
+		hit=hit+1
+		WHERE product_no=#{product_no}
+	</update>
+	<!-- 
+	<select id="productFindTotalPage" resultType="int" parameterType="hashmap">
+		SELECT CEIL(COUNT(*)/12.0)
+		FROM cocktail_product2
+		WHERE ${}
+	</select>
+	-->
+	<select id="RecommendData6" resultType="Product2VO">
+    	SELECT * FROM (SELECT * FROM cocktail_product2
+      	ORDER BY DBMS_RANDOM.RANDOM)
+    	WHERE rownum&lt;=6
+  </select>
+	
+</mapper>
