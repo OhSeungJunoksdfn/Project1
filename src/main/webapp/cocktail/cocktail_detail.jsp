@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>    
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -66,7 +66,6 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>제조법</h6>
-                                    
                                     <c:forEach var="tvo" items="${contents }" >
                                     <p> ${tvo }</p>
                                     </c:forEach>
@@ -120,7 +119,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title related__product__title">
-                        <h2>다른 칵테일</h2>
+                        <h2>다른 칵테일 추천</h2>
                     </div>
                 </div>
             </div>
@@ -146,15 +145,6 @@
     </section>
     <!-- Related Product Section End -->
 
-
-
-
-
-
 </body>
 
-</html>
-      
-     
-</body>
 </html>

@@ -25,12 +25,12 @@
 </resultMap>
 
 	<select id="cocktailData12" resultType="CocktailVO">
-		SELECT *
+		SELECT cocktail_no,id,name,NVL(NULLIF(alc, '0'), '무알콜') as alc,detail,REPLACE(image, ' ', '%20') AS image,ename,comments
 		FROM (SELECT * FROM cocktail WHERE detail='y' ORDER BY DBMS_RANDOM.RANDOM)
 		WHERE rownum&lt;=12
 	</select>
 		<select id="cocktailData4" resultType="CocktailVO">
-		SELECT *
+		SELECT cocktail_no,id,name,NVL(NULLIF(alc, '0'), '무알콜') as alc,detail,REPLACE(image, ' ', '%20') AS image,ename,comments
 		FROM (SELECT * FROM cocktail WHERE detail='y' ORDER BY DBMS_RANDOM.RANDOM)
 		WHERE rownum&lt;=4
 	</select>
@@ -44,10 +44,11 @@
 	</select>
 	
 	<select id="cocktailListData" resultType="CocktailVO" parameterType="hashmap" >
-		SELECT cocktail_no,id,name,alc,detail,image,ename,comments,num
+		SELECT cocktail_no,id,name,NVL(NULLIF(alc, '0'), '무알콜') as alc,detail,REPLACE(image, ' ', '%20') AS image,ename,comments,num
 		FROM (SELECT cocktail_no,id,name,alc,detail,image,ename,comments,rownum as num
-		FROM (SELECT /*+ INDEX_DESC(cocktail COCKTAIL_NO_PK)*/ cocktail_no,id,name,alc,detail,image,ename,comments
-		FROM cocktail WHERE detail=#{detail}))
+		FROM (SELECT  cocktail_no,id,name,alc,detail,image,ename,comments
+		FROM cocktail WHERE detail=#{detail}
+		${sort}))
 		WHERE num BETWEEN #{start} AND #{end}
 		
 	</select>
@@ -57,7 +58,7 @@
 	</select>
 	
 	<select id="cocktailDetailData" resultType="CocktailVO" parameterType="int" >
-		SELECT *
+		SELECT cocktail_no,id,name,NVL(NULLIF(alc, '0'), '무알콜') as alc,detail,REPLACE(image, ' ', '%20') AS image,ename,comments,content,hit,likes
 		FROM cocktail
 		WHERE cocktail_no=#{cno}
 	</select>
@@ -72,17 +73,10 @@
 		WHERE cocktail.cocktail_no = cocktail_tag.cocktail_no
 		AND cocktail.cocktail_no = #{cno}
 	</select>
-	<select id="cocktailFindData" resultType="CocktailVO" parameterType="hashmap">
-		SELECT cocktail_no,id,name,alc,detail,image,ename,comments,num
-		FROM (SELECT cocktail_no,id,name,alc,detail,image,ename,comments,rownum as num
-		FROM (SELECT /*+ INDEX_DESC(cocktail COCKTAIL_NO_PK)*/ cocktail_no,id,name,alc,detail,image,ename,comments
-		FROM cocktail))
-		WHERE num BETWEEN #{start} AND #{end}
-		AND REGEXP_LIKE(name,#{fd})
-	</select>
+
 	
 	<select id="ingredientsHouseData12" resultMap="ingredientsMap" >
-			SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename 
+			SELECT ing_no,ingname,comments,NVL(NULLIF(alc, '0'), '무알콜') as alc,ingtag,ciimage,ename 
 		FROM (SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename FROM COCKTAIL_INGREDIENTS ORDER BY DBMS_RANDOM.RANDOM)
 		WHERE rownum&lt;=12
 	</select>
@@ -93,14 +87,43 @@
 	</select>
 	
 	<select id="ingredientsListData" resultMap="ingredientsMap" parameterType="hashmap" >
-		SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename,num
+		SELECT ing_no,ingname,comments,NVL(NULLIF(alc, '0'), '무알콜') as alc,ingtag,ciimage,ename,num
 		FROM (SELECT ing_no,ingname,comments,alc,ingtag,ciimage,ename,rownum as num
 		FROM (SELECT /*+ INDEX_DESC(cocktail_ingredients INGGREDIENTS_NO_PK) */ ing_no,ingname,comments,alc,ingtag,ciimage,ename
 		FROM cocktail_ingredients))
 		WHERE num BETWEEN #{start} AND #{end}
 	</select>
+	
 	<select id="ingredientsTotalPage" resultType="int">
 		SELECT COUNT(*) FROM cocktail_ingredients
+	</select>
+	
+	<select id="ingredientsDetailData" resultMap="ingredientsMap" parameterType="int">
+		SELECT ing_no,ingname,comments,NVL(NULLIF(alc, '0'), '무알콜') as alc,ingtag,ciimage,ename
+		FROM cocktail_ingredients
+		WHERE ing_no=#{no}
+	</select>
+	
+	<select id="ingredientsMakeList" resultType="CocktailVO" parameterType="int" >
+	SELECT * 
+	FROM COCKTAIL
+	WHERE cocktail_no IN(SELECT cocktail_recipe.cocktail_no 
+	FROM cocktail_ingredients,cocktail_recipe
+	WHERE cocktail_ingredients.ing_no=cocktail_recipe.ing_no
+	AND cocktail_ingredients.ing_no=#{no})
+	</select>
+
+	<select id="cocktailFindData" resultType="CocktailVO" parameterType="hashmap" >
+		SELECT cocktail_no,id,name,NVL(NULLIF(alc, '0'), '무알콜') as alc,detail,image,ename,comments,num
+		FROM (SELECT cocktail_no,id,name,alc,detail,image,ename,comments,rownum as num
+		FROM (SELECT /*+ INDEX_DESC(cocktail COCKTAIL_NO_PK)*/ cocktail_no,id,name,alc,detail,image,ename,comments
+		FROM cocktail WHERE REGEXP_LIKE(name,#{ss})))
+		WHERE num BETWEEN #{start} AND #{end}
+		
+	</select>
+	
+	<select id="cocktailFindCount" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM cocktail WHERE REGEXP_LIKE(name,#{ss})
 	</select>
 	
 	

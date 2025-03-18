@@ -32,7 +32,7 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
                       <ul>
-                            <li><a href="#">칵테일</a>
+                             <li><a href="#">칵테일</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="../cocktail/cocktail_list.do">칵테일 목록</a></li>
                                     <li><a href="../cocktail/cocktail_ingredients.do">재료 목록</a></li>
@@ -108,7 +108,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
             
-                            <div class="header__top__right__auth">
+                            <div class="header__top__right__auth" style="display:flex; flex-direction: row; justify-content:end">
                                 <a href="../member/login.do"><i class="fa fa-user"></i> 로그인</a>
                                  <span>/</span>
                                 <a href="../member/join.do">회원가입</a>
@@ -128,7 +128,7 @@
                 <div class="col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="#">칵테일</a>
+                             <li><a href="#">칵테일</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="../cocktail/cocktail_list.do">칵테일 목록</a></li>
                                     <li><a href="../cocktail/cocktail_ingredients.do">재료 목록</a></li>

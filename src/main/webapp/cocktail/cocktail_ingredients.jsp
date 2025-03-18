@@ -37,48 +37,38 @@
             		<div class="container">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
-                                <div class="filter__sort">
-                                    <span>정렬</span>
-                                    <select>
-                                        <option value="0">조회수 높은순</option>
-                                        <option value="0">조회수 낮은순</option>
-                                        <option value="0">도수 높은순</option>
-                                        <option value="0">도수 낮은순</option>
-                                    </select>
-                                </div>
+                                
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6>총<span>${count }</span>개</h6>
+                                    <h6>총&nbsp;<span>${count}</span>개</h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
                                 <div class="filter__found">
-                                    <h6> <span>${curpage }</span>페이지 / <span>${totalpage }</span>총 페이지</h6>
+                                    <h6> <span>${curpage}</span>페이지 /&nbsp;<span>${totalpage }</span>총 페이지</h6>
                                 </div>
                             </div>
                         </div>
                         </div>
         <div class="container">
             <div class="row">
-                    <div class="row">
                     <c:forEach var="vo" items="${list }">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" style="background-size: contain;" data-setbg="${vo.civo.ciimage }">
+                                <div class="product__item__pic set-bg"  style="background-size: contain; height:350px;" data-setbg="${vo.civo.ciimage }">
                                     <ul class="product__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">${vo.civo.ingname }</a></h6>
+                                    <h6><a href="../cocktail/cocktail_ingredient_detail.do?no=${vo.civo.ing_no }">${vo.civo.ingname }</a></h6>
                                     <h5>${vo.civo.ename }</h5>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
-                    </div>
 
            <div class="container">
            		<div class="row justify-content-center">
