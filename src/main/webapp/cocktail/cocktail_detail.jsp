@@ -13,7 +13,6 @@
     <title>Ogani</title>
 
 </head>
-
 <body>
     
 
@@ -145,15 +144,6 @@
         </div>
     </section>
     <!-- Related Product Section End -->
-
-
-
-
-
-
-</body>
-
-</html>
       
      
 </body>
