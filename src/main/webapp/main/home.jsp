@@ -132,7 +132,7 @@
                         <c:if test="${i.count == 1 or i.count == 4 or i.count == 7 or i.count == 10}">
                             <div class="latest-prdouct__slider__item">
                             </c:if>
-                                <a href="#" class="latest-product__item">
+                                <a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${vo.image }" alt="" style="width:110px; height:110px">
                                     </div>
@@ -157,7 +157,7 @@
                         <c:if test="${i.count == 1 or i.count == 4 or i.count == 7 or i.count == 10}">
                             <div class="latest-prdouct__slider__item">
                             </c:if>
-                                <a href="#" class="latest-product__item">
+                                <a href="../cocktail/cocktail_ingredient_detail.do?no=${vo.civo.ing_no }" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${vo.civo.ciimage }" alt="" style="width:110px; height:110px">
                                     </div>
@@ -182,7 +182,7 @@
                         <c:if test="${i.count == 1 or i.count == 4 or i.count == 7 or i.count == 10}">
                             <div class="latest-prdouct__slider__item">
                             </c:if>
-                                <a href="#" class="latest-product__item">
+                                <a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${vo.image }" alt="" style="width:110px; height:110px">
                                     </div>
