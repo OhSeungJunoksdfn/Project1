@@ -11,6 +11,7 @@
   <typeAlias type="com.sist.vo.NewsVO" alias="NewsVO"/>
   <typeAlias type="com.sist.vo.CommunityFreeboardVO" alias="CommunityFreeboardVO"/>
   <typeAlias type="com.sist.vo.CocktailMemberVO" alias="CocktailMemberVO"/>
+  <typeAlias type="com.sist.vo.Cocktail_ProductVO" alias="Cocktail_ProductVO"/>
   </typeAliases>
   <environments default="development">
   	<environment id="development">
@@ -30,5 +31,6 @@
   	<mapper resource="com/sist/mapper/news-mapper.xml"/>
   	<mapper resource="com/sist/mapper/community-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktailmember-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/cocktail_product-mapper.xml"/>
   </mappers>
  </configuration>
