@@ -108,7 +108,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
             
-                            <div class="header__top__right__auth">
+                            <div class="header__top__right__auth" style="display:flex; flex-direction: row; justify-content:end">
                                 <a href="../member/login.do"><i class="fa fa-user"></i> 로그인</a>
                                  <span>/</span>
                                 <a href="../member/join.do">회원가입</a>
