@@ -11,6 +11,6 @@
 <body>
 	<jsp:include page="${cocktail_jsp }"></jsp:include>
 	<!-- Cookie -->
-	
+	<jsp:include page="cocktail_cookie.jsp"></jsp:include>
 </body>
 </html>

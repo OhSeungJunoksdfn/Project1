@@ -42,7 +42,7 @@
  		console.log("Firebase Storage Initialized:", storage);
 
        	 
-        }
+        
 </script>
     
 </head>
