@@ -18,17 +18,17 @@
                             <span>상품</span>
                         </div>
                         <ul>
-                            <li><a href="#">레드</a></li>
-                            <li><a href="#">화이트</a></li>
-                            <li><a href="#">스파클링</a></li>
-                            <li><a href="#">아메리칸 위스키</a></li>
-                            <li><a href="#">로제</a></li>
-                            <li><a href="#">스카치 위스키</a></li>
-                            <li><a href="#">리큐르</a></li>
-                            <li><a href="#">하이볼글라스</a></li>
-                            <li><a href="#">칵테일쉐이커</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=1">레드</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=2">화이트</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=3">로제</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=4">스파클링</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=5">아메리칸 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=6">스카치 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=13">리큐르</a></li>
+                            <li><a href="#">하이볼 글라스</a></li>
+                            <li><a href="#">칵테일 쉐이커</a></li>
                             <li><a href="#">지거/믹싱턴</a></li>
-                            <li><a href="#">바스푼</a></li>
+                            <li><a href="#">바 스푼</a></li>
                         </ul>
                     </div>
                 </div>

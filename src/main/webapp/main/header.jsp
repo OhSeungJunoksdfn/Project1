@@ -147,7 +147,7 @@
                             </li>
                             <li><a href="#">상품</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">주류상품 목록</a></li>
+                                    <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
                                     <li><a href="../product2/product_list.do">칵테일용품 목록</a></li>
                                     <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
                                     <li><a href="./shoping-cart.html">용품 목록</a></li>

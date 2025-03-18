@@ -8,6 +8,60 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>상품</span>
+                        </div>
+                        <ul>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=1">레드</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=2">화이트</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=3">로제</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=4">스파클링</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=5">아메리칸 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=6">스카치 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=13">리큐르</a></li>
+                            <li><a href="#">하이볼 글라스</a></li>
+                            <li><a href="#">칵테일 쉐이커</a></li>
+                            <li><a href="#">지거/믹싱턴</a></li>
+                            <li><a href="#">바 스푼</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    All Categories
+                                    <span class="arrow_carrot-down"></span>
+                                </div>
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Breadcrumb Section End -->
+
 <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
         <div class="container">
@@ -36,24 +90,24 @@
                     <div class="sidebar__item">
                         <h4>카테고리</h4>
                         <ul>
-                            <li><a href="cocktail_product_list.do?cno=1">레드 와인</a></li>
-                            <li><a href="cocktail_product_list.do?cno=2">화이트 와인</a></li>
-                            <li><a href="cocktail_product_list.do?cno=3">로제 와인</a></li>
-                            <li><a href="cocktail_product_list.do?cno=4">스파클링 와인</a></li>
-                            <li><a href="cocktail_product_list.do?cno=5">아메리칸 위스키</a></li>
-                            <li><a href="cocktail_product_list.do?cno=6">스카치 위스키</a></li>
-                            <li><a href="cocktail_product_list.do?cno=7">아이리쉬 위스키</a></li>
-                            <li><a href="cocktail_product_list.do?cno=8">캐나다 위스키</a></li>
-                            <li><a href="cocktail_product_list.do?cno=9">일본 위스키</a></li>
-                            <li><a href="cocktail_product_list.do?cno=10">브랜디</a></li>
-                            <li><a href="cocktail_product_list.do?cno=11">꼬냑</a></li>
-                            <li><a href="cocktail_product_list.do?cno=12">알마냑</a></li>
-                            <li><a href="cocktail_product_list.do?cno=13">리큐르</a></li>
-                            <li><a href="cocktail_product_list.do?cno=14">진</a></li>
-                            <li><a href="cocktail_product_list.do?cno=15">럼</a></li>
-                            <li><a href="cocktail_product_list.do?cno=16">보드카</a></li>
-                            <li><a href="cocktail_product_list.do?cno=17">데킬라</a></li>
-                            <li><a href="cocktail_product_list.do?cno=18">전통주</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=1">레드 와인</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=2">화이트 와인</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=3">로제 와인</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=4">스파클링 와인</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=5">아메리칸 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=6">스카치 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=7">아이리쉬 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=8">캐나다 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=9">일본 위스키</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=10">브랜디</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=11">꼬냑</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=12">알마냑</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=13">리큐르</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=14">진</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=15">럼</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=16">보드카</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=17">데킬라</a></li>
+                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=18">전통주</a></li>
                         </ul>
                     </div>
                     <div class="sidebar__item">
@@ -81,7 +135,7 @@
                              <c:forEach var="pageList" items="${cList4 }">
                                 <div class="latest-prdouct__slider__item">
                                   <c:forEach var="cvo" items="${pageList }">
-                                    <a href="cocktail_product_detail.do?product_no=${cvo.product_no }" class="latest-product__item">
+                                    <a href="../cocktail_product_detail.do?product_no=${cvo.product_no }" class="latest-product__item">
                                         <div class="latest-product__item__pic">
                                             <img src="${cvo.poster }">
                                         </div>
