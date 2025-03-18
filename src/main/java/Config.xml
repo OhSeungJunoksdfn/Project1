@@ -11,12 +11,9 @@
   <typeAlias type="com.sist.vo.NewsVO" alias="NewsVO"/>
   <typeAlias type="com.sist.vo.CommunityFreeboardVO" alias="CommunityFreeboardVO"/>
   <typeAlias type="com.sist.vo.CocktailMemberVO" alias="CocktailMemberVO"/>
-<<<<<<< HEAD
   <typeAlias type="com.sist.vo.Product2VO" alias="Product2VO"/>
   <typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
-=======
   <typeAlias type="com.sist.vo.Cocktail_ProductVO" alias="Cocktail_ProductVO"/>
->>>>>>> refs/remotes/origin/master
   </typeAliases>
   <environments default="development">
   	<environment id="development">
@@ -36,11 +33,8 @@
   	<mapper resource="com/sist/mapper/news-mapper.xml"/>
   	<mapper resource="com/sist/mapper/community-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktailmember-mapper.xml"/>
-<<<<<<< HEAD
   	<mapper resource="com/sist/mapper/product2-mapper.xml"/>
-  	<mapper resource="com/sist/mapper/product2-mapper.xml"/>
-=======
+  	<mapper resource="com/sist/mapper/reply-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktail_product-mapper.xml"/>
->>>>>>> refs/remotes/origin/master
   </mappers>
  </configuration>
