@@ -170,7 +170,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title related__product__title">
-                        <h2>Related Product</h2>
+                        <h2>관련 상품</h2>
                     </div>
                 </div>
             </div>
