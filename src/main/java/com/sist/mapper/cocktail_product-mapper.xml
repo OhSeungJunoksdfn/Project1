@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cocktail_product-mapper">
+ <select id="cocktail_productListData" resultType="Cocktail_ProductVO" parameterType="hashmap">
+   SELECT product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
+   FROM (SELECT product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit, rownum as num
+   FROM (SELECT /*+ INDEX_ASC(cocktail_product c_prod_product_no_pk)*/ 
+         product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
+   FROM cocktail_product
+     <where>
+       <if test="cno!=null">
+         AND cno=#{cno}
+       </if>
+     </where>
+   ))
+   WHERE num BETWEEN #{start} AND #{end}
+ </select>
+ <select id="cocktail_productTotalPage" resultType="int" parameterType="hashmap">
+   SELECT CEIL(COUNT(*)/12.0) FROM cocktail_product
+     <where>
+       <if test="cno!=null">
+         AND cno=#{cno}
+       </if>
+     </where>
+ </select>
+ <select id="cocktail_productTotalCount" resultType="int" parameterType="hashmap">
+   SELECT COUNT(*) FROM cocktail_product
+     <where>
+       <if test="cno!=null">
+         AND cno=#{cno}
+       </if>
+     </where>
+ </select>
+ <select id="cocktail_productRandomData" resultType="Cocktail_ProductVO">
+   SELECT * FROM (SELECT * FROM cocktail_product
+      ORDER BY DBMS_RANDOM.RANDOM
+    )
+    WHERE rownum&lt;=1
+ </select>
+ <select id="cocktail_productRandomData12" resultType="Cocktail_ProductVO">
+    SELECT * FROM (SELECT * FROM cocktail_product
+      ORDER BY DBMS_RANDOM.RANDOM
+    )
+    WHERE rownum&lt;=12
+ </select>
+ <select id="coctail_productCookieData"></select>
+ 
+<!--  <select id="cocktail_productDetailData" resultType="Cocktail_ProductVO" parameterType="int"> -->
+<!--     SELECT product_id, name, cno, content -->
+<!--     <if test="cno!=1 or cno!=2 or cno!=3 or cno!=4"> -->
+<!--       , alc, volumn, loc  -->
+<!--     </if> -->
+<!--     FROM cocktail_product -->
+<!--     WHERE product_no=#{product_no} -->
+<!--  </select> -->
+
+ <select id="cocktail_productDetailData" resultType="Cocktail_ProductVO" parameterType="int">
+   SELECT product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
+   FROM cocktail_product
+   WHERE product_no=#{product_no}
+ </select>
+ 
+ <update id="cocktail_productHitIncrement" parameterType="int">
+   UPDATE cocktail_product SET
+   hit=hit+1
+   WHERE product_no=#{product_no}
+ </update>
+  <!-- 상품 검색 --> 
+  <select id="cocktail_productFindData" resultType="Cocktail_ProductVO" parameterType="hashmap">
+    SELECT product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit, num
+    FROM (SELECT product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit, rownum as num 
+    FROM (SELECT /*+ INDEX_ASC(cocktail_product c_prod_product_no_pk)*/product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
+    FROM cocktail_product 
+    WHERE ${fd} LIKE '%'||#{ss}||'%'))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="cocktail_productFindTotalPage" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*)/12.0) 
+    FROM cocktail_product
+    WHERE ${fd} LIKE '%'||#{ss}||'%'
+  </select>
+  
+  
+  
+</mapper>
