@@ -5,8 +5,72 @@
 		SELECT * FROM (SELECT * FROM cocktailbar ORDER BY DBMS_RANDOM.RANDOM)
 		WHERE rownum&lt;=1
 	</select>
-	<select id="cocktailbarHouseData12" resultType="CocktailbarVO">
+		<select id="cocktailbarHouseData12" resultType="CocktailbarVO">
 		SELECT * FROM (SELECT * FROM cocktailbar ORDER BY DBMS_RANDOM.RANDOM)
-		WHERE rownum&lt;=12
+		WHERE rownum&lt;=4
 	</select>
+ <!-- 칵테일 목록 -->
+	<!-- 
+BAR_NO  NOT NULL NUMBER        
+NAME    NOT NULL VARCHAR2(100) 
+ADDRESS NOT NULL VARCHAR2(120) 
+PHONE   NOT NULL VARCHAR2(14)  
+IMAGE   NOT NULL VARCHAR2(300) 
+PROFILE NOT NULL CLOB          
+HIT              NUMBER        
+TIME    NOT NULL VARCHAR2(500) 
+LOC              VARCHAR2(10)  
+SUBWAY  NOT NULL VARCHAR2(500) 
+	 -->
+  <select id="cocktailbarListData" resultType="CocktailbarVO" parameterType="hashmap">
+   SELECT bar_no,name,address,phone,image,profile,hit,time,loc,subway,num
+   FROM (SELECT bar_no,name,address,phone,image,profile,hit,time,loc,subway,rownum as num 
+   FROM (SELECT /*+ INDEX_ASC(cocktailbar cb_bar_no_pk)*/bar_no,name,address,phone,image,profile,hit,time,loc,subway
+   FROM cocktailbar))
+   WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="cocktailbarTotalPage" resultType="int">
+   SELECT CEIL(COUNT(*)/12.0) FROM cocktailbar
+  </select>
+  <select id="cocktailbarDetailData" resultType="CocktailbarVO" parameterType="int">
+    SELECT * FROM cocktailbar
+    WHERE bar_no=#{bar_no}
+  </select>
+  <update id="cocktailbarHitIncrement" parameterType="int">
+    UPDATE cocktailbar SET
+    hit=hit+1
+    WHERE bar_no=#{bar_no}
+  </update>
+  <!-- 글 추가하기? -->
+  <insert id="Cocktailbarinsert" parameterType="CocktailbarVO">
+   <selectKey keyProperty="bar_no" resultType="int" order="BEFORE">
+     SELECT NVL(MAX(bar_no)+1,1) as bar_no FROM cocktailbar
+   </selectKey>
+   INSERT INTO cocktailbar VALUES(
+     #{bar_no},#{name},#{address},#{phone},#{image},#{profile},#{time},#{loc},#{subway}
+   )
+   </insert>
+   <update id="CocktailbarUpdate" parameterType="CocktailbarVO">
+   UPDATE cocktailbar SET
+   #{name}#{bar_no},name=#{name},address=#{address},phone=#{phone},image=#{image},profile=#{profile},time=#{time},loc=#{loc},subway=#{subway}
+   WHERE no=#{no}
+  </update>
+  <delete id="CocktailbarDelete" parameterType="int">
+   DELETE FROM cocktailbar
+   WHERE bar_no=#{bar_no}
+  </delete> 
+  
+  <!-- 검색 -->
+  <select id="cocktailbarFindData" resultType="CocktailbarVO" parameterType="hashmap">
+    SELECT bar_no,name,address,phone,image,profile,hit,time,loc,subway,num
+    FROM (SELECT bar_no,name,address,phone,image,profile,hit,time,loc,subway,rownum as num 
+    FROM (SELECT /*+ INDEX_ASC(cocktailbar cb_bar_no_pk)*/bar_no,name,address,phone,image,profile,hit,time,loc,subway
+    FROM cocktailbar WHERE ${?} LIKE '%'||#{?}||'%'))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="cocktailbarFindTotalPage" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*)/12.0) 
+    FROM cocktailbar
+    WHERE ${?} LIKE '%'||#{?}||'%'
+  </select>
 </mapper>

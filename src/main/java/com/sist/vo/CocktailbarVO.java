@@ -1,4 +1,5 @@
 package com.sist.vo;
+import lombok.Data;
 
 /*
 BAR_NO	NUMBER
@@ -12,7 +13,6 @@ TIME	VARCHAR2(500 BYTE)
 LOC	VARCHAR2(10 BYTE)
 SUBWAY	VARCHAR2(500 BYTE)
  */
-import lombok.Data;
 
 @Data
 public class CocktailbarVO {
