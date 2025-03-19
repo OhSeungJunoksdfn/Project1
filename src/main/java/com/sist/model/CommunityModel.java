@@ -164,6 +164,7 @@ public class CommunityModel {
                         if (item.isFormField()) {
                             String fieldValue = item.getString(charset);
                             System.out.println(fieldValue);
+                            //여기 오류 있음
                             board_no=fieldValue;
                         }
                     }
