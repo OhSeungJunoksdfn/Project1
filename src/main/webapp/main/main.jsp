@@ -25,25 +25,7 @@
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    	<script type="module">
-  		 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-
-  		const firebaseConfig = {
-    		apiKey: "AIzaSyC_y7X_k0tIS5KnBCUS9LCp4IgyuH0AaSk",
-    		authDomain: "teamproject1-99f67.firebaseapp.com",
-    		projectId: "teamproject1-99f67",
-    		storageBucket: "teamproject1-99f67.firebasestorage.app",
-    		messagingSenderId: "293231387691",
-    		appId: "1:293231387691:web:8e9c54714782223928766e"
-  		};
-  		 const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
- 		console.log("Firebase Storage Initialized:", storage);
-
-       	 
-        
-</script>
+    	
     
 </head>
 
@@ -68,8 +50,6 @@
     <script src="../js/mixitup.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/main.js"></script>
-
-
 
 </body>
 

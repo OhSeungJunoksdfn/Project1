@@ -256,4 +256,12 @@ public class CocktailModel {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping("cocktail/cocktail_insert.do")
+	public String cocktail_insert(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		
+		request.setAttribute("main_jsp", "../cocktail/cocktail_insert.jsp");
+		return "../main/main.jsp";
+	}
 }
