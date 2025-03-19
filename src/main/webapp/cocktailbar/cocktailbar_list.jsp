@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../cocktailbar/style.css"/>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bce0da4aa16d6105ec492eb0855addfd&libraries=services"></script>
 <!-- <style type="text/css">
 h6{
@@ -87,14 +88,11 @@ text-overflow: ellipsis;
                      -->
                     
                   
-                    <div class="col-12">
-                    <div class="product__pagination">
-                        <nav aria-label="#">
+                    
+                    	
                             <ul class="pagination">
                                <c:if test="${startPage>1 }">
-                                 <li class="page-item">
-                                    <a class="page-link" href="../cocktailbar/cocktailbar_list.do?page=${startPage-1 }">이전 <i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
-                                 </li>
+                                    <a class="page-link" href="../cocktailbar/cocktailbar_list.do?page=${startPage-1 }"> <i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                                 </c:if>
                                 
                                 <c:forEach var="i" begin="${startPage }" end="${endPage }">
@@ -102,14 +100,12 @@ text-overflow: ellipsis;
                                 </c:forEach>
                                 
                                 <c:if test="${endPage<totalpage }">
-                                 <li class="page-item">
-                                    <a class="page-link" href="../cocktailbar/cocktailbar_list.do?page=${endPage+1 }">다음 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                                 </li>
+                                    <a class="page-link" href="../cocktailbar/cocktailbar_list.do?page=${endPage+1 }"> <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                                 </c:if>
                             </ul>
-                        </nav>
-                    </div>
-                    </div>
+                        
+                    
+                   
                     
                       <div class="row">
                        <div class="product__discount__slider owl-carousel">
