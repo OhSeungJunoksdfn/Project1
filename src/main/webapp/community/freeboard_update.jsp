@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,15 @@ window.onunload= function () {//페이지가 실제로 닫힐 때 수행할 작�
 	navigator.sendBeacon('../community/freeboard_delete_unsaved.do',data);
 };
 $(document).ready(function(){
-	window.addEventListener('beforeunload', handleBeforeUnload); 
+	window.addEventListener('beforeunload', handleBeforeUnload);
+	 $.ajax({
+         url: '../community/get_htmlfile.do?htmlfile=${vo.htmlfile }',
+         type: 'GET',                   // GET 요청
+         success: function(response) {
+             quill.root.innerHTML = response;
+         }
+     });
+	 $("#editor").css({"height":'${vo.documentheight}'+'px'})
 });
 
 
@@ -43,20 +52,20 @@ $(document).ready(function(){
                             <form action="#">
                                 <div class="hero__search__categories" style="width:120px;float:left;text-align:left;">
                                     <select class="" style="width:80px;padding:0px;border:none;text-align:center">
-										<option value="일상">일상</option>
-										<option value="질문">질문</option>
-										<option value="정보">정보</option>
-										<option value="후기">후기</option>
-										<option value="맛집">맛집</option>
-										<option value="기타">기타</option>
+										<option value="일상" <c:if test="${fn:trim(vo.tag) == '일상'}">selected</c:if>>일상</option>
+										<option value="질문" <c:if test="${fn:trim(vo.tag) == '질문'}">selected</c:if>>질문</option>
+										<option value="정보" <c:if test="${fn:trim(vo.tag) == '정보'}">selected</c:if>>정보</option>
+										<option value="후기" <c:if test="${fn:trim(vo.tag) == '후기'}">selected</c:if>>후기</option>
+										<option value="맛집" <c:if test="${fn:trim(vo.tag) == '맛집'}">selected</c:if>>맛집</option>
+										<option value="기타" <c:if test="${fn:trim(vo.tag) == '기타'}">selected</c:if>>기타</option>
 									</select>
                                 </div>
-                                <input type="text" name="subject" placeholder="제목" style="float:left;color:black">
+                                <input type="text" name="subject" placeholder="제목" value="${vo.subject }" style="float:left;color:black">
                             </form>
                     </div>
                     <!-- 유저아이디 세션에서 가져오도록 처리 -->
                     <c:set var="userid" value="user"/>
-					<div id="editor" style="height: 500px;color:black" data-postid="${temp_board_no }" data-userid="${userid }" data-filename="newfile.html">
+					<div id="editor" style="height: 500px;color:black" data-postid="${vo.board_no }" data-userid="${userid }" data-filename="${vo.htmlfile }">
 						<p>Hello World!</p>
 						<p>
 							Some initial <strong>bold</strong> text
@@ -71,8 +80,7 @@ $(document).ready(function(){
 						<span><button onclick="save()" class="site-btn ml-3" style="float:right">완료</button> </span>
 						<span><button onclick="javascript:history.back()" class="site-btn" style="float:right">취소</button> </span>
 					</div>
-					
-					
+				
 				</div>
 			</div>
 		</div>
