@@ -133,18 +133,18 @@ quill.on('text-change', function() {
   
 	imageTags=changedImage
 	//console.log("imageTags",imageTags)
-	console.log(quill.root.innerHTML)
 	let contentHeight = quill.root.scrollHeight;
 	$("#editor").css({"height":contentHeight})
+	console.log("filename",$("#editor").data('filename'))
 });
 
 const save = () =>{
 	window.removeEventListener('beforeunload', handleBeforeUnload);
 	window.onunload=null;
 	
-	let htmlcontent = `<div class="quillcontentcontainer" data-height="${quill.root.scrollHeight}">${quill.root.innerHTML}<div>`;
+	let htmlcontent = quill.root.innerHTML;
 	let htmlBlob = new Blob([htmlcontent], { type: 'text/html' });
-	let htmlFile = new File([htmlBlob], 'quill_content.html', { type: 'text/html' });
+	let htmlFile = new File([htmlBlob], $("#editor").data('filename'), { type: 'text/html' });
 	let formData = new FormData();
 	formData.append('file', htmlFile);  // 파일이 HTML 형식일 경우
 	formData.append('board_no', $("#editor").data('postid'));
