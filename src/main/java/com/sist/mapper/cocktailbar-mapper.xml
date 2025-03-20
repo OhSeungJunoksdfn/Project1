@@ -44,10 +44,11 @@ SUBWAY  NOT NULL VARCHAR2(500)
   <!-- 글 추가하기? -->
   <insert id="Cocktailbarinsert" parameterType="CocktailbarVO">
    <selectKey keyProperty="bar_no" resultType="int" order="BEFORE">
-     SELECT NVL(MAX(bar_no)+1,1) as bar_no FROM cocktailbar
+     SELECT NVL(MAX(bar_no)+1, 1) AS bar_no FROM cocktailbar
    </selectKey>
-   INSERT INTO cocktailbar VALUES(
-     #{bar_no},#{name},#{address},#{phone},#{image},#{profile},#{time},#{loc},#{subway}
+   INSERT INTO cocktailbarINSERT INTO 
+   cocktailbar (bar_no, name, address, phone, image, profile, time, loc, subway) 
+   VALUES(#{bar_no},#{name},#{address},#{phone},#{image},#{profile},#{time},#{loc},#{subway}
    )
    </insert>
    <update id="CocktailbarUpdate" parameterType="CocktailbarVO">

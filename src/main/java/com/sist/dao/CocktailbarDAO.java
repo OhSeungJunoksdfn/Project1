@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.sist.commons.*;
 import com.sist.vo.CocktailbarVO;
 
+
 public class CocktailbarDAO {
 	private static SqlSessionFactory ssf;
 	static
@@ -135,10 +136,17 @@ public class CocktailbarDAO {
 		  session.close();
 		  return total;
 	  }
-	  public static void cocktailbarInsert(CocktailbarVO vo)
+	  public static void Cocktailbarinsert(CocktailbarVO vo)
 	  {
-		  SqlSession session=ssf.openSession(true);
-		  session.insert("Insert",vo);
-		  session.close();
+	  try {
+	        session = ssf.openSession(true);
+	        session.insert("Cocktailbarinsert", vo);
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
 	  }
 }
