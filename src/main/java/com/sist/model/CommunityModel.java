@@ -92,9 +92,9 @@ public class CommunityModel {
 	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
 	{	
 		
-		// 게시물 삭제 url 이상한거 고치기
 		// 게시물 시간 표시 고치기
-		//quill 게시물 내용 길면 확장되도록 바꾸기
+		// 게시물 업데이트 할 때 사진 수정하면 어떻게 할지 생각하기
+		// quill 기본 글씨 색 흐린거 고치기
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
@@ -107,10 +107,6 @@ public class CommunityModel {
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) uploadDir.mkdir();
             	
-                String board_no ="";
-                String id = "";
-                String tag="";
-                String subject="";
             	//request객체를 이 코드 앞에서 사용하고 있으면 여기 리스트에 데이터 안들어감
                 List<FileItem> formItems = upload.parseRequest(request);
                 Charset charset = Charset.forName("UTF-8");
@@ -119,10 +115,13 @@ public class CommunityModel {
                     for (FileItem item : formItems) {
                         if (!item.isFormField()) {
                             String fileName = new File(item.getName()).getName();
-                            String extension = fileName.substring(fileName.lastIndexOf("."), fileName.length());
-                            //추후에 db insert
-                            UUID uuid = UUID.randomUUID();
-                            fileName=uuid.toString()+extension;
+                            System.out.println("filename:"+fileName);
+                            if(fileName.equals("newfile.html"))
+                            {
+                            	String extension = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                                UUID uuid = UUID.randomUUID();
+                                fileName=uuid.toString()+extension;
+                            }
                             item.write(Path.of(uploadPath, fileName));
                             map.put("htmlfile_size", item.getSize());
                     		map.put("htmlfile",fileName);
@@ -150,7 +149,30 @@ public class CommunityModel {
 	@RequestMapping("community/freeboard_delete_unsaved.do")
 	public void freeboard_delete_unsaved(HttpServletRequest request, HttpServletResponse response)
 	{	
-		String board_no = request.getParameter("board_no");
+		String board_no ="";
+		if (JakartaServletFileUpload.isMultipartContent(request)) {
+            DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+            JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
+            
+            try {
+            	
+                List<FileItem> formItems = upload.parseRequest(request);
+                Charset charset = Charset.forName("UTF-8");
+                Map map = new HashMap();
+                if (formItems != null /*&& formItems.size() > 0*/) {
+                    for (FileItem item : formItems) {
+                        if (item.isFormField()) {
+                            String fieldValue = item.getString(charset);
+                            System.out.println(fieldValue);
+                            //여기 오류 있음
+                            board_no=fieldValue;
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+		}
 		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
 		//delete cascade 제약조건으로 게시물 삭제시 이미지 자동 삭제
 	}
@@ -296,5 +318,20 @@ public class CommunityModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping("community/freeboard_update.do")
+	public String freeboard_update(HttpServletRequest request, HttpServletResponse response)
+	{	
+		try {
+			String no=request.getParameter("board_no");
+			String page=request.getParameter("page");
+			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
+			request.setAttribute("vo", vo);
+			request.setAttribute("page", page);
+			request.setAttribute("main_jsp", "../community/freeboard_update.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "../main/main.jsp";
 	}
 }

@@ -34,7 +34,7 @@
 					<td class="text-center" width=5%>${vo.board_no }</td>
 					<td class="text-center" width=5%>${vo.tag }</td>
 					<td  width=45%>
-						<a href="../community/freeboard_detail.do?board_no=${vo.board_no }" style="color:black">${vo.subject }</a>
+						<a href="../community/freeboard_detail.do?board_no=${vo.board_no }&page=${page}" style="color:black">${vo.subject }</a>
 					</td>
 					<td class="text-center" width=15%>${vo.id }</td>
 					<td class="text-center" width=20%><fmt:formatDate value="${vo.regdate }" pattern="yyyy-MM-dd"/></td>
