@@ -55,8 +55,8 @@ $(function(){
 </script>
 </head>
 <body>
- <div class="container" style="margin-top: 150px">
-    <div class="row" style="width:450px">
+  <div class="container" style="margin-top: 50px">
+    <div class="row" style="width:350px">
       <table class="table">
         <tr>
          <td>ID:<input type=text id=id size=15 class="form-control-sm">

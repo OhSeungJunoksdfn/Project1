@@ -35,7 +35,7 @@
     WHERE id=#{id}
   </select>
   <select id="memberGetPassword" resultType="CocktailMemberVO" parameterType="string">
-   SELECT id,pwd,name,sex,admin
+   SELECT id,pwd,name,sex,email,admin
    FROM cocktail_member
    WHERE id=#{id}
   </select>

@@ -60,8 +60,7 @@ $(function(){
       <button id="logBtn">로그인</button>
       
       <div class="login-options">
-         <a href="#">아이디 찾기</a> 
-         <a href="#">비밀번호 찾기</a>
+         <a href="../member/idfind.do">아이디/비밀번호찾기</a> 
          <a href="../member/join.do">회원가입</a>
       </div>
    </div>

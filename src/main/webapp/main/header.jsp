@@ -68,10 +68,10 @@
                                 </ul>
                             </li>
                             <c:if test="${sessionScope.id!=null }">
-                            <c:if test="${sessionScope.admin='n' }">
+                            <c:if test="${sessionScope.admin=='n' }">
                             <li><a href="./contact.html">마이페이지</a></li>
                             </c:if>
-                            <c:if test="${sessionScope.admin='y' }">
+                            <c:if test="${sessionScope.admin=='y' }">
                             <li><a href="./contact.html">관리자페이지</a></li>
                             </c:if>
                             </c:if>
@@ -82,7 +82,7 @@
         <div class="humberger__menu__contact">
             <ul>
             <c:if test="${sessionScope.id!=null }">
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i class="fa fa-envelope"></i> ${sessionScope.email}&nbsp;&nbsp;</li>
                 <li>Free Shipping for all Order of $99</li>
               </c:if>
             </ul>
@@ -99,8 +99,10 @@
                         <div class="header__top__left">
                             <ul>
                             <c:if test="${sessionScope.id!=null }">
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li><i class="fa fa-envelope"></i> ${sessionScope.email}&nbsp;&nbsp;</li>
+                                <li>${sessionScope.name}(${sessionScope.admin eq 'y' ? "관리자":"회원" })님 환영합니다.❤️&nbsp;&nbsp;</li>
+                                <!-- ${sessionScope.name}
+                                	<c:if test="${sessionScope.admin eq 'y'}">(관리자)</c:if> == 관리자만 표시 -->
                               </c:if>
                             </ul>
                         </div>
@@ -109,9 +111,14 @@
                         <div class="header__top__right">
             
                             <div class="header__top__right__auth" style="display:flex; flex-direction: row; justify-content:end">
+                            	<c:if test="${sessionScope.id==null }">
                                 <a href="../member/login.do"><i class="fa fa-user"></i> 로그인</a>
                                  <span>/</span>
                                 <a href="../member/join.do">회원가입</a>
+                                </c:if>
+                                <c:if test="${sessionScope.id!=null }">
+                                <a href="../member/logout.do" class="btn btn-outline-danger">로그아웃</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -167,10 +174,12 @@
                             </li>
                             <c:if test="${sessionScope.id!=null }">
                             <c:if test="${sessionScope.admin=='n' }">
-                            <li><a href="#">마이페이지</a></li>
+                             <li><a href="../admin/adminpage.do">마이페이지</a>
+
                             </c:if>
                             <c:if test="${sessionScope.admin=='y' }">
-                            <li><a href="#">관리자페이지</a></li>
+                            <li><a href="../admin/adminpage.do">관리자페이지</a>
+
                             </c:if>
                             </c:if>
                         </ul>
