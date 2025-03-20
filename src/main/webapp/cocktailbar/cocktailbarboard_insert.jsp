@@ -20,22 +20,25 @@ $(function(){
 		}).open()
 	})
 		
-	$('#joinBtn').click(function(){
-		let name = $('input[name="name"]').val();   // name 값으로 선택
-	    let image = $('input[name="image"]').val(); // image 값으로 선택
-	    let address = $('input[name="address"]').val(); // address 값으로 선택
-	    let subway = $('input[name="subway"]').val(); // subway 값으로 선택
-	    let time = $('input[name="time"]').val();    // time 값으로 선택
-	    let profile = $('input[name="profile"]').val(); // profile 값으로 선택
-		let post=$('#post').val()
+	$('#insertBtn').click(function(){
+		let name = $('input[name="name"]').val();
+        let image = $('input[name="image"]').val();
+        let address = $('input[name="address"]').val();
+        let subway = $('input[name="subway"]').val();
+        let time = $('input[name="time"]').val();
+        let profile = $('textarea[name="profile"]').val();
+        let phone = $('input[name="phone"]').val();
+        let post = $('#post').val();
+        let loc = $('select[name="loc"]').val();
 		
-		if(name === "" || image === "" || address === "" || subway === "" || time === "" || profile === "" || post === "") {
+		if(name === "" || image === "" || address === "" || subway === "" || time === "" || profile === "" || post === "" || phone === "") {
 		      alert("공백 없이 반드시 입력하셔야 합니다.");
 		      return;  // 폼 제출 방지
 		    }
 		
-		$('#frm').submit()
-	})
+        
+         $('#frm').submit();  // 폼을 서버로 제출
+     })
 })
 </script>
 </head>
@@ -56,7 +59,7 @@ $(function(){
     <section class="archive-area section_padding_80">
         <div class="container">
             <div class="row" style="width:800px;margin:0px auto">
-            <form method=post action="../cocktailbar/cocktailbarboard_insert_ok.do" name="frm" id="frm">
+            <form method=post action="../cocktailbar/cocktailbar_list.do" name="frm" id="frm">
              <table class="table">
               
               <tr>
@@ -120,11 +123,18 @@ $(function(){
                </tr>
                
                <tr>
-                <th class="text-center" width=30%>가까운 역,지역</th>
+                <th class="text-center" style="color:gray" width=30%>가까운 역,지역</th>
                 <td width=70%>
                  <input type=text name="subway" size=20 class="form-control-sm">
                 </td>
                </tr>
+               
+               <tr>
+               <th width=15% class="text-center" style="color:gray">전화번호</th>
+               <td width=85%>
+                <input type=text name="phone" size=15 class="form-control-sm">
+               </td>
+              </tr>
               
               <tr>
                <th width=15% class="text-center" style="color:gray">영업시간</th>
@@ -142,7 +152,7 @@ $(function(){
               
               <tr>
                <td colspan="2" class="text-center">
-                <input type=button value="입력" class="btn-sm btn-success" id="joinBtn">
+                <input type=button value="입력" class="btn-sm btn-success" id="insertBtn">
                 <input type=button value="취소" class="btn-sm btn-info"
                  onclick="javascript:history.back()"
                 >
