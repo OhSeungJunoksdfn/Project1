@@ -203,6 +203,6 @@ public class CocktailbarModel {
 		   vo.setSubway(subway);
 		   
 		   CocktailbarDAO.Cocktailbarinsert(vo);
-		   return "redirect:../cocktailbar/cocktailbarlist.do";
+		   return "redirect:../cocktailbar/cocktailbar_list.do";
 	   }
 }

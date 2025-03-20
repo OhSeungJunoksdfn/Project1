@@ -59,7 +59,7 @@ $(function(){
     <section class="archive-area section_padding_80">
         <div class="container">
             <div class="row" style="width:800px;margin:0px auto">
-            <form method=post action="../cocktailbar/cocktailbar_list.do" name="frm" id="frm">
+            <form method=post action="../cocktailbar/cocktailbarboard_insert_ok.do" name="frm" id="frm">
              <table class="table">
               
               <tr>

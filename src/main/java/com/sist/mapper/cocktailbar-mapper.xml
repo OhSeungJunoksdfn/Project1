@@ -46,8 +46,7 @@ SUBWAY  NOT NULL VARCHAR2(500)
    <selectKey keyProperty="bar_no" resultType="int" order="BEFORE">
      SELECT NVL(MAX(bar_no)+1, 1) AS bar_no FROM cocktailbar
    </selectKey>
-   INSERT INTO cocktailbarINSERT INTO 
-   cocktailbar (bar_no, name, address, phone, image, profile, time, loc, subway) 
+   INSERT INTO cocktailbar (bar_no, name, address, phone, image, profile, time, loc, subway) 
    VALUES(#{bar_no},#{name},#{address},#{phone},#{image},#{profile},#{time},#{loc},#{subway}
    )
    </insert>
@@ -74,4 +73,10 @@ SUBWAY  NOT NULL VARCHAR2(500)
     FROM cocktailbar
     WHERE ${?} LIKE '%'||#{?}||'%'
   </select>
+  
+  <select id="CB_boardDetailData" resultType="CocktailbarVO" parameterType="int">
+   SELECT bar_no, name, address, phone, image, profile, time, loc, subway
+   FROM cocktailbar
+   WHERE bar_no=#{bar_no}
+ </select>
 </mapper>
