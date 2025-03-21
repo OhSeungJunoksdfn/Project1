@@ -68,7 +68,7 @@
   
   <select id="cocktail_productCnoRandomData" resultType="Cocktail_ProductVO" parameterType="hashmap">
     SELECT * FROM (SELECT * FROM cocktail_product
-    WHERE cno=#{cno}
+    WHERE cno=#{cno} 
     ORDER BY DBMS_RANDOM.RANDOM
     )
     WHERE rownum&lt;=1

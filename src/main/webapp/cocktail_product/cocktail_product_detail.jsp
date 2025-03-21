@@ -129,7 +129,7 @@
                         <div class="product__item__pic set-bg">
                           <a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">
                             <img src="${vo.poster }" style="width: 100%; height: 200px;">
-                          </a>
+                          </a> 
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>

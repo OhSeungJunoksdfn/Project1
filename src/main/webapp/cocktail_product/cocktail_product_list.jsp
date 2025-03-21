@@ -231,7 +231,7 @@
                 </div>
               <div class="">
                 <div class="product__pagination">
-                    <ul class="pagination">
+                    <ul class="pagination">  
                         <c:if test="${startPage>1 }">
                         <a href="../cocktail_product/cocktail_product_list.do?cno=${cno }&page=${startPage-1 }"><i class="fa fa-long-arrow-left"></i></a>
                         </c:if>

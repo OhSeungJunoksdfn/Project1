@@ -48,7 +48,7 @@ public class Cocktail_ProductDAO {
 		SqlSession session=ssf.openSession();
 		int total=session.selectOne("cocktail_productTotalPage", map);
 		session.close();
-		return total;
+		return total; 
 	}
 	public static int cocktail_productTotalCount(Map map)
 	{
