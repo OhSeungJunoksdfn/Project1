@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import com.sist.commons.*;
 import com.sist.vo.CocktailbarVO;
 
+
 public class CocktailbarDAO {
 	private static SqlSessionFactory ssf;
 	static
@@ -120,25 +121,33 @@ public class CocktailbarDAO {
     WHERE ${?} LIKE '%'||#{?}||'%'
   </select>
 	 */
-	 public static List<CocktailbarVO> cocktailbarFindData(Map map)
-	  {
-		  SqlSession session=ssf.openSession();
-		  List<CocktailbarVO> list=session.selectList("cocktailbarFindData",map);
-		  session.close();
-		  return list;
-	  }
+//	 public static List<CocktailbarVO> cocktailbarFindData(Map map)
+//	  {
+//		  SqlSession session=ssf.openSession();
+//		  List<CocktailbarVO> list=session.selectList("cocktailbarFindData",map);
+//		  session.close();
+//		  return list;
+//	  }
 	  // SQL
-	  public static int cocktailbarFindTotalPage(Map map)
+//	  public static int cocktailbarFindTotalPage(Map map)
+//	  {
+//		  SqlSession session=ssf.openSession();
+//		  int total=session.selectOne("cocktailbarFindTotalPage",map);
+//		  session.close();
+//		  return total;
+//	  }
+	  public static void Cocktailbarinsert(CocktailbarVO vo)
 	  {
-		  SqlSession session=ssf.openSession();
-		  int total=session.selectOne("cocktailbarFindTotalPage",map);
-		  session.close();
-		  return total;
-	  }
-	  public static void cocktailbarInsert(CocktailbarVO vo)
-	  {
-		  SqlSession session=ssf.openSession(true);
-		  session.insert("Insert",vo);
-		  session.close();
+		  SqlSession session=null;
+	  try {
+	        session = ssf.openSession(true);
+	        session.insert("Cocktailbarinsert", vo);
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
 	  }
 }

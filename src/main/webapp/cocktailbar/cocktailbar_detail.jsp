@@ -416,6 +416,15 @@ $(function(){
                                     </li>
                                     </c:forEach>
                                 </ol>
+                                <c:if test="">
+             					  <table class="table">
+            						  <tr>
+             						  <td>
+               							 <a href="../cocktailbar/cocktailbarboard_insert.do" class="btn btn-outline-info btn-sm">수정</a>
+             						  </td>
+            						 </tr>
+        					     </table>
+           					  </c:if> 
                             </div>
     <!-- Product Details Section End -->
 

@@ -10,6 +10,7 @@ import com.sist.vo.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
@@ -201,7 +202,7 @@ public class CocktailbarModel {
 		   vo.setLoc(loc);
 		   vo.setSubway(subway);
 		   
-		   CocktailbarDAO.cocktailbarInsert(vo);
-		   return "redirect:../cocktailbar/cocktailbarlist.do";
+		   CocktailbarDAO.Cocktailbarinsert(vo);
+		   return "redirect:../cocktailbar/cocktailbar_list.do";
 	   }
 }

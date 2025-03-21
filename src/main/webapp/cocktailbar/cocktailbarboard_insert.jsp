@@ -7,6 +7,40 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('#postBtn').click(function(){
+		new daum.Postcode({
+			oncomplete:function(data)
+			{
+				$('#post').val(data.zonecode)
+				$('#address').val(data.address)
+			}
+		}).open()
+	})
+		
+	$('#insertBtn').click(function(){
+		let name = $('input[name="name"]').val();
+        let image = $('input[name="image"]').val();
+        let address = $('input[name="address"]').val();
+        let subway = $('input[name="subway"]').val();
+        let time = $('input[name="time"]').val();
+        let profile = $('textarea[name="profile"]').val();
+        let phone = $('input[name="phone"]').val();
+        let post = $('#post').val();
+        let loc = $('select[name="loc"]').val();
+		
+		if(name === "" || image === "" || address === "" || subway === "" || time === "" || profile === "" || post === "" || phone === "") {
+		      alert("공백 없이 반드시 입력하셔야 합니다.");
+		      return;  // 폼 제출 방지
+		    }
+		
+        
+         $('#frm').submit();  // 폼을 서버로 제출
+     })
+})
+</script>
 </head>
 <body>
 <!-- Breadcrumb Section Begin -->
@@ -36,6 +70,13 @@
               </tr>
               
               <tr>
+               <th width=15% class="text-center" style="color:gray">사진</th>
+               <td width=85%>
+                <input type=text name="image" size=15 class="form-control-sm">
+               </td>
+              </tr>
+              
+              <tr>
                <th width=15% class="text-center" style="color:gray">우편번호</th>
                <td width=85%>
                 <input type=text id="post" name="post" size=10 class="form-control-sm" readonly>
@@ -46,49 +87,54 @@
               <tr>
                <th width=15% class="text-center" style="color:gray">주소</th>
                <td width=85%>
-                <input type=text id="addr1" name="addr1" size=55 class="form-control-sm" readonly>
+                <input type=text id="address" name="address" size=55 class="form-control-sm" readonly>
                </td>
               </tr>
               
               <tr>
                <th width=15% class="text-center" style="color:gray">상세주소</th>
                <td width=85%>
-                <input type=text name="addr2" size=55 class="form-control-sm">
+                <input type=text size=55 class="form-control-sm">
                </td>
               </tr>
               
               <tr>
                 <th class="text-center" style="color:gray"  width=20%>지역</th>
                 <td width=80%>
-                 <select>
-                  <option value="loc" selected>서울</option>
-                  <option value="loc" selected>인천</option>
-                  <option value="loc" selected>경기</option>
-                  <option value="loc" selected>강원</option>
-                  <option value="loc" selected>부산</option>
-                  <option value="loc" selected>경남</option>
-                  <option value="loc" selected>대구</option>
-                  <option value="loc" selected>경북</option>
-                  <option value="loc" selected>울산</option>
-                  <option value="loc" selected>대전</option>
-                  <option value="loc" selected>충남</option>
-                  <option value="loc" selected>충북</option>
-                  <option value="loc" selected>경북</option>
-                  <option value="loc" selected>광주</option>
-                  <option value="loc" selected>전남</option>
-                  <option value="loc" selected>전북</option>
-                  <option value="loc" selected>제주</option>                  
+                 <select name="loc" class="form-control-sm">
+                   <option value="서울" selected>서울</option>
+				      <option value="인천">인천</option>
+				      <option value="경기">경기</option>
+				      <option value="강원">강원</option>
+				      <option value="부산">부산</option>
+				      <option value="경남">경남</option>
+				      <option value="대구">대구</option>
+				      <option value="경북">경북</option>
+				      <option value="울산">울산</option>
+				      <option value="대전">대전</option>
+				      <option value="충남">충남</option>
+				      <option value="충북">충북</option>
+				      <option value="광주">광주</option>
+				      <option value="전남">전남</option>
+				      <option value="전북">전북</option>
+				      <option value="제주">제주</option>             
                  </select>
                 </td>
                </tr>
                
                <tr>
-                <th class="text-center" width=30%>가까운 지역</th>
+                <th class="text-center" style="color:gray" width=30%>가까운 역,지역</th>
                 <td width=70%>
-                 <input type=text name=subway id=subway size=20
-                  class="form-control-sm" required>
+                 <input type=text name="subway" size=20 class="form-control-sm">
                 </td>
                </tr>
+               
+               <tr>
+               <th width=15% class="text-center" style="color:gray">전화번호</th>
+               <td width=85%>
+                <input type=text name="phone" size=15 class="form-control-sm">
+               </td>
+              </tr>
               
               <tr>
                <th width=15% class="text-center" style="color:gray">영업시간</th>
@@ -98,31 +144,15 @@
               </tr>
               
               <tr>
-               <th width=15% class="text-center" style="color:gray">이메일</th>
+               <th width=15% class="text-center" style="color:gray">칵테일 바 소개</th>
                <td width=85%>
-                <input type=text name="email" size=55 class="form-control-sm">
-               </td>
-              </tr>
-              
-              
-              
-              <tr>
-               <th width=15% class="text-center" style="color:gray">사진</th>
-               <td width=85%>
-                <input type=text name="image" size=15 class="form-control-sm">
-               </td>
-              </tr>
-              
-              <tr>
-               <th width=15% class="text-center" style="color:gray">소개</th>
-               <td width=85%>
-                <textarea rows="7" cols="57" name="content"></textarea>
+                <textarea rows="7" cols="57" name="profile" class="form-control-sm"></textarea>
                </td>
               </tr>
               
               <tr>
                <td colspan="2" class="text-center">
-                <input type=button value="입력" class="btn-sm btn-success" id="joinBtn">
+                <input type=button value="입력" class="btn-sm btn-success" id="insertBtn">
                 <input type=button value="취소" class="btn-sm btn-info"
                  onclick="javascript:history.back()"
                 >

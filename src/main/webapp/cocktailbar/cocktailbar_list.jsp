@@ -36,13 +36,15 @@ text-overflow: ellipsis;
     <section class="product spad">
         <div class="container">
             <div class="row">
-                <table class="table">
+             <c:if test="">
+               <table class="table">
               <tr>
                <td>
-                <a href="../cocktailbar/cocktailbarboard_insert.do" class="btn btn-outline-danger btn-sm">새글</a>
+                <a href="../cocktailbar/cocktailbarboard_insert.do" class="btn btn-outline-danger btn-sm">칵테일바 추가하기</a>
                </td>
               </tr>
              </table>
+             </c:if> 
                 <div class="col-lg-12 col-md-12">
                     
                     
