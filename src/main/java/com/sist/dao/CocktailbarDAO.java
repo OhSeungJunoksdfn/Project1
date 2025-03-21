@@ -150,4 +150,25 @@ public class CocktailbarDAO {
 	        }
 	    }
 	  }
+	  public static void CocktailbarUpdate(CocktailbarVO vo)
+	  {
+		  SqlSession session=null;
+		  try 
+		  {
+			  session=ssf.openSession(true);
+			  session.update("CocktailbarUpdate",vo);
+		  }
+		  catch (Exception ex) 
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  if (session != null) 
+			  {
+	            session.close();
+	          }
+		  }
+		  
+	  }
 }

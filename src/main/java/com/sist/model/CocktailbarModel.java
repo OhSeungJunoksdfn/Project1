@@ -1,4 +1,5 @@
 package com.sist.model;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -102,7 +103,7 @@ public class CocktailbarModel {
 	  }
 	
 	
-	  @RequestMapping("cocktailbar/cocktailbar_find.do")
+/*	  @RequestMapping("cocktailbar/cocktailbar_find.do")
 	  public String recipe_find(HttpServletRequest request,
 	  		HttpServletResponse response)
 	  {
@@ -170,7 +171,7 @@ public class CocktailbarModel {
 			  out.write(arr.toJSONString());
 		  }catch(Exception ex) {}
 		  
-	  }
+	  }*/
 	  @RequestMapping("cocktailbar/cocktailbarboard_insert.do")
 	  public String cocktailbarboard_insert(HttpServletRequest request,
 			  HttpServletResponse response)
@@ -205,4 +206,42 @@ public class CocktailbarModel {
 		   CocktailbarDAO.Cocktailbarinsert(vo);
 		   return "redirect:../cocktailbar/cocktailbar_list.do";
 	   }
+	  @RequestMapping("cocktailbar/cocktailbarboard_update.do")
+	  public String cocktailbarboard_update(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+	 	    String bar_no = request.getParameter("bar_no");
+     	    CocktailbarVO vo = CocktailbarDAO.cocktailbarDetailData(Integer.parseInt(bar_no));
+		    
+		    // JSP에 필요한 데이터를 설정
+		    request.setAttribute("vo", vo);  // vo 객체를 JSP로 전달
+		    request.setAttribute("main_jsp", "../cocktailbar/cocktailbarboard_update.jsp");
+		    
+		    return "../main/main.jsp";
+	  }
+	  @RequestMapping("cocktailbar/cocktailbarboard_update_ok.do")
+	  public void cocktailbarboard_update_ok(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		   String name=request.getParameter("name");
+		   String address=request.getParameter("address");
+		   String phone=request.getParameter("phone");
+		   String image=request.getParameter("image");
+		   String profile=request.getParameter("profile");
+		   String time=request.getParameter("time");
+		   String loc=request.getParameter("loc");
+		   String subway=request.getParameter("subway");
+		   
+		   CocktailbarVO vo=new CocktailbarVO();
+		   vo.setName(name);
+		   vo.setAddress(address);
+		   vo.setPhone(phone);
+		   vo.setImage(image);
+		   vo.setProfile(profile);
+		   vo.setTime(time);
+		   vo.setLoc(loc);
+		   vo.setSubway(subway);
+		  CocktailbarDAO.CocktailbarUpdate(vo);
+		  
+	  }
 }

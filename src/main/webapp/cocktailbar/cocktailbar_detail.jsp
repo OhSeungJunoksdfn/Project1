@@ -367,6 +367,7 @@ $(function(){
             </div>
         </div>
     </section>
+
     					<div class="comment_area section_padding_50 clearfix">
                                 <h4 class="mb-30">댓글(${count })</h4>
 
@@ -416,16 +417,14 @@ $(function(){
                                     </li>
                                     </c:forEach>
                                 </ol>
-                                <c:if test="">
-             					  <table class="table">
-            						  <tr>
-             						  <td>
-               							 <a href="../cocktailbar/cocktailbarboard_insert.do" class="btn btn-outline-info btn-sm">수정</a>
-             						  </td>
-            						 </tr>
-        					     </table>
-           					  </c:if> 
                             </div>
+             <table class="table">
+              <tr>
+               <td>
+                <a href="../cocktailbar/cocktailbarboard_update.do?bar_no=${vo.bar_no }" class="btn btn-outline-danger btn-sm">수정</a>
+               </td>
+              </tr>
+             </table>
     <!-- Product Details Section End -->
 
     <!-- Related Product Section Begin -->

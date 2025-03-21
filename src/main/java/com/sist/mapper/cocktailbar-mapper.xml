@@ -52,8 +52,8 @@ SUBWAY  NOT NULL VARCHAR2(500)
    </insert>
    <update id="CocktailbarUpdate" parameterType="CocktailbarVO">
    UPDATE cocktailbar SET
-   #{name}#{bar_no},name=#{name},address=#{address},phone=#{phone},image=#{image},profile=#{profile},time=#{time},loc=#{loc},subway=#{subway}
-   WHERE no=#{no}
+   bar_no=#{bar_no},name=#{name},address=#{address},phone=#{phone},image=#{image},profile=#{profile},time=#{time},loc=#{loc},subway=#{subway}
+   WHERE bar_no=#{bar_no}
   </update>
   <delete id="CocktailbarDelete" parameterType="int">
    DELETE FROM cocktailbar
@@ -74,9 +74,4 @@ SUBWAY  NOT NULL VARCHAR2(500)
     WHERE ${?} LIKE '%'||#{?}||'%'
   </select>
   
-  <select id="CB_boardDetailData" resultType="CocktailbarVO" parameterType="int">
-   SELECT bar_no, name, address, phone, image, profile, time, loc, subway
-   FROM cocktailbar
-   WHERE bar_no=#{bar_no}
- </select>
 </mapper>
