@@ -18,10 +18,9 @@ const options = {
 
 
 const quill = new Quill('#editor', options);
-
 $(document).ready(function(){
 	$('.ql-toolbar.ql-snow').css('text-align','left')
-	$(".ql-editor").css({"overflow":"hidden"})
+	$(".ql-editor").css({"overflow":"hidden","min-height":"500px"})
 });
 
 $("#test").click(()=>{
@@ -100,17 +99,27 @@ const imageOnclick = (e) =>{
 }
 
 let imageTags=[];
-let imageId=0;//있는 문서 수정하는 경우일 때는 미리 이미지 리스트 에서 마지막 이미지의 아이디 가져와서 설정하기
+
+console.log("quillroot",quill.root)
+let prevHeight = 500
 quill.on('text-change', function() {
 
-	
-	console.log("postid",$("#editor").data('postid'))
+	let imageId=Array.from(quill.root.querySelectorAll("*"))//편집할 문서에 포함된 이미지 태그들의 아이디에서 가장 큰 숫자에서 1을 더해서 다음에 삽입될 이미지의 아이디 정하기
+			    		.reduce((acc,child)=>{
+							if(child.nodeName==='IMG'&child.id.length!==0)
+							{
+								const id = Number(child.id.split('-')[1])+1
+								return id>acc?id:acc
+							}
+							return acc
+						},0)
+	console.log(imageId)
 	//quill에 추가된 요소중에 이미지만 리스트에 모으고 아이디를 추가하는 코드
 	const changedImage = Array.from(quill.root.querySelectorAll("*"))
 		    				.filter((child)=>{
 								if(child.nodeName==='IMG'){
 									if(child.id.length===0){
-										child.id='img-'+imageId++;
+										child.id='img-'+imageId;
 										imageUploadAndConvertedImageApply(child.id);
 									}
 									return true
@@ -134,10 +143,31 @@ quill.on('text-change', function() {
 	imageTags=changedImage
 	//console.log("imageTags",imageTags)
 	let contentHeight = quill.root.scrollHeight;
-	$("#editor").css({"height":contentHeight})
-	console.log("filename",$("#editor").data('filename'))
+	
+	if(contentHeight<prevHeight)
+	{
+		$("#editor").css({"height":"0px"})
+	}
+	$("#editor").css({"height":quill.root.scrollHeight})
+	prevHeight=contentHeight
+	
+	
 });
 
+function observeResize() {
+    let editor = document.querySelector('.ql-editor');
+    let container = document.querySelector('#editor');
+
+    let resizeObserver = new ResizeObserver(() => {
+        container.style.height = editor.scrollHeight + "px";
+        console.log("에디터 크기 변경 감지:", editor.scrollHeight);
+    });
+
+    resizeObserver.observe(editor);
+}
+
+// 실행
+//observeResize();
 const save = () =>{
 	window.removeEventListener('beforeunload', handleBeforeUnload);
 	window.onunload=null;

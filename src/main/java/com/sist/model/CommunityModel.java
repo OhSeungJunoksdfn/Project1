@@ -94,7 +94,6 @@ public class CommunityModel {
 		
 		// 게시물 시간 표시 고치기
 		// 게시물 업데이트 할 때 사진 수정하면 어떻게 할지 생각하기
-		// quill 기본 글씨 색 흐린거 고치기
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
@@ -163,8 +162,6 @@ public class CommunityModel {
                     for (FileItem item : formItems) {
                         if (item.isFormField()) {
                             String fieldValue = item.getString(charset);
-                            System.out.println(fieldValue);
-                            //여기 오류 있음
                             board_no=fieldValue;
                         }
                     }
@@ -173,6 +170,7 @@ public class CommunityModel {
                 ex.printStackTrace();
             }
 		}
+		//html파일 삭제는 아직 안됨 추가
 		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
 		//delete cascade 제약조건으로 게시물 삭제시 이미지 자동 삭제
 	}
@@ -326,6 +324,7 @@ public class CommunityModel {
 			String no=request.getParameter("board_no");
 			String page=request.getParameter("page");
 			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
+			request.setAttribute("temp_board_no", vo.getBoard_no());
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			request.setAttribute("main_jsp", "../community/freeboard_update.jsp");
