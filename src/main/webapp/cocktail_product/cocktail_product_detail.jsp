@@ -9,59 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>상품</span>
-                        </div>
-                        <ul>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=1">레드</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=2">화이트</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=3">로제</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=4">스파클링</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=5">아메리칸 위스키</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=6">스카치 위스키</a></li>
-                            <li><a href="../cocktail_product/cocktail_product_list.do?cno=13">리큐르</a></li>
-                            <li><a href="#">하이볼 글라스</a></li>
-                            <li><a href="#">칵테일 쉐이커</a></li>
-                            <li><a href="#">지거/믹싱턴</a></li>
-                            <li><a href="#">바 스푼</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-<!-- Breadcrumb Section End -->
-
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
         <div class="container">
@@ -71,7 +18,7 @@
                         <h2>주류 스토어</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">스토어 홈</a>
-                            <a href="./index.html">${vo.type }</a>
+                            <a href="../cocktail_product/cocktail_product_list.do?cno=${cno }">${vo.type }</a>
                             <span>상품 페이지</span>
                         </div>
                     </div>
@@ -170,14 +117,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title related__product__title">
-                        <h2>관련 상품</h2>
+                        <h2>관련 상품 보기</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
+              <c:forEach var="vo" items="${rList4 }">
                 <div class="col-lg-3 col-md-4 col-sm-6">
+                  
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/product-1.jpg">
+                        <div class="product__item__pic set-bg">
+                          <a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">
+                            <img src="${vo.poster }" style="width: 100%; height: 200px;">
+                          </a> 
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -185,56 +137,13 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
+                            <h6><a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">${vo.name }</a></h6>
+                            <h5>${vo.price }</h5>
                         </div>
                     </div>
+                  
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/product-2.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/product-3.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../img/product/product-7.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
+               </c:forEach>
             </div>
         </div>
     </section>

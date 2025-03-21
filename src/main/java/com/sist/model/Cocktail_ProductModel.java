@@ -3,7 +3,7 @@ package com.sist.model;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.List; 
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -18,10 +18,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import oracle.net.ns.SessionAtts;
-//Cocktail_ProductVO vo=Cocktail_ProductDAO.cocktail_productRandomData();
-//List<Cocktail_ProductVO> cpList=Cocktail_ProductDAO.cocktail_productRandomData12();
-//request.setAttribute("cpvo", vo);
-//request.setAttribute("cpList", cpList);
+
 @Controller
 public class Cocktail_ProductModel {
 	 @RequestMapping("cocktail_product/cocktail_product_list.do")
@@ -49,14 +46,12 @@ public class Cocktail_ProductModel {
 		if(endPage>totalpage)
 			endPage=totalpage;
 		
-		System.out.println("DEBUG: startPage = " + startPage + ", endPage = " + endPage + ", totalpage = " + totalpage);
+		Cocktail_ProductVO vo=Cocktail_ProductDAO.cocktail_productCnoRandomData(map);
+		List<Cocktail_ProductVO> rList=Cocktail_ProductDAO.cocktail_productCnoRandomData12(map);
 		
-		
-		Cocktail_ProductVO vo=Cocktail_ProductDAO.cocktail_productRandomData();
-		List<Cocktail_ProductVO> rList=Cocktail_ProductDAO.cocktail_productRandomData12();
 		request.setAttribute("vo", vo);
 		request.setAttribute("rList", rList);
-		
+		request.setAttribute("cno", cno);
 		
 		List<Cocktail_ProductVO> cList=new ArrayList<Cocktail_ProductVO>();
 		Cookie[] cookies=request.getCookies();
@@ -89,30 +84,44 @@ public class Cocktail_ProductModel {
 		request.setAttribute("totalpage", totalpage);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
-		request.setAttribute("cno", cno);
 		request.setAttribute("totalcount", totalcount);
 		request.setAttribute("main_jsp", "../cocktail_product/cocktail_product_list.jsp");
 		return "../main/main.jsp";
-	 }
+	}
 	@RequestMapping("cocktail_product/cocktail_product_detail_before.do")
 	public String cocktail_product_detail_before(HttpServletRequest request, HttpServletResponse response)
 	{
 		String product_no=request.getParameter("product_no");
+		String cno=request.getParameter("cno");
 		Cookie cookie=new Cookie("product_no_"+product_no, product_no);
 		cookie.setPath("/");
 		cookie.setMaxAge(60^60*24);
 		// 전송
 		response.addCookie(cookie);
 		// 화면 이동
-		return "redirect:cocktail_product_detail.do?product_no="+product_no;
+		return "redirect:cocktail_product_detail.do?product_no="+product_no+"&cno="+cno;
 	}
 	@RequestMapping("cocktail_product/cocktail_product_detail.do")
 	public String cocktail_product_detail(HttpServletRequest request, HttpServletResponse response)
 	{
+		try
+		{
 		String product_no=request.getParameter("product_no");
+		String cno=request.getParameter("cno");
+		
 		Cocktail_ProductVO vo=Cocktail_ProductDAO.cocktail_productDetailData(Integer.parseInt(product_no));
+		
+		int rcno=Integer.parseInt(cno);
+		List<Cocktail_ProductVO> rList4=Cocktail_ProductDAO.cocktail_productCnoRandomData4(rcno);
+		
+		request.setAttribute("cno", cno);
 		request.setAttribute("vo", vo);
+		request.setAttribute("rList4", rList4);
 		request.setAttribute("main_jsp", "../cocktail_product/cocktail_product_detail.jsp");
+		
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 		return "../main/main.jsp";
 	}
 	@RequestMapping("cocktail_product/cocktail_product_find.do")
@@ -183,9 +192,4 @@ public class Cocktail_ProductModel {
 			  out.write(arr.toJSONString());
 		  }catch(Exception ex) {}
 	  }
-	
-	
-	
-	
-	
 }
