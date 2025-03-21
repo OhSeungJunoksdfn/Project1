@@ -31,20 +31,6 @@
        </if>
      </where>
  </select>
- <select id="cocktail_productRandomData" resultType="Cocktail_ProductVO">
-   SELECT * FROM (SELECT * FROM cocktail_product
-      ORDER BY DBMS_RANDOM.RANDOM
-    )
-    WHERE rownum&lt;=1
- </select>
- <select id="cocktail_productRandomData12" resultType="Cocktail_ProductVO">
-    SELECT * FROM (SELECT * FROM cocktail_product
-      ORDER BY DBMS_RANDOM.RANDOM
-    )
-    WHERE rownum&lt;=12
- </select>
- <select id="coctail_productCookieData"></select>
- 
 <!--  <select id="cocktail_productDetailData" resultType="Cocktail_ProductVO" parameterType="int"> -->
 <!--     SELECT product_id, name, cno, content -->
 <!--     <if test="cno!=1 or cno!=2 or cno!=3 or cno!=4"> -->
@@ -80,6 +66,25 @@
     WHERE ${fd} LIKE '%'||#{ss}||'%'
   </select>
   
-  
-  
+  <select id="cocktail_productCnoRandomData" resultType="Cocktail_ProductVO" parameterType="hashmap">
+    SELECT * FROM (SELECT * FROM cocktail_product
+    WHERE cno=#{cno}
+    ORDER BY DBMS_RANDOM.RANDOM
+    )
+    WHERE rownum&lt;=1
+  </select>
+  <select id="cocktail_productCnoRandomData4" resultType="Cocktail_ProductVO" parameterType="int">
+    SELECT * FROM (SELECT * FROM cocktail_product
+    WHERE cno=#{cno}
+    ORDER BY DBMS_RANDOM.RANDOM
+    )
+    WHERE rownum&lt;=4
+  </select>
+  <select id="cocktail_productCnoRandomData12" resultType="Cocktail_ProductVO" parameterType="hashmap">
+    SELECT * FROM (SELECT * FROM cocktail_product
+    WHERE cno=#{cno}
+    ORDER BY DBMS_RANDOM.RANDOM
+    )
+    WHERE rownum&lt;=12
+  </select>
 </mapper>
