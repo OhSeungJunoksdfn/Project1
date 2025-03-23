@@ -20,11 +20,9 @@ const handleBeforeUnload = () => {//페이지를 떠날 때 경고창 띄우기
     event.returnValue = message;
     return message;
 }
-window.onunload= function () {//페이지가 실제로 닫힐 때 수행할 작업
-	const data = new FormData();
-	data.append('board_no', '${temp_board_no}');
-	navigator.sendBeacon('../community/freeboard_delete_unsaved.do',data);
-};
+
+
+
 $(document).ready(function(){
 	window.addEventListener('beforeunload', handleBeforeUnload);
 	 $.ajax({
@@ -36,6 +34,7 @@ $(document).ready(function(){
      });
 	 $("#editor").css({"height":'${vo.documentheight}'+'px'})
 });
+
 
 
 </script>

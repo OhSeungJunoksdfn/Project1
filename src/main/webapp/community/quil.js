@@ -18,10 +18,9 @@ const options = {
 
 
 const quill = new Quill('#editor', options);
-
 $(document).ready(function(){
 	$('.ql-toolbar.ql-snow').css('text-align','left')
-	$(".ql-editor").css({"overflow":"hidden"})
+	$(".ql-editor").css({"overflow":"hidden","min-height":"500px"})
 });
 
 $("#test").click(()=>{
@@ -94,23 +93,40 @@ const convertBase64ImgToImgFile = (data, fileName) => {//base64이미지를 이�
 	}
 	return new File([unit8Array], fileName, { type: mime })
 }
+
+const handleOnUnload = function () {//페이지가 실제로 닫힐 때 수행할 작업
+	const data = new FormData();
+	data.append('board_no', $("#editor").data('postid'));
 	
-const imageOnclick = (e) =>{
-	console.log(e.target)
-}
+	const imagenames_to_delete = image_to_delete.map((image)=>{
+			return image.src.split("?image=")[1]
+		}).join()
+	data.append('imagenames_to_delete',imagenames_to_delete)
+	navigator.sendBeacon('../community/freeboard_delete_unsaved.do',data);
+};
+window.onunload= handleOnUnload;//페이지가 실제로 닫힐 때 수행할 작업(quill.js)
 
 let imageTags=[];
-let imageId=0;//있는 문서 수정하는 경우일 때는 미리 이미지 리스트 에서 마지막 이미지의 아이디 가져와서 설정하기
+let prevHeight = 500
+let image_to_delete = []
 quill.on('text-change', function() {
 
-	
-	console.log("postid",$("#editor").data('postid'))
+	let imageId=Array.from(quill.root.querySelectorAll("*"))//편집할 문서에 포함된 이미지 태그들의 아이디에서 가장 큰 숫자에서 1을 더해서 다음에 삽입될 이미지의 아이디 정하기
+			    		.reduce((acc,child)=>{
+							if(child.nodeName==='IMG'&child.id.length!==0)
+							{
+								const id = Number(child.id.split('-')[1])+1
+								return id>acc?id:acc
+							}
+							return acc
+						},0)
+	console.log(imageId)
 	//quill에 추가된 요소중에 이미지만 리스트에 모으고 아이디를 추가하는 코드
 	const changedImage = Array.from(quill.root.querySelectorAll("*"))
 		    				.filter((child)=>{
 								if(child.nodeName==='IMG'){
 									if(child.id.length===0){
-										child.id='img-'+imageId++;
+										child.id='img-'+imageId;
 										imageUploadAndConvertedImageApply(child.id);
 									}
 									return true
@@ -127,16 +143,29 @@ quill.on('text-change', function() {
 	  	})
 		
 		
-		//console.log(deletedImages)
-		serverImageDelete(deletedImages)
+		console.log(deletedImages)
+		
+		image_to_delete = [...image_to_delete,...deletedImages]
+		//serverImageDelete(deletedImages)
 	}
   
 	imageTags=changedImage
 	//console.log("imageTags",imageTags)
-	let contentHeight = quill.root.scrollHeight;
-	$("#editor").css({"height":contentHeight})
-	console.log("filename",$("#editor").data('filename'))
+	
+	
+	let contentHeight = quill.root.scrollHeight;// quill 내용 길어지거나 짧아지면 에디터 높이 조절
+	
+	if(contentHeight<prevHeight)
+	{
+		$("#editor").css({"height":"0px"})
+	}
+	$("#editor").css({"height":quill.root.scrollHeight})
+	prevHeight=contentHeight
+	
+	console.log(image_to_delete)
+	
 });
+
 
 const save = () =>{
 	window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -152,6 +181,12 @@ const save = () =>{
 	formData.append('subject', $("input[name=subject]").val());
 	formData.append('tag', $("select").val());
 	formData.append('documentheight',quill.root.scrollHeight)
+	
+	const imagenames_to_delete = image_to_delete.map((image)=>{
+				return image.src.split("?image=")[1]
+			}).join()
+	formData.append('imagenames_to_delete',imagenames_to_delete)
+	
 	$.ajax({
 		type:'post',
 		url:'../community/freeboard_insert.do',
