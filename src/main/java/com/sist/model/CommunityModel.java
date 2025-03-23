@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.*;
@@ -27,6 +28,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
+	//검색 기능 완성하기
+	//삭제 기능 만들기
+	//세션에서 아이디 가져오도록 처리
+	//댓글기능 만들기
 	private final String uploadPath = "./upload/";
 	
 	@RequestMapping("community/freeboard_list.do")
@@ -37,7 +42,10 @@ public class CommunityModel {
 			String page=request.getParameter("page");
 			if(page==null)
 				page="1"; // default page
-			
+			String tag=request.getParameter("tag");
+			if(tag==null)
+				tag="All"; // default page
+			System.out.println("tagggggg:"+tag);
 			// 현재 페이지 지정
 			int curpage=Integer.parseInt(page);
 			// 데이터 읽기
@@ -45,6 +53,7 @@ public class CommunityModel {
 			
 			map.put("start", (curpage*20)-19);
 			map.put("end", curpage*20);
+			map.put("tag", tag);
 			List<CommunityFreeboardVO> list=CommunityDAO.boardListData(map);
 			int totalpage=CommunityDAO.boardTotalPage();
 			final int BLOCK=10;
@@ -61,15 +70,18 @@ public class CommunityModel {
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("page", page);
+			request.setAttribute("tag", tag);
+			request.setAttribute("main_jsp", "../community/freeboard_list.jsp");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
 		
-		request.setAttribute("main_jsp", "../community/freeboard_list.jsp");
+		
 		return "../main/main.jsp";
 	}
+	
 	
 	@RequestMapping("community/freeboard_insert_newpost.do")
 	public String freeboard_insertNewPost(HttpServletRequest request, HttpServletResponse response)
@@ -111,7 +123,6 @@ public class CommunityModel {
 	{	
 		
 		// 게시물 시간 표시 고치기
-		// 게시물 업데이트 할 때 사진 수정하면 어떻게 할지 생각하기
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
