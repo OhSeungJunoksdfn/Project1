@@ -93,15 +93,22 @@ const convertBase64ImgToImgFile = (data, fileName) => {//base64이미지를 이�
 	}
 	return new File([unit8Array], fileName, { type: mime })
 }
+
+const handleOnUnload = function () {//페이지가 실제로 닫힐 때 수행할 작업
+	const data = new FormData();
+	data.append('board_no', $("#editor").data('postid'));
 	
-const imageOnclick = (e) =>{
-	console.log(e.target)
-}
+	const imagenames_to_delete = image_to_delete.map((image)=>{
+			return image.src.split("?image=")[1]
+		}).join()
+	data.append('imagenames_to_delete',imagenames_to_delete)
+	navigator.sendBeacon('../community/freeboard_delete_unsaved.do',data);
+};
+window.onunload= handleOnUnload;//페이지가 실제로 닫힐 때 수행할 작업(quill.js)
 
 let imageTags=[];
-
-console.log("quillroot",quill.root)
 let prevHeight = 500
+let image_to_delete = []
 quill.on('text-change', function() {
 
 	let imageId=Array.from(quill.root.querySelectorAll("*"))//편집할 문서에 포함된 이미지 태그들의 아이디에서 가장 큰 숫자에서 1을 더해서 다음에 삽입될 이미지의 아이디 정하기
@@ -136,13 +143,17 @@ quill.on('text-change', function() {
 	  	})
 		
 		
-		//console.log(deletedImages)
-		serverImageDelete(deletedImages)
+		console.log(deletedImages)
+		
+		image_to_delete = [...image_to_delete,...deletedImages]
+		//serverImageDelete(deletedImages)
 	}
   
 	imageTags=changedImage
 	//console.log("imageTags",imageTags)
-	let contentHeight = quill.root.scrollHeight;
+	
+	
+	let contentHeight = quill.root.scrollHeight;// quill 내용 길어지거나 짧아지면 에디터 높이 조절
 	
 	if(contentHeight<prevHeight)
 	{
@@ -151,23 +162,11 @@ quill.on('text-change', function() {
 	$("#editor").css({"height":quill.root.scrollHeight})
 	prevHeight=contentHeight
 	
+	console.log(image_to_delete)
 	
 });
 
-function observeResize() {
-    let editor = document.querySelector('.ql-editor');
-    let container = document.querySelector('#editor');
 
-    let resizeObserver = new ResizeObserver(() => {
-        container.style.height = editor.scrollHeight + "px";
-        console.log("에디터 크기 변경 감지:", editor.scrollHeight);
-    });
-
-    resizeObserver.observe(editor);
-}
-
-// 실행
-//observeResize();
 const save = () =>{
 	window.removeEventListener('beforeunload', handleBeforeUnload);
 	window.onunload=null;
@@ -182,6 +181,12 @@ const save = () =>{
 	formData.append('subject', $("input[name=subject]").val());
 	formData.append('tag', $("select").val());
 	formData.append('documentheight',quill.root.scrollHeight)
+	
+	const imagenames_to_delete = image_to_delete.map((image)=>{
+				return image.src.split("?image=")[1]
+			}).join()
+	formData.append('imagenames_to_delete',imagenames_to_delete)
+	
 	$.ajax({
 		type:'post',
 		url:'../community/freeboard_insert.do',

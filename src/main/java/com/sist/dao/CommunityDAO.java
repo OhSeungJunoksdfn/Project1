@@ -52,8 +52,18 @@ public class CommunityDAO {
 	public static void boardDeleteImage(String[] imageNames)
 	{
 		SqlSession session=ssf.openSession(true);
-		session.insert("boardDeleteImage",imageNames);
+		session.delete("boardDeleteImage",imageNames);
 		session.close();
+	}
+	
+	//저장되지 않은 변경사항인 이미지 삭제
+	public static List<String> boardDeleteImageUnsaved(int no)
+	{
+		SqlSession session=ssf.openSession(true);
+		List<String> unsavedImages = session.selectList("boardGetDeleteImage",no);
+		session.delete("boardDeleteImageUnsaved");
+		session.close();
+		return unsavedImages;
 	}
 	//새 게시물 추가
 	public static void boardInsertNewPost(CommunityFreeboardVO vo)
@@ -62,18 +72,21 @@ public class CommunityDAO {
 		session.insert("boardInsertNewPost",vo);
 		session.close();
 	}
+	//게시물 저장
 	public static void boardInsert(Map map)
 	{
 		SqlSession session=ssf.openSession(true);
-		session.insert("boardInsert",map);
+		session.update("boardSave",map);
 		session.close();
 	}
 	//저장되지 않은 게시물 삭제
 	public static void boardDeleteUnsaved(int board_no)
 	{
-		SqlSession session=ssf.openSession(true);
+		SqlSession session=ssf.openSession();
 		session.insert("boardDeleteUnsaved",board_no);
+		session.commit();
 		session.close();
 	}
+	//게시물에서 삭제된 이미지 삭제
 	
 }
