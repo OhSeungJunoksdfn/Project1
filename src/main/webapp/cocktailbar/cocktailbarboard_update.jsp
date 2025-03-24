@@ -34,40 +34,16 @@ $(function(){
         let post = $('#post').val();
         let loc = $('select[name="loc"]').val();
 
+        console.log('Form data:', { bar_no, name, image, address, subway, time, profile, phone, post, loc });
+        
         // 필수 항목 공백 검사
         if(name === "" || image === "" || address === "" || subway === "" || time === "" || profile === "" || post === "" || phone === "") {
             alert("공백 없이 반드시 입력하셔야 합니다.");
             return;  // 폼 제출 방지
         }
 
-        // 폼 데이터를 formData 객체로 묶기
-        let formData = {
-            bar_no: bar_no,
-            name: name,
-            image: image,
-            address: address,
-            subway: subway,
-            time: time,
-            profile: profile,
-            phone: phone,
-            post: post,
-            loc: loc
-        };
-
-        // AJAX 요청
-        $.ajax({
-            type: 'POST',
-            url: '../cocktailbar/cocktailbarboard_update_ok.do',
-            data: formData,  // 폼 데이터를 보내기
-            success: function(result) {
-                // 수정 성공 시 상세 페이지로 이동
-                location.href = "../cocktailbar/cocktailbar_detail.do?bar_no=" + bar_no;
-            },
-            error: function(err) {
-                // 오류 발생 시 알림
-                alert("오류 발생: " + err);
-            }
-        });
+        $('#frm').submit();
+        
     });
 });
 </script>
@@ -89,7 +65,7 @@ $(function(){
     <section class="archive-area section_padding_80">
         <div class="container">
             <div class="row" style="width:800px;margin:0px auto">
-            <form id="frm">
+            <form method=post id="frm" action="../cocktailbar/cocktailbarboard_update_ok.do">
              <table class="table">
               <tr>
                <th width=30% class="text-center" style="color:gray">칵테일바 이름</th>
@@ -176,7 +152,7 @@ $(function(){
               <tr>
                <th width=15% class="text-center" style="color:gray">칵테일 바 소개</th>
                <td width=85%>
-                <textarea rows="7" cols="57" name="profile" class="form-control-sm">"${vo.profile }"</textarea>
+               <textarea rows="7" cols="57" name="profile" class="form-control-sm">${vo.profile}</textarea>
                </td>
               </tr>
               

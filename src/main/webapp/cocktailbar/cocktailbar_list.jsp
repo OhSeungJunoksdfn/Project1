@@ -39,7 +39,7 @@ text-overflow: ellipsis;
                <table class="table">
               <tr>
                <td>
-                <a href="../cocktailbar/cocktailbarboard_update.do" class="btn btn-outline-danger btn-sm">수정</a>
+                <a href="../cocktailbar/cocktailbarboard_insert.do" class="btn btn-outline-danger btn-sm">칵테일바 추가하기</a>
                </td>
               </tr>
              </table>

@@ -180,7 +180,7 @@ public class CocktailbarModel {
 		  return "../main/main.jsp";
 	  }
 	  @RequestMapping("cocktailbar/cocktailbarboard_insert_ok.do")
-	   public String board_insert_ok(HttpServletRequest request,
+	   public String cocktailbarboard_insert_ok(HttpServletRequest request,
 			   HttpServletResponse response)
 	   {
 		  //#{bar_no},#{name},#{address},#{phone},#{image},#{profile},#{time},#{loc},#{subway}
@@ -192,6 +192,8 @@ public class CocktailbarModel {
 		   String time=request.getParameter("time");
 		   String loc=request.getParameter("loc");
 		   String subway=request.getParameter("subway");
+		   
+		   
 		   
 		   CocktailbarVO vo=new CocktailbarVO();
 		   vo.setName(name);
@@ -220,9 +222,10 @@ public class CocktailbarModel {
 		    return "../main/main.jsp";
 	  }
 	  @RequestMapping("cocktailbar/cocktailbarboard_update_ok.do")
-	  public void cocktailbarboard_update_ok(HttpServletRequest request,
+	  public String cocktailbarboard_update_ok(HttpServletRequest request,
 			  HttpServletResponse response)
 	  {
+		   String bar_no=request.getParameter("bar_no");
 		   String name=request.getParameter("name");
 		   String address=request.getParameter("address");
 		   String phone=request.getParameter("phone");
@@ -233,6 +236,8 @@ public class CocktailbarModel {
 		   String subway=request.getParameter("subway");
 		   
 		   CocktailbarVO vo=new CocktailbarVO();
+		   
+		   vo.setBar_no(Integer.parseInt(bar_no));
 		   vo.setName(name);
 		   vo.setAddress(address);
 		   vo.setPhone(phone);
@@ -241,7 +246,19 @@ public class CocktailbarModel {
 		   vo.setTime(time);
 		   vo.setLoc(loc);
 		   vo.setSubway(subway);
-		  CocktailbarDAO.CocktailbarUpdate(vo);
+		   CocktailbarDAO.CocktailbarUpdate(vo);
+		   
+		   return "redirect:cocktailbar_detail.do?bar_no="+bar_no;
+	  }
+	  @RequestMapping("cocktailbar/cocktailbarboard_delete.do")
+	  public String cocktailbarboard_delete(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		  String bar_no=request.getParameter("bar_no");
+		  CocktailbarVO vo=new CocktailbarVO();
+		  vo.setBar_no(Integer.parseInt(bar_no));
+		  CocktailbarDAO.CocktailbarDelete(vo);
 		  
+		  return "redirect:cocktailbar_list.do";
 	  }
 }

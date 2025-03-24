@@ -421,7 +421,8 @@ $(function(){
              <table class="table">
               <tr>
                <td>
-                <a href="../cocktailbar/cocktailbarboard_update.do?bar_no=${vo.bar_no }" class="btn btn-outline-danger btn-sm">수정</a>
+                <a href="../cocktailbar/cocktailbarboard_update.do?bar_no=${vo.bar_no }" class="btn btn-outline-warning btn-sm">수정</a>
+                <a href="../cocktailbar/cocktailbarboard_delete.do?bar_no=${vo.bar_no }" class="btn btn-danger btn-sm">삭제</a>
                </td>
               </tr>
              </table>
