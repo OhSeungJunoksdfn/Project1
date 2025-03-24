@@ -21,10 +21,10 @@ public class CommunityDAO {
 		session.close();
 		return list;
 	}
-	public static int boardTotalPage()
+	public static int boardTotalPage(Map map)
 	{
 		SqlSession session=ssf.openSession();
-		int total=session.selectOne("boardTotalPage");
+		int total=session.selectOne("boardTotalPage",map);
 		session.close();
 		return total;
 	}
@@ -73,7 +73,7 @@ public class CommunityDAO {
 		session.close();
 	}
 	//게시물 저장
-	public static void boardInsert(Map map)
+	public static void boardSave(Map map)
 	{
 		SqlSession session=ssf.openSession(true);
 		session.update("boardSave",map);
@@ -83,10 +83,26 @@ public class CommunityDAO {
 	public static void boardDeleteUnsaved(int board_no)
 	{
 		SqlSession session=ssf.openSession();
-		session.insert("boardDeleteUnsaved",board_no);
+		session.delete("boardDeleteUnsaved",board_no);
 		session.commit();
 		session.close();
 	}
-	//게시물에서 삭제된 이미지 삭제
+	//삭제될 게시물에 있는 이미지 가져오기
+	public static List<String> boardGetDeleteImageAtDeleteBoard(int board_no)
+	{
+		SqlSession session=ssf.openSession();
+		List<String> list = session.selectList("boardGetDeleteImageAtDeleteBoard",board_no);
+		session.close();
+		return list;
+	}
+	//게시물 삭제
+	public static void boardDelete(int board_no)
+	{
+		SqlSession session=ssf.openSession();
+		session.insert("boardDelete",board_no);
+		session.commit();
+		session.close();
+	}
+
 	
 }

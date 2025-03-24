@@ -181,7 +181,7 @@ const save = () =>{
 	formData.append('subject', $("input[name=subject]").val());
 	formData.append('tag', $("select").val());
 	formData.append('documentheight',quill.root.scrollHeight)
-	
+	formData.append('content',quill.getText())
 	const imagenames_to_delete = image_to_delete.map((image)=>{
 				return image.src.split("?image=")[1]
 			}).join()
@@ -196,7 +196,7 @@ const save = () =>{
 		success:function(result){
 			location.href="../community/freeboard_list.do"
 		}
-	}) 
+	})
 	
 }
 

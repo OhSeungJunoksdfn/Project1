@@ -28,7 +28,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
-	//검색 기능 완성하기
 	//삭제 기능 만들기
 	//세션에서 아이디 가져오도록 처리
 	//댓글기능 만들기
@@ -42,10 +41,19 @@ public class CommunityModel {
 			String page=request.getParameter("page");
 			if(page==null)
 				page="1"; // default page
+			
 			String tag=request.getParameter("tag");
 			if(tag==null)
-				tag="All"; // default page
-			System.out.println("tagggggg:"+tag);
+				tag="All"; 
+			
+			String selectsearch=request.getParameter("selectsearch");
+			if(selectsearch==null)
+				selectsearch="제목"; 
+			
+			String searchdata=request.getParameter("searchdata");
+			if(searchdata==null)
+				searchdata="";
+			System.out.println("searchdataaaaaaaa:"+searchdata);
 			// 현재 페이지 지정
 			int curpage=Integer.parseInt(page);
 			// 데이터 읽기
@@ -54,8 +62,10 @@ public class CommunityModel {
 			map.put("start", (curpage*20)-19);
 			map.put("end", curpage*20);
 			map.put("tag", tag);
+			map.put("selectsearch", selectsearch);
+			map.put("searchdata", searchdata);
 			List<CommunityFreeboardVO> list=CommunityDAO.boardListData(map);
-			int totalpage=CommunityDAO.boardTotalPage();
+			int totalpage=CommunityDAO.boardTotalPage(map);
 			final int BLOCK=10;
 			int startPage=((curpage-1)/BLOCK*BLOCK)+1;
 			int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
@@ -71,6 +81,8 @@ public class CommunityModel {
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("page", page);
 			request.setAttribute("tag", tag);
+			request.setAttribute("selectsearch", selectsearch);
+			request.setAttribute("searchdata", searchdata);
 			request.setAttribute("main_jsp", "../community/freeboard_list.jsp");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -166,8 +178,9 @@ public class CommunityModel {
                 
                 
                 String[] imageNames = ((String)map.get("imagenames_to_delete")).split(",");
-                CommunityDAO.boardInsert(map);
-                //free_board_delete_image(imageNames,Integer.parseInt((String)map.get("board_no")));
+                CommunityDAO.boardSave(map);
+                
+                //저장된 변경사항에 있는 이미지 삭제하기
                 CommunityDAO.boardDeleteImage(imageNames);
         		for(String imageName:imageNames)
         		{
@@ -175,12 +188,13 @@ public class CommunityModel {
         			file.delete();
         		}
         		
-        		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(Integer.parseInt((String)map.get("board_no")));
-        		for(String imageName:unsavedImages)
-        		{
-        			File file=new File(uploadPath+imageName);
-        			file.delete();
-        		}
+        		//
+				/*
+				 * List<String> unsavedImages =
+				 * CommunityDAO.boardDeleteImageUnsaved(Integer.parseInt((String)map.get(
+				 * "board_no"))); for(String imageName:unsavedImages) { File file=new
+				 * File(uploadPath+imageName); file.delete(); }
+				 */
                 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -225,11 +239,11 @@ public class CommunityModel {
             }
 		}
 		//html파일 삭제는 아직 안됨 추가
-		//게시물 삭제시에는 delete cascade 제약조건으로 이미지 자동 삭제
-		//게시물 업데이트할 때 이미지 삭제하는건 실제로 업데이트를 저장할지 안할지 모르기 때문에 저장 안할때만 삭제
-		String[] imageNames = imagenames_to_delete.split(",");
-        //free_board_delete_image(imageNames,Integer.parseInt(board_no));
 		
+		String[] imageNames = imagenames_to_delete.split(",");
+		
+		//게시물 삭제시에는 delete cascade 제약조건으로 db에서 이미지 자동 삭제
+		//게시물 업데이트할 때 이미지 삭제하는건 실제로 업데이트를 저장할지 안할지 모르기 때문에 저장 안할때만 삭제
 		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(Integer.parseInt(board_no));
 		for(String imageName:unsavedImages)
 		{
@@ -381,5 +395,26 @@ public class CommunityModel {
 			e.printStackTrace();
 		}
 		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("community/freeboard_delete.do")
+	public String freeboard_delete(HttpServletRequest request, HttpServletResponse response)
+	{	
+		try {
+			String no=request.getParameter("board_no");
+			String id=request.getParameter("id");//유저 아이디
+			
+			//이미지 파일 삭제 먼저
+			List<String> imageList = (List<String>)CommunityDAO.boardGetDeleteImageAtDeleteBoard(Integer.parseInt(no));
+			for(String imageName:imageList)
+    		{
+    			File file=new File(uploadPath+imageName);
+    			file.delete();
+    		}
+			CommunityDAO.boardDelete(Integer.parseInt(no));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:../community/freeboard_list.do";
 	}
 }
