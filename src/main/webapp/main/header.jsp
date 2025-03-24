@@ -69,10 +69,10 @@
                             </li>
                             <c:if test="${sessionScope.id!=null }">
                             <c:if test="${sessionScope.admin=='n' }">
-                            <li><a href="./contact.html">마이페이지</a></li>
+                            <li><a href="../mypage/my_main.do">마이페이지</a></li>
                             </c:if>
                             <c:if test="${sessionScope.admin=='y' }">
-                            <li><a href="./contact.html">관리자페이지</a></li>
+                            <li><a href="../adminpage/admin_main.do">관리자페이지</a></li>
                             </c:if>
                             </c:if>
                         </ul>
@@ -174,11 +174,11 @@
                             </li>
                             <c:if test="${sessionScope.id!=null }">
                             <c:if test="${sessionScope.admin=='n' }">
-                             <li><a href="../admin/adminpage.do">마이페이지</a>
+                             <li><a href="../mypage/my_main.do">마이페이지</a>
 
                             </c:if>
                             <c:if test="${sessionScope.admin=='y' }">
-                            <li><a href="../admin/adminpage.do">관리자페이지</a>
+                            <li><a href="../adminpage/admin_main.do">관리자페이지</a>
 
                             </c:if>
                             </c:if>
