@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.community-mapper"> 
-<sql id="where-no">
+	<sql id="where-no">
 		WHERE no=#{no}
 	</sql>
 	<!-- 목록 -->
@@ -9,11 +9,14 @@
 	String id, subject, tag, htmlfile, dbday;
 	Date regdate; -->
 	<select id="boardListData" resultType="CommunityFreeboardVO" parameterType="hashmap">
-		SELECT board_no, id, subject, tag, regdate, hit, num
-		FROM (SELECT board_no, id, subject, tag, regdate, hit, rownum as num
-		FROM (SELECT board_no, id, subject, tag, regdate, hit
+		SELECT board_no, id, subject, tag, regdate, hit, poststate, num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, rownum as num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate
 		FROM cocktail_board ORDER BY regdate DESC))
-		WHERE num BETWEEN #{start} AND #{end}
+		WHERE (num BETWEEN #{start} AND #{end}) AND (poststate != 'UNSAVED')
+		<if test="tag != 'All'">
+    		AND (tag = #{tag})
+  		</if>
 	</select>
 	<!-- 총페이지 -->
 	<select id="boardTotalPage" resultType="int">
@@ -32,7 +35,7 @@
 	<!-- 이미지 db에 넣기 -->
 	<insert id="boardInsertImage" parameterType="hashmap">
 		INSERT INTO board_img
-		 VALUES(#{file_name},#{file_size},#{board_no})
+		 VALUES(#{file_name},#{file_size},#{board_no},'UNSAVED')
 	</insert>
 	<!-- 이미지 삭제하기 -->
 	<delete id="boardDeleteImage" parameterType="string">
@@ -44,6 +47,15 @@
 	    	</foreach>
 	    </trim>
 	</delete>
+	<!-- 저장되지 않은 변경사항인 이미지 삭제하기 -->
+	<delete id="boardDeleteImageUnsaved" parameterType="string">
+	    DELETE FROM board_img
+	    WHERE imagestate = 'UNSAVED'
+	</delete>
+	<!-- 삭제될 이미지 가져오기 -->
+	<select id="boardGetDeleteImage" parameterType="int" resultType="string">
+		SELECT file_name from board_img WHERE board_no = #{board_no} AND imagestate='UNSAVED'
+	</select>
 	<!-- 글쓰기 버튼으로 insert페이지로 이동하면 깡통 게시물 하나 추가 -->
 	<insert id="boardInsertNewPost" useGeneratedKeys="true" keyProperty="board_no" parameterType="CommunityFreeboardVO">
 		<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
@@ -52,7 +64,8 @@
 		INSERT INTO cocktail_board(board_no,subject,tag,htmlfile,poststate)
 		 VALUES(#{board_no},#{subject},#{tag},#{htmlfile},#{postState})
 	</insert>
-	<update id="boardInsert" parameterType="hashmap">
+	<!-- 완료 버튼 누르면 편집된 게시물 저장 -->
+	<update id="boardSave" parameterType="hashmap">
 		UPDATE cocktail_board
 		SET id = #{id}, subject = #{subject}, tag = #{tag}, htmlfile = #{htmlfile}, htmlfile_size = #{htmlfile_size}, poststate = 'SAVED', documentheight= #{documentheight}
 		WHERE board_no = #{board_no}

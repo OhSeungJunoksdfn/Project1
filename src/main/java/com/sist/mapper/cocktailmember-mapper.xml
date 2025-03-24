@@ -39,4 +39,5 @@
    FROM cocktail_member
    WHERE id=#{id}
   </select>
+
 </mapper>

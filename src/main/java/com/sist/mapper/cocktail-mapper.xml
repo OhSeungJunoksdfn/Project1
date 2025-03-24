@@ -126,5 +126,58 @@
 		SELECT COUNT(*) FROM cocktail WHERE REGEXP_LIKE(name,#{ss})
 	</select>
 	
+	<select id="ingredientsFindData" resultType="com.sist.vo.CocktailIngredientsVO" parameterType="string" >
+		SELECT ing_no,ingname, NVL(alc,0) as alc FROM cocktail_ingredients WHERE REGEXP_LIKE(ingname,#{fd})
+	</select>
+	
+	
+	
+	<select id="select_no" resultType="int" >
+		SELECT NVL(MAX(cocktail_no)+1,1) as cocktail_no FROM cocktail
+	</select>
+	
+ 	<insert id="cocktailInsert" parameterType="CocktailVO">
+	INSERT INTO cocktail 
+	VALUES(#{cocktail_no},#{id},#{name},#{ename},#{comments},#{alc},#{image},#{content},'n',0,0,SYSDATE)
+	</insert>
+	
+	<insert id="cocktailTagInsert" parameterType="cocktailVO">
+	<selectKey keyProperty="ctvo.cocktail_tag_no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(cocktail_tag_no)+1,1) as cocktail_tag_no FROM cocktail_tag
+	</selectKey>
+	
+		INSERT INTO cocktail_tag
+		VALUES(#{ctvo.cocktail_tag_no},#{cocktail_no},#{ctvo.value})
+	</insert>
+	
+	<insert id="cocktailRecipeInsert" parameterType="cocktailVO">
+	<selectKey keyProperty="crivo.recipe_no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(recipe_no)+1,1) as recipe_no FROM cocktail_recipe
+	</selectKey>
+	
+	INSERT INTO cocktail_recipe
+	VALUES(#{crivo.recipe_no},#{cocktail_no},#{crivo.ing_no},#{crivo.volume},#{crivo.unit})	
+	</insert>
+	
+	 <update id="cocktailUpdate" parameterType="CocktailVO">
+	UPDATE cocktail SET
+	name=#{name},ename=#{ename},comments=#{comments},alc=#{alc},image=#{image},content=#{content}
+	WHERE cocktail_no=#{cocktail_no}
+	</update>
+	
+	<delete id="cocktailDelete" parameterType="int">
+	DELETE cocktail
+	WHERE cocktail_no=#{cocktail_no}
+	</delete>
+	
+	<delete id="cocktailTagDelete" parameterType="int">
+	DELETE cocktail_tag
+	WHERE cocktail_no=#{cocktail_no}
+	</delete>
+	
+	<delete id="cocktailRecipeDelete" parameterType="int">
+	DELETE cocktail_recipe
+	WHERE cocktail_no=#{cocktail_no}
+	</delete> 
 	
 </mapper>

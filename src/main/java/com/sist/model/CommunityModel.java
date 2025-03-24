@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.*;
@@ -27,6 +28,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
+	//검색 기능 완성하기
+	//삭제 기능 만들기
+	//세션에서 아이디 가져오도록 처리
+	//댓글기능 만들기
 	private final String uploadPath = "./upload/";
 	
 	@RequestMapping("community/freeboard_list.do")
@@ -37,7 +42,10 @@ public class CommunityModel {
 			String page=request.getParameter("page");
 			if(page==null)
 				page="1"; // default page
-			
+			String tag=request.getParameter("tag");
+			if(tag==null)
+				tag="All"; // default page
+			System.out.println("tagggggg:"+tag);
 			// 현재 페이지 지정
 			int curpage=Integer.parseInt(page);
 			// 데이터 읽기
@@ -45,6 +53,7 @@ public class CommunityModel {
 			
 			map.put("start", (curpage*20)-19);
 			map.put("end", curpage*20);
+			map.put("tag", tag);
 			List<CommunityFreeboardVO> list=CommunityDAO.boardListData(map);
 			int totalpage=CommunityDAO.boardTotalPage();
 			final int BLOCK=10;
@@ -61,15 +70,18 @@ public class CommunityModel {
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("page", page);
+			request.setAttribute("tag", tag);
+			request.setAttribute("main_jsp", "../community/freeboard_list.jsp");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
 		
-		request.setAttribute("main_jsp", "../community/freeboard_list.jsp");
+		
 		return "../main/main.jsp";
 	}
+	
 	
 	@RequestMapping("community/freeboard_insert_newpost.do")
 	public String freeboard_insertNewPost(HttpServletRequest request, HttpServletResponse response)
@@ -88,12 +100,29 @@ public class CommunityModel {
 		request.setAttribute("main_jsp", "../community/freeboard_insert.jsp");
 		return "../main/main.jsp";
 	}
+	//이미지 파일 삭제하기
+	@RequestMapping("서블릿메소드아님")
+	public void free_board_delete_image(String[] imageNames,int board_no) 
+	{
+		CommunityDAO.boardDeleteImage(imageNames);
+		for(String imageName:imageNames)
+		{
+			File file=new File(uploadPath+imageName);
+			file.delete();
+		}
+		
+		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(board_no);
+		for(String imageName:unsavedImages)
+		{
+			File file=new File(uploadPath+imageName);
+			file.delete();
+		}
+	}
 	@RequestMapping("community/freeboard_insert.do")
 	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
 	{	
 		
 		// 게시물 시간 표시 고치기
-		// 게시물 업데이트 할 때 사진 수정하면 어떻게 할지 생각하기
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
@@ -115,7 +144,7 @@ public class CommunityModel {
                         if (!item.isFormField()) {
                             String fileName = new File(item.getName()).getName();
                             System.out.println("filename:"+fileName);
-                            if(fileName.equals("newfile.html"))
+                            if(fileName.equals("newfile.html"))//파일이 있으면 그 파일에 덮어쓰고 없으면 uuid로 새로 이름 부여하기
                             {
                             	String extension = fileName.substring(fileName.lastIndexOf("."), fileName.length());
                                 UUID uuid = UUID.randomUUID();
@@ -128,7 +157,7 @@ public class CommunityModel {
                         else
                         {
                         	String fieldName = item.getFieldName();
-                            String fieldValue = item.getString(charset);  // 텍스트 값
+                            String fieldValue = item.getString(charset); 
                             System.out.println(fieldName+":"+fieldValue);
                         	map.put(fieldName, fieldValue);
                         }
@@ -136,7 +165,23 @@ public class CommunityModel {
                 }
                 
                 
+                String[] imageNames = ((String)map.get("imagenames_to_delete")).split(",");
                 CommunityDAO.boardInsert(map);
+                //free_board_delete_image(imageNames,Integer.parseInt((String)map.get("board_no")));
+                CommunityDAO.boardDeleteImage(imageNames);
+        		for(String imageName:imageNames)
+        		{
+        			File file=new File(uploadPath+imageName);
+        			file.delete();
+        		}
+        		
+        		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(Integer.parseInt((String)map.get("board_no")));
+        		for(String imageName:unsavedImages)
+        		{
+        			File file=new File(uploadPath+imageName);
+        			file.delete();
+        		}
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -149,6 +194,7 @@ public class CommunityModel {
 	public void freeboard_delete_unsaved(HttpServletRequest request, HttpServletResponse response)
 	{	
 		String board_no ="";
+		String imagenames_to_delete = "";
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
@@ -161,8 +207,16 @@ public class CommunityModel {
                 if (formItems != null /*&& formItems.size() > 0*/) {
                     for (FileItem item : formItems) {
                         if (item.isFormField()) {
+                            String fieldName = item.getFieldName();
                             String fieldValue = item.getString(charset);
-                            board_no=fieldValue;
+                            if(fieldName.equals("board_no"))
+                            {
+                            	board_no=fieldValue;
+                            }
+                            else if(fieldName.equals("imagenames_to_delete")) {
+                            	imagenames_to_delete = fieldValue;
+                            }
+                            
                         }
                     }
                 }
@@ -171,8 +225,19 @@ public class CommunityModel {
             }
 		}
 		//html파일 삭제는 아직 안됨 추가
+		//게시물 삭제시에는 delete cascade 제약조건으로 이미지 자동 삭제
+		//게시물 업데이트할 때 이미지 삭제하는건 실제로 업데이트를 저장할지 안할지 모르기 때문에 저장 안할때만 삭제
+		String[] imageNames = imagenames_to_delete.split(",");
+        //free_board_delete_image(imageNames,Integer.parseInt(board_no));
+		
+		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(Integer.parseInt(board_no));
+		for(String imageName:unsavedImages)
+		{
+			File file=new File(uploadPath+imageName);
+			file.delete();
+		}
+        
 		CommunityDAO.boardDeleteUnsaved(Integer.parseInt(board_no));
-		//delete cascade 제약조건으로 게시물 삭제시 이미지 자동 삭제
 	}
 	@RequestMapping("community/freeboard_detail.do")
 	public String freeboard_detail(HttpServletRequest request, HttpServletResponse response)
@@ -300,23 +365,7 @@ public class CommunityModel {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping("community/delete_image.do")//이미지파일 삭제
-	public void delete_image(HttpServletRequest request, HttpServletResponse response)
-	{
-		
-		String[] imageNames = ((String)request.getParameter("imageNames")).split(",");
-		try {
-			
-			for(String imageName:imageNames)
-			{
-				File file=new File(uploadPath+imageName);
-				file.delete();
-			}
-			CommunityDAO.boardDeleteImage(imageNames);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	@RequestMapping("community/freeboard_update.do")
 	public String freeboard_update(HttpServletRequest request, HttpServletResponse response)
 	{	

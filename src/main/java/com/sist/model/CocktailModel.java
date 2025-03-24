@@ -13,6 +13,7 @@ import com.sist.controller.RequestMapping;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CocktailModel {
@@ -255,5 +256,111 @@ public class CocktailModel {
 		{
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping("cocktail/cocktail_insert.do")
+	public String cocktail_insert(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		
+		request.setAttribute("main_jsp", "../cocktail/cocktail_insert.jsp");
+		return "../main/main.jsp";
+	}
+	
+	
+	@RequestMapping("cocktail/cocktail_insert_ok.do")
+	public String cocktail_insert_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session = request.getSession();
+		String id=(String)session.getAttribute("id");
+		String name= request.getParameter("name");
+		String ename= request.getParameter("ename");
+		String comments= request.getParameter("comments");
+		String content= request.getParameter("content");
+		String[] ing_no= request.getParameterValues("ing_no");
+		String[] unit= request.getParameterValues("unit");
+		String[] volume= request.getParameterValues("volume");
+		String[] alc= request.getParameterValues("alc");
+
+		int totalAlc=0;
+		int totalVolume=0;
+		for(int i=0;i<volume.length;i++)
+		{
+			int isAlc=Integer.parseInt(alc[i].trim());
+			int isVolume=Integer.parseInt(volume[i].trim());
+			totalAlc+=(isAlc*isVolume);
+			totalVolume+=isVolume;
+		}
+		int itAlc=totalAlc/totalVolume;
+		CocktailVO vo = new CocktailVO();
+		vo.setName(name);
+		vo.setEname(ename);
+		vo.setComments(comments);
+		vo.setContent(content);
+		vo.setAlc(String.valueOf(itAlc));
+		vo.setId(id);
+		vo.setImage("../img/illust_no_image.png");
+		CocktailDAO.cocktailInsert(vo, ing_no, unit, volume);
+		
+		return"redirect:../cocktail/cocktail_my.do";
+	}
+	
+	@RequestMapping("cocktail/ingredients_find_ajax.do")
+	public void ingredients_find_ajax(HttpServletRequest request, HttpServletResponse response)
+	{
+		String fd = request.getParameter("fd");
+		System.out.println(fd.toString());
+		List<CocktailIngredientsVO> list = CocktailDAO.ingredientsFindData(fd);
+		JSONArray arr = new JSONArray();
+		int i = 0;
+		for(CocktailIngredientsVO vo:list)
+		{
+			JSONObject obj=new JSONObject();
+			obj.put("ing_no",vo.getIng_no());
+			obj.put("ingname",vo.getIngname());
+			obj.put("alc", vo.getAlc());
+			
+			arr.add(obj);
+			i++;
+		}
+		try
+		{
+			response.setContentType("text/plain;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(arr.toJSONString());
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("cocktail/cocktail_delete.do")
+	public String cocktail_delete(HttpServletRequest request, HttpServletResponse response)
+	{
+		String cno = request.getParameter("cno");
+		request.setAttribute("cno", cno);
+		return "../cocktail/cocktail_delete.jsp?cno="+cno;
+	}
+	@RequestMapping("cocktail/cocktail_delete_ok.do")
+	public String cocktail_delete_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		String cocktail_no = request.getParameter("cno");
+		CocktailDAO.cocktailDelete(Integer.parseInt(cocktail_no));
+		
+		return "redirect:../cocktail/cocktail_list.do";
+	}
+	@RequestMapping("cocktail/cocktail_update.do")
+	public String cocktail_update(HttpServletRequest request, HttpServletResponse response)
+	{
+		String cno = request.getParameter("cno");
+		CocktailVO vo = CocktailDAO.cocktailDetailData(Integer.parseInt(cno));
+		List<CocktailVO> list = CocktailDAO.cocktailRecipeData(Integer.parseInt(cno));
+		List<CocktailVO> tags = CocktailDAO.cocktailTagData(Integer.parseInt(cno));
+		System.out.println(vo.getContent());
+		request.setAttribute("list", list);
+		request.setAttribute("vo", vo);
+		request.setAttribute("tags", tags);
+		
+		request.setAttribute("main_jsp", "../cocktail/cocktail_update.jsp");
+		return "../main/main.jsp";
 	}
 }
