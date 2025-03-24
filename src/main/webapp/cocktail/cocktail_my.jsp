@@ -43,11 +43,13 @@ $(function(){
     </section>
     
 	<section class="product spad">
+	<c:if test="${sessionScope.id!=null }">
 		<div class="container">
         	<div class="row mb-2 mr-2 justify-content-end">
-        		<a href="../cocktail/cocktail_insert.do" class="btn btn-sm btn-outline-primary" style="color: black; font-weight: 500">레시피 작성</a>
+        		<a href="../cocktail/cocktail_insert.do" class="primary-btn">레시피 작성</a>
             </div>
         </div>
+        </c:if>
             		<div class="container">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">

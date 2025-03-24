@@ -14,5 +14,5 @@ ENAME	VARCHAR2(100 BYTE)
 @Data
 public class CocktailIngredientsVO {
 	private int ing_no;
-	private String ingname,comments, alc,ingtag,ciimage,ename;
+	private String ingname,comments,alc,ingtag,ciimage,ename;
 }

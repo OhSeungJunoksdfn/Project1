@@ -43,6 +43,10 @@
                             <li><b>태그</b> ㅣ<c:forEach var="tvo" items="${tags }" ><span>${tvo.ctvo.value } </span>ㅣ</c:forEach></li>
                             <li><b>조회수</b> <span>${vo.hit }</span></li>
                             <li><b>좋아요</b> <i class="fa fa-heart" ></i> ${vo.likes } </li>
+                            <c:if test="${sessionScope.id==vo.id }">
+                            <li><b></b><a href="../cocktail/cocktail_update.do?cno=${vo.cocktail_no }" class="primary-btn">수정하기</a>
+                            <a href="../cocktail/cocktail_delete.do?cno=${vo.cocktail_no}" class="primary-btn">삭제하기</a> </li>
+                            </c:if>
                         </ul>
                     </div>
                 </div>
