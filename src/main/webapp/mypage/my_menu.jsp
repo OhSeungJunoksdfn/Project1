@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body> 
 
                     <div class="hero__categories">
                         <div class="hero__categories__all">
