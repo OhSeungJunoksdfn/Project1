@@ -44,16 +44,16 @@ background-color: transparent;
 	                </ul>
 	            </div>
 	           	<div class="hero__search__form" style="float:right;width:40%;">
-	               	<form action="#">
-	                   	<div class="hero__search__categories" style="width:20%;float:left;text-align:left">
+	               	<form id="myForm" action="#">
+	                   	<div class="hero__search__categories" style="width:25%;float:left;text-align:left">
 	                    	<select id="selectsearch" style="width:80%;padding:0px;border:none;text-align:center;margin-top:5px">
-								<option value="제목" <c:if test="${fn:trim(vo.tag) == '일상'}">selected</c:if>>제목</option>
-								<option value="내용" <c:if test="${fn:trim(vo.tag) == '질문'}">selected</c:if>>내용</option>
-								<option value="작성자" <c:if test="${fn:trim(vo.tag) == '후기'}">selected</c:if>>작성자</option>
+								<option value="제목" <c:if test="${selectsearch == '제목'}">selected</c:if>>제목</option>
+								<option value="내용" <c:if test="${selectsearch == '내용'}">selected</c:if>>내용</option>
+								<option value="작성자" <c:if test="${selectsearch == '작성자'}">selected</c:if>>작성자</option>
 							</select>
 	                   	</div>
-	                  	<input id="searchdata" type="text" name="subject" placeholder="검색어 입력" style="float:left;color:black;width:60%">
-	                  	<button class="site-btn" style="width:20%;">검색</button>
+	                  	<input id="searchdata" type="text" value="${searchdata }" placeholder="검색어 입력" style="float:left;color:black;width:55%">
+	                  	<button id="searchButton" class="site-btn" style="width:20%;">검색</button>
 	               	</form>
 	           	</div>
             </div>
@@ -84,16 +84,16 @@ background-color: transparent;
            <table class="table">
 				<tr>
 					<td class="product__pagination blog__pagination" style="border:none">
-						<a href="../community/freeboard_list.do?page=${curpage>1?curpage-1:curpage }" class="" style="width:50px;border:none;color:black"
+						<a href="../community/freeboard_list.do?page=${curpage>1?curpage-1:curpage }&tag=${tag}&selectsearch=${selectsearch}&searchdata=${searchdata}" class="" style="width:50px;border:none;color:black"
 						onmouseover="this.style.color='white'" 
 							onmouseout="this.style.color='black';">이전</a>
 						<c:set var="underline" value="underline" />
 						<c:set var="none" value="" />
 						<c:forEach var="i" begin="${startPage }" end="${endPage }">
 							
-                        	<a class="pagelist" href="../community/freeboard_list.do?page=${i }" style="margin:5px;border:none;text-decoration:${curpage==i?underline:none}">${i }</a>
+                        	<a class="pagelist" href="../community/freeboard_list.do?page=${i }&tag=${tag}&selectsearch=${selectsearch}&searchdata=${searchdata}" style="margin:5px;border:none;text-decoration:${curpage==i?underline:none}">${i }</a>
                         </c:forEach>
-						<a href="../community/freeboard_list.do?page=${curpage<totalpage?curpage+1:curpage }" class="ml-4" style="width:50px;border:none;color:black"
+						<a href="../community/freeboard_list.do?page=${curpage<totalpage?curpage+1:curpage }&tag=${tag}&selectsearch=${selectsearch}&searchdata=${searchdata}" class="ml-4" style="width:50px;border:none;color:black"
 							onmouseover="this.style.color='white'" 
 							onmouseout="this.style.color='black';">다음</a>
 						
@@ -107,25 +107,38 @@ background-color: transparent;
     </section>
 </div>
 <script type="text/javascript">
+$('#myForm').on('keypress', function(event) {
+    if (event.which === 13) {//엔터키 기본동작 방지
+        event.preventDefault();
+    }
+});
 
+$('#myForm').on('submit', function(event) {
+    event.preventDefault();  // 기본 제출 동작 방지
+});
+
+const handleSearch = () => {
+	const tag = $('.tag.active').text()
+	const selectsearch = $('#selectsearch').val()
+	const searchdata = $('#searchdata').val()
+	window.location.href = "../community/freeboard_list.do?tag="+tag+"&selectsearch="+selectsearch+"&searchdata="+searchdata;
+}
+
+$('#searchButton').on('click',handleSearch)
+
+$('#searchdata').keydown(function(e){
+	if(e.keyCode==13)
+	{
+		handleSearch()
+	}
+})
 
 $('.tag').on('click',function(){
 	const tag = $(this).text()
 	const selectsearch = $('#selectsearch').val()
 	const searchdata = $('#searchdata').val()
-	console.log(searchdata)
 	window.location.href = "../community/freeboard_list.do?tag="+tag+"&selectsearch="+selectsearch+"&searchdata="+searchdata;
 	
-	/* $.ajax({
-		type:'post',
-		url:'../community/freeboard_list.do',
-		dataType:'json',
-		data:{"tag":tag},
-		success:function(result)
-		{
-			
-		}
-	})  */
 })
 
 

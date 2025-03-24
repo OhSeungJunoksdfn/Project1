@@ -9,18 +9,44 @@
 	String id, subject, tag, htmlfile, dbday;
 	Date regdate; -->
 	<select id="boardListData" resultType="CommunityFreeboardVO" parameterType="hashmap">
-		SELECT board_no, id, subject, tag, regdate, hit, poststate, num
-		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, rownum as num
-		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate
+		SELECT board_no, id, subject, tag, regdate, hit, poststate, content, num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, content, rownum as num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, content
 		FROM cocktail_board ORDER BY regdate DESC))
 		WHERE (num BETWEEN #{start} AND #{end}) AND (poststate != 'UNSAVED')
 		<if test="tag != 'All'">
     		AND (tag = #{tag})
   		</if>
+  		<if test="searchdata != '' ">
+  			<if test="selectsearch == '제목' ">
+  				AND subject LIKE '%'||#{searchdata}||'%'
+  			</if>
+  			<if test="selectsearch == '내용' ">
+  				AND content LIKE '%'||#{searchdata}||'%'
+  			</if>
+  			<if test="selectsearch == '작성자' ">
+  				AND id LIKE '%'||#{searchdata}||'%'
+  			</if>
+  		</if>
 	</select>
 	<!-- 총페이지 -->
-	<select id="boardTotalPage" resultType="int">
+	<select id="boardTotalPage" resultType="int" parameterType="hashmap">
 		SELECT CEIL(COUNT(*)/20.0) FROM cocktail_board
+		WHERE (poststate != 'UNSAVED') 
+		<if test="tag != 'All'">
+    		AND (tag = #{tag})
+  		</if>
+  		<if test="searchdata != '' ">
+  			<if test="selectsearch == '제목' ">
+  				AND subject LIKE '%'||#{searchdata}||'%'
+  			</if>
+  			<if test="selectsearch == '내용' ">
+  				AND content LIKE '%'||#{searchdata}||'%'
+  			</if>
+  			<if test="selectsearch == '작성자' ">
+  				AND id LIKE '%'||#{searchdata}||'%'
+  			</if>
+  		</if>
 	</select>
 	<update id="boardHitIncrement" parameterType="int">
 		UPDATE cocktail_board SET
@@ -56,6 +82,10 @@
 	<select id="boardGetDeleteImage" parameterType="int" resultType="string">
 		SELECT file_name from board_img WHERE board_no = #{board_no} AND imagestate='UNSAVED'
 	</select>
+	<!-- 삭제될 게시물에 있는 이미지 가져오기 -->
+	<select id="boardGetDeleteImageAtDeleteBoard" parameterType="int" resultType="string">
+		SELECT file_name from board_img WHERE board_no = #{board_no}
+	</select>
 	<!-- 글쓰기 버튼으로 insert페이지로 이동하면 깡통 게시물 하나 추가 -->
 	<insert id="boardInsertNewPost" useGeneratedKeys="true" keyProperty="board_no" parameterType="CommunityFreeboardVO">
 		<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
@@ -67,11 +97,15 @@
 	<!-- 완료 버튼 누르면 편집된 게시물 저장 -->
 	<update id="boardSave" parameterType="hashmap">
 		UPDATE cocktail_board
-		SET id = #{id}, subject = #{subject}, tag = #{tag}, htmlfile = #{htmlfile}, htmlfile_size = #{htmlfile_size}, poststate = 'SAVED', documentheight= #{documentheight}
+		SET id = #{id}, subject = #{subject}, tag = #{tag}, htmlfile = #{htmlfile}, htmlfile_size = #{htmlfile_size}, poststate = 'SAVED', documentheight= #{documentheight}, content=#{content}
 		WHERE board_no = #{board_no}
 	</update>
 	<delete id="boardDeleteUnsaved" parameterType="int">
 		DELETE FROM cocktail_board
 		WHERE board_no=#{board_no} and poststate='UNSAVED'
+	</delete>
+	<delete id="boardDelete" parameterType="int">
+		DELETE FROM cocktail_board
+		WHERE board_no=#{board_no}
 	</delete>
 </mapper>

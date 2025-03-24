@@ -40,8 +40,10 @@
 			<tr style="border:none">
 				<td style="vertical-align:bottom;border:none"><h4 class="text-left" style="float:left">[${vo.tag }] ${vo.subject }</h4></td>
 				<td class="text-right" style="border:none">
-				<a href="../community/freeboard_update.do?board_no=${vo.board_no}" class="site-btn" style="">수정</a> 
-				<a href="#" class="site-btn" style="">삭제</a> 
+				<!-- 유저아이디 세션에서 가져오도록 처리 -->
+                <c:set var="userid" value="user"/>
+				<a href="../community/freeboard_update.do?board_no=${vo.board_no}&id=${userid}" class="site-btn" style="">수정</a> 
+				<a href="../community/freeboard_delete.do?board_no=${vo.board_no}&id=${userid}" class="site-btn" style="">삭제</a> 
 				<a href="../community/freeboard_list.do?page=${page }" class="site-btn" style="">목록</a> 
 				</td>
 			</tr>
