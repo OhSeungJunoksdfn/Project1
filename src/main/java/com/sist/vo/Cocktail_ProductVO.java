@@ -19,6 +19,6 @@ import lombok.Data;
  */
 @Data
 public class Cocktail_ProductVO {
-	private int product_no, cno, hit;
+	private int product_no, cno, hit, priceInt;
 	private String name, type, price, poster, deliver, alc, volumn, loc, content, delevery_fee;
 }

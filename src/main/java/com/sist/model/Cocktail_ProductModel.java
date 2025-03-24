@@ -2,8 +2,9 @@ package com.sist.model;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List; 
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -30,6 +31,9 @@ public class Cocktail_ProductModel {
 		String cno=request.getParameter("cno");
 		if(cno==null)
 			cno="1";
+		String sort=request.getParameter("sort");
+		if(sort==null)
+			sort="0";
 		int curpage=Integer.parseInt(page);
 		Map map=new HashMap();
 		map.put("start", (curpage*12)-11);
@@ -46,6 +50,7 @@ public class Cocktail_ProductModel {
 		if(endPage>totalpage)
 			endPage=totalpage;
 		
+		// 카테고리별로 나누기
 		Cocktail_ProductVO vo=Cocktail_ProductDAO.cocktail_productCnoRandomData(map);
 		List<Cocktail_ProductVO> rList=Cocktail_ProductDAO.cocktail_productCnoRandomData12(map);
 		
@@ -53,6 +58,7 @@ public class Cocktail_ProductModel {
 		request.setAttribute("rList", rList);
 		request.setAttribute("cno", cno);
 		
+		// 쿠키
 		List<Cocktail_ProductVO> cList=new ArrayList<Cocktail_ProductVO>();
 		Cookie[] cookies=request.getCookies();
 		if(cookies!=null)
@@ -76,6 +82,20 @@ public class Cocktail_ProductModel {
 			cList4.add(cList.subList(i, end));
 		}
 		
+		String priceStr=vo.getPrice();
+		priceStr=priceStr.replaceAll("[^0-9]", "");
+		vo.setPriceInt(Integer.parseInt(priceStr));
+		
+		switch(sort)
+		{
+		case "1":
+			list.sort(Comparator.comparingInt(Cocktail_ProductVO::getPriceInt));
+			break;
+		case "2":
+			list.sort(Comparator.comparingInt(Cocktail_ProductVO::getPriceInt).reversed());
+			break;
+		}
+		
 		
 		request.setAttribute("cList", cList);
 		request.setAttribute("cList4", cList4);
@@ -85,6 +105,7 @@ public class Cocktail_ProductModel {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("totalcount", totalcount);
+		request.setAttribute("sort", sort);
 		request.setAttribute("main_jsp", "../cocktail_product/cocktail_product_list.jsp");
 		return "../main/main.jsp";
 	}
@@ -96,7 +117,7 @@ public class Cocktail_ProductModel {
 		Cookie cookie=new Cookie("product_no_"+product_no, product_no);
 		cookie.setPath("/");
 		cookie.setMaxAge(60^60*24);
-		// 전송
+		// 전송 
 		response.addCookie(cookie);
 		// 화면 이동
 		return "redirect:cocktail_product_detail.do?product_no="+product_no+"&cno="+cno;
@@ -133,63 +154,105 @@ public class Cocktail_ProductModel {
 	@RequestMapping("cocktail_product/cocktail_product_find_ajax.do")
 	public void cocktail_product_find_ajax(HttpServletRequest request, HttpServletResponse response)
 	{
-		// data:{"fd":fd,"ss":ss,"page":1}
-		String page=request.getParameter("page");
-		String fd=request.getParameter("fd");
-		String ss=request.getParameter("ss");
-		int curpage=Integer.parseInt(page);
-		Map map=new HashMap();
-		map.put("start", (20*curpage)-19);
-		map.put("end", 20*curpage);
-		map.put("ss", ss);
-		map.put("fd",fd);
-		List<Cocktail_ProductVO> list=Cocktail_ProductDAO.cocktail_productFindData(map);
-		int totalpage=Cocktail_ProductDAO.cocktail_productFindTotalPage(map);
-		  
-		final int BLOCK=10;
-		int startPage=((curpage-1)/BLOCK*BLOCK)+1;
-		int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
-		  
-		if(endPage>totalpage)
-			 endPage=totalpage;
-		  
-		// JSON변경 
-		JSONArray arr=new JSONArray();
-		int i=0;
-		// product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
-		for(Cocktail_ProductVO vo:list)
+		try 
 		{
-			JSONObject obj=new JSONObject();
-			obj.put("product_no", vo.getProduct_no());
-			obj.put("name", vo.getName());
-			obj.put("type", vo.getType());
-			obj.put("price", vo.getPrice());
-			obj.put("poster", vo.getPoster());
-			obj.put("delever", vo.getDeliver());
-			obj.put("alc", vo.getAlc());
-			obj.put("volumn", vo.getVolumn());
-			obj.put("loc", vo.getLoc());
-			obj.put("content", vo.getContent());
-			obj.put("cno", vo.getCno());
-			obj.put("hit", vo.getHit());
-			if(i==0)
+			// data:{"fd":fd,"ss":ss,"page":1}
+			String page=request.getParameter("page");
+			String ss=request.getParameter("ss");
+			String cno=request.getParameter("cno");
+			if(cno==null)
+				cno="1";
+			if(ss==null || ss.trim().isEmpty())
+				ss="*";
+			int curpage=Integer.parseInt(page);
+			Map map=new HashMap();
+			map.put("start", (curpage*12)-11);
+			map.put("end", curpage*12);
+			map.put("ss", ss);
+			map.put("cno", cno);
+			List<Cocktail_ProductVO> list=Cocktail_ProductDAO.cocktail_productFindData(map);
+			int totalpage=Cocktail_ProductDAO.cocktail_productFindTotalPage(map);
+			
+			
+			final int BLOCK=10;
+			int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+			int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
+			  
+			if(endPage>totalpage)
+				 endPage=totalpage;
+			
+			List<Cocktail_ProductVO> fList;
+			if(ss==null || ss.trim().isEmpty())
 			{
-				obj.put("curpage", curpage);
-				obj.put("totalpage", totalpage);
-				obj.put("startPage", startPage);
-				obj.put("endPage",endPage);
+				fList=Cocktail_ProductDAO.cocktail_productFindRandomData(map);
+			}
+			else
+			{
+				fList=Cocktail_ProductDAO.cocktail_productFindData(map);
 			}
 			  
-			arr.add(obj);
-			i++;
-		  }
-		  
-		  // 전송
-		  try
-		  {
-			  response.setContentType("text/plain;charset=UTF-8");
-			  PrintWriter out=response.getWriter();
-			  out.write(arr.toJSONString());
-		  }catch(Exception ex) {}
-	  }
+			// JSON변경 
+			JSONArray arr=new JSONArray();
+			int i=0;
+			// product_no, name, type, price, poster, deliver, alc, volumn, loc, content, cno, hit
+			for(Cocktail_ProductVO vo:list)
+			{
+				JSONObject obj=new JSONObject();
+				obj.put("product_no", vo.getProduct_no());
+				obj.put("name", vo.getName());
+				obj.put("type", vo.getType());
+				obj.put("price", vo.getPrice());
+				obj.put("poster", vo.getPoster());
+				obj.put("delever", vo.getDeliver());
+				obj.put("alc", vo.getAlc());
+				obj.put("volumn", vo.getVolumn());
+				obj.put("loc", vo.getLoc());
+				obj.put("content", vo.getContent());
+				obj.put("cno", vo.getCno());
+				obj.put("hit", vo.getHit());
+				if(i==0)
+				{
+					obj.put("curpage", curpage);
+					obj.put("totalpage", totalpage);
+					obj.put("startPage", startPage);
+					obj.put("endPage",endPage);
+					obj.put("ss", ss);
+				}
+				  
+				arr.add(obj);
+				i++;
+			  }
+			
+			List<Cocktail_ProductVO> rList=Cocktail_ProductDAO.cocktail_productCnoRandomData12(map);
+			JSONArray arr2=new JSONArray();
+			for(Cocktail_ProductVO vo:rList)
+			{
+				JSONObject obj=new JSONObject();
+				obj.put("product_no", vo.getProduct_no());
+				obj.put("name", vo.getName());
+				obj.put("type", vo.getType());
+				obj.put("price", vo.getPrice());
+				obj.put("poster", vo.getPoster());
+				obj.put("delever", vo.getDeliver());
+				obj.put("alc", vo.getAlc());
+				obj.put("volumn", vo.getVolumn());
+				obj.put("loc", vo.getLoc());
+				obj.put("content", vo.getContent());
+				obj.put("cno", vo.getCno());
+				obj.put("hit", vo.getHit());
+				arr2.add(obj);
+			}
+			  
+			JSONObject result=new JSONObject();
+			result.put("arr", arr);
+			result.put("arr2", arr2);
+			  
+			// 전송
+				response.setContentType("text/plain;charset=UTF-8");
+				PrintWriter out=response.getWriter();
+				out.write(result.toJSONString());
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }
