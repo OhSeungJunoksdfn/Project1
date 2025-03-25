@@ -255,7 +255,7 @@ input[type=text]{
     </section>
 <section class="product-details spad">
         <div class="container">
-        <form method="post" action="../cocktail/cocktail_insert_ok.do">
+        <form method="post" action="../cocktail/cocktail_update_ok.do">
             <table class="table">
             <tr>
             	<th><h5>이미지 업로드</h5></th>
@@ -267,7 +267,8 @@ input[type=text]{
             <tr>
             	<th><h5>칵테일 이름</h5></th>
             	<td>
-					<input type="text" name="name" id="name" value="${vo.name }" >   	
+					<input type="text" name="name" id="name" value="${vo.name }" > 
+					<input type="hidden" name="cno" value=${cno }>  	
             	</td>
             </tr>
             <tr>
@@ -370,7 +371,7 @@ input[type=text]{
 				</table>
 				<tr >
 				<td colspan="2" class="text-right">
-					<input type="button" value="레시피 올리기" class="primary-btn" onclick="onSubmit()">
+					<input type="button" value="레시피 수정" class="primary-btn" onclick="onSubmit()">
 					<a href="javascript:history.back()" class="primary-btn" style="background: white; color: #000;border: 2px solid black;">취소</a>
 				</td>
 				</tr>

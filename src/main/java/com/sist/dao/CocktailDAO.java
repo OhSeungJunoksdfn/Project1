@@ -352,21 +352,7 @@ public class CocktailDAO {
 		}
 	}
 	
-	public static void cocktailUpdate(CocktailVO vo)
-	{
-		SqlSession session = null;
-		try {
-			session = ssf.openSession(true);
-			session.update("cocktailUpdate",vo);
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if(session!=null) session.close();
-		}
-	}
+	
 	public static void cocktailTagUpdate(CocktailTagVO vo)
 	{
 		SqlSession session = null;
@@ -409,6 +395,78 @@ public class CocktailDAO {
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+	}
+	
+	public static void cocktailUpdate(CocktailVO vo,String[] ing_no,String[] unit,String[] volume,int cocktail_no )
+	{
+		SqlSession session = null;
+		try {
+			session = ssf.openSession();
+			
+			vo.setCocktail_no(cocktail_no);
+			//칵테일 수정
+			session.update("cocktailUpdate",vo);
+			//칵테일재료 태그 삭제
+			session.delete("cocktailRecipeDelete",cocktail_no);
+			session.delete("cocktailTagDelete",cocktail_no);
+			//칵테일재료 태그 생성
+			CocktailVO ivo = new CocktailVO();
+			ivo.setCocktail_no(cocktail_no);
+			if(Integer.parseInt(vo.getAlc())==0)
+			{
+				ivo.getCtvo().setValue("무알콜");
+			}
+			else if(Integer.parseInt(vo.getAlc())>=20)
+			{
+				ivo.getCtvo().setValue("강한 도수");
+			}
+			else 
+			{
+				ivo.getCtvo().setValue("약한 도수");
+			}
+			session.insert("cocktailTagInsert",ivo);
+			Map<String, String> map = new HashMap<>();
+			map.put("럼", "럼베이스");
+			map.put("보드카", "보드카베이스");
+			map.put("위스키", "위스키베이스");
+			map.put("진", "진베이스");
+			map.put("데킬라", "데킬라베이스");
+			map.put("브랜디", "브랜디베이스");
+			map.put("소주", "소주베이스");
+			for(int i=0; i<ing_no.length;i++) {
+				for(String val:map.keySet())
+				{
+					if(ing_no[i].contains(val))
+					{
+						ivo.getCtvo().setValue(map.get(val));
+						session.insert("cocktailTagInsert",ivo);
+						break;
+					}
+				}
+			}
+			ivo.getCtvo().setValue("재료 " + ing_no.length+"개" );
+			session.insert("cocktailTagInsert",ivo);
+			
+			for(int i=0;i<ing_no.length;i++)
+			{
+				ivo.getCrivo().setIng_no(Integer.parseInt(ing_no[i].trim()));
+				ivo.getCrivo().setUnit(unit[i]);
+				ivo.getCrivo().setVolume(Integer.parseInt(volume[i].trim()));
+				session.insert("cocktailRecipeInsert",ivo);
+			}
+			
+			session.commit();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			session = ssf.openSession();
+			session.delete("cocktailDelete",cocktail_no);
+			//여기다가 insert한거 삭제하기 cocktail먼저 만들고 나머지 만들기 실패하면 여기서 삭제 cocktail_no는 처음에 불러와서 그거로 하는거로??
 		}
 		finally
 		{

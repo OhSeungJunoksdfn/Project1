@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>칵테일 목록</h2>
+                        <h2>재료 목록</h2>
                     </div>
                 </div>
             </div>
@@ -51,6 +51,7 @@
                             </div>
                         </div>
                         </div>
+                        <div id="line"></div>
         <div class="container">
             <div class="row">
                     <c:forEach var="vo" items="${list }">
@@ -69,7 +70,9 @@
                             </div>
                         </div>
                     </c:forEach>
-
+                </div>
+            </div>
+				<div id="line"></div>
            <div class="container">
            		<div class="row justify-content-center">
     	                    <div class="product__pagination">
@@ -85,8 +88,6 @@
                     </div>
            		</div>
          </div>
-                </div>
-            </div>
     </section>
 </body>
 </html>
