@@ -50,6 +50,7 @@ public class CocktailMemberModel {
 		   }catch(Exception ex) 
 		   {
 			   ex.printStackTrace();
+			   
 		   }
 		   
 	   }
@@ -136,6 +137,7 @@ public class CocktailMemberModel {
 		   }catch(Exception ex) 
 		   {
 			   ex.printStackTrace();
+			   
 		   }
 	   }
 	// 로그아웃 
@@ -147,5 +149,55 @@ public class CocktailMemberModel {
 		   session.invalidate();
 		   return "redirect:../main/main.do";
 	   }
+	   @RequestMapping("member/update.do")
+	   public String member_update(HttpServletRequest request, HttpServletResponse response)
+	   {
+		   try
+			{
+				request.setAttribute("main_jsp", "../member/update.jsp");
+				return "../main/main.jsp";
+			}catch(Exception ex) 
+			{
+			   ex.printStackTrace();
+			   return "../member/error.jsp";
+			}
+	   }
+	   
+	   @RequestMapping("..member/update_ok.do")
+	   public String member_update_ok(HttpServletRequest requset, HttpServletResponse response)
+	   {
+	  		   String id=request.getParameter("id");
+			   String pwd=request.getParameter("pwd");
+			   String name=request.getParameter("name");
+			   String sex=request.getParameter("sex");
+			   String birthday=request.getParameter("birthday");
+			   String email=request.getParameter("email");
+			   String post=request.getParameter("post");
+			   String address=request.getParameter("address");
+			   String address_detail=request.getParameter("address_detail");
+			   String phone1=request.getParameter("phone1");
+			   String phone2=request.getParameter("phone2");
+			   String coment=request.getParameter("coment");
+			   String avatar=request.getParameter("avatar");
+			   
+			   CocktailMemberVO vo=new CocktailMemberVO();
+			   vo.setId(id);
+			   vo.setPwd(pwd);
+			   vo.setName(name);
+			   vo.setSex(sex);
+			   vo.setBirthday(birthday);
+			   vo.setEmail(email);
+			   vo.setPost(post);
+			   vo.setAddress(address);
+			   vo.setAddress_detail(address_detail);
+			   vo.setPhone(phone1+"-"+phone2);
+			   vo.setComent(coment);
+			   vo.setAvatar(avatar);
+			   CocktailMemberDAO.memberUpdate(vo);
+			   return "redirect:../main/main.do";
+			   
+	   }
+	   return "../member/member_update_ok.jsp";
+	   
 	}
 
