@@ -94,7 +94,7 @@ public class CocktailbarDAO {
 	  {
 		  SqlSession session=ssf.openSession(true);
 		  session.update("cocktailbarHitIncrement",bar_no);
-		  //session.commit();
+		  session.commit();
 		  CocktailbarVO vo=session.selectOne("cocktailbarDetailData",bar_no);
 		  session.close();
 		  return vo;

@@ -36,6 +36,7 @@ text-overflow: ellipsis;
     <section class="product spad">
         <div class="container">
             <div class="row">
+            <c:if test="${sessionScope.id!=null }">
                <table class="table">
               <tr>
                <td>
@@ -43,6 +44,7 @@ text-overflow: ellipsis;
                </td>
               </tr>
              </table>
+             </c:if>
                 <div class="col-lg-12 col-md-12">
                     
                     
@@ -58,7 +60,7 @@ text-overflow: ellipsis;
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">${vo.loc }</a></h6>
+                                    <h6>${vo.loc }</h6>
                                     <h5><a href="../cocktailbar/cocktailbar_detail_before.do?bar_no=${vo.bar_no }">${vo.name}</a></h5>
                                 </div>
                             </div>

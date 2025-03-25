@@ -69,6 +69,7 @@ $(function(){
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3>${vo.name }</h3>
+                        <b>조회수 : </b><span>${vo.hit}</span>
                         <div class="product__details__quantity">
                         </div>
                         <ul>
@@ -83,8 +84,8 @@ $(function(){
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab"
-                                    aria-selected="false">지도</a>
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                    aria-selected="true">지도</a>
                             </li>
                         </ul>
                         <div class="tab-pane" id="tabs-1" role="tabpanel">
@@ -355,8 +356,8 @@ $(function(){
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab"
-                                    aria-selected="false">댓글</a>
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                    aria-selected="true">댓글</a>
                             </li>
                         </ul>
                         <div class="tab-pane" id="tabs-1" role="tabpanel">
@@ -366,9 +367,17 @@ $(function(){
                             </div>
             </div>
         </div>
-    </section>
-
-    					<div class="comment_area section_padding_50 clearfix">
+        <c:if test="${sessionScope.id!=null }">
+        <table class="table">
+              <tr>
+               <td>
+                <a href="../cocktailbar/cocktailbarboard_update.do?bar_no=${vo.bar_no }" class="btn btn-outline-warning btn-sm">수정</a>
+                <a href="../cocktailbar/cocktailbarboard_delete.do?bar_no=${vo.bar_no }" class="btn btn-danger btn-sm">삭제</a>
+               </td>
+              </tr>
+             </table>
+         </c:if>
+    					<%-- <div class="comment_area section_padding_50 clearfix">
                                 <h4 class="mb-30">댓글(${count })</h4>
 
                                 <ol>
@@ -417,15 +426,10 @@ $(function(){
                                     </li>
                                     </c:forEach>
                                 </ol>
-                            </div>
-             <table class="table">
-              <tr>
-               <td>
-                <a href="../cocktailbar/cocktailbarboard_update.do?bar_no=${vo.bar_no }" class="btn btn-outline-warning btn-sm">수정</a>
-                <a href="../cocktailbar/cocktailbarboard_delete.do?bar_no=${vo.bar_no }" class="btn btn-danger btn-sm">삭제</a>
-               </td>
-              </tr>
-             </table>
+                            </div> --%>
+    </section>
+
+             
     <!-- Product Details Section End -->
 
     <!-- Related Product Section Begin -->
@@ -449,7 +453,7 @@ $(function(){
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">${vo.loc }</a></h6>
+                            <h6>${vo.loc }</h6>
                             <h5><a href="../cocktailbar/cocktailbar_detail.do?bar_no=${vo.bar_no }">${vo.name}</a></h5>
                         </div>
                     </div>
