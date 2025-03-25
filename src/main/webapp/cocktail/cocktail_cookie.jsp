@@ -15,7 +15,7 @@
                 <c:forEach var="vo" items="${clist }">
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="${vo.image }">
-                            <h5><a href="#">${vo.name }</a></h5>
+                            <h5><a href="../cocktail/cocktail_detail.do?cno=${vo.cocktail_no }">${vo.name }</a></h5>
                         </div>
                     </div>
                 </c:forEach>

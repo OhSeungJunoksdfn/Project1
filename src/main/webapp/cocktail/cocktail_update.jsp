@@ -351,15 +351,15 @@ input[type=text]{
 	      <td class="text-center" width="15%"><input type="text" name="volume" class="volume" value="${list[i].crivo.volume }"></td> 
 	      <td class="text-center" width="15%"> 
 	        <select name="unit" class="unit"> 
-	          <option  <c:if test="${list[i].crivo.unit=='ml' }">selected</c:if> >ml</option>
-					 <option  <c:if test="${list[i].crivo.unit=='dash' }">selected</c:if> >dash</option>
-					 <option <c:if test="${list[i].crivo.unit=='teaspoon' }">selected</c:if> >teaspoon</option>
-					 <option  <c:if test="${list[i].crivo.unit=='drops' }">selected</c:if> >drops</option>
-					 <option  <c:if test="${list[i].crivo.unit=='gram' }">selected</c:if> >gram</option>
-					 <option  <c:if test="${list[i].crivo.unit=='개' }">selected</c:if> >개</option>
-					 <option  <c:if test="${list[i].crivo.unit=='slice' }">selected</c:if> >slice</option>
-					 <option  <c:if test="${list[i].crivo.unit=='peel' }">selected</c:if> >peel</option>
-					 <option  <c:if test="${list[i].crivo.unit=='leaves' }">selected</c:if> >leaves</option>
+	          <option   ${list[i].crivo.unit.trim()=="ml"? "selected":"" } >ml</option>
+					 <option   ${list[i].crivo.unit.trim()=="dash"? "selected":"" } >dash</option>
+					 <option  ${list[i].crivo.unit.trim()=="teaspoon"? "selected":"" } >teaspoon</option>
+					 <option  ${list[i].crivo.unit.trim()=="drops"? "selected":"" } >drops</option>
+					 <option   ${list[i].crivo.unit.trim()=="gram"? "selected":"" } >gram</option>
+					 <option   ${list[i].crivo.unit.trim()=="개"? "selected":"" } >개</option>
+					 <option  ${list[i].crivo.unit.trim()=="slice"? "selected":"" } >slice</option>
+					 <option   ${list[i].crivo.unit.trim()=="peel"? "selected":"" } >peel</option>
+					 <option   ${list[i].crivo.unit.trim()=="leaves"? "selected":"" }>leaves</option>
 	        </select> 
 	      </td> 
 	      <td class="text-center" width="10%"> 
