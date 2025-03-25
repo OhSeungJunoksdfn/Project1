@@ -70,6 +70,7 @@ let jsonView = (json) => {
 			+'</div>'
 	})
 	
+	html+='<div id="line"></div>'
 	html+='<div class="container">'
 	html+='<div class="row justify-content-end">'
     html+='<div class="product__pagination">'
@@ -129,13 +130,14 @@ let jsonView = (json) => {
         </div>
     </section>
 	<section class="product spad">
+	
 	<div class="container">
 		<div class="row justify-content-end mb-2">
                 <input type="text" id="ss"  placeholder="Seach">
 	            <button type="button" id="findBtn" class="site-btn">검색</button>
 		</div>
        </div>
-	
+	<div id="line"></div>
         <div class="container">
             <div class="row" id="view">
                     

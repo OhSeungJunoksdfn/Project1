@@ -8,6 +8,8 @@
 	<result property="civo.ingname" column="ingname" />
 	<result property="civo.ciimage" column="ciimage" />
 	<result property="civo.ingtag" column="ingtag" />
+	<result property="civo.alc" column="alc" />
+	<result property="civo.ing_no" column="ing_no" />
 </resultMap>
 
 <resultMap type="CocktailVO" id="tagMap">
@@ -36,7 +38,7 @@
 	</select>
 	
 	<select id="cocktailRecipeData" resultMap="cocktailMap" parameterType="int">
-		SELECT ingname,cocktail_ingredients.comments,ciimage,ingtag,volume,unit
+		SELECT ingname,cocktail_ingredients.comments,ciimage,ingtag,volume,unit,NVL(cocktail_ingredients.alc,'0') as alc,cocktail_ingredients.ing_no
 		FROM cocktail,cocktail_ingredients ,COCKTAIL_RECIPE
 		WHERE cocktail.cocktail_no=COCKTAIL_RECIPE.cocktail_no
 		AND cocktail_ingredients.ing_no = COCKTAIL_RECIPE.ing_no
