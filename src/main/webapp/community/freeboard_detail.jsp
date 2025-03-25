@@ -24,9 +24,44 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
-
 </script>
+<style type="text/css">
+.comment-container{
+	padding:10px;
+	border-top:solid black 1px;
+	border-bottom:solid black 1px;
+	overflow:auto
+}
+.comment-box{
+	text-align:left;
+	padding:10px;
+	float:left;
+	color:black;
+	border-bottom:solid black 1px;
+	width:100%
+}
+.comment-box:last-child{
+	border-bottom:none;
+
+}
+.comment-writer{
+	color:black;
+	font-size:17px;
+	font-weight:bold;
+}
+.comment-content{
+}
+.comment-date{
+	font-size: 15px;
+	color:gray
+}
+.comment-button{
+	margin:10px;
+	padding:5px;
+	padding-left:10px;
+	padding-right:10px;
+}
+</style>
 </head>
 <body>
 <div>
@@ -68,6 +103,28 @@
 					</td>
 				</tr>
 			</table> -->
+			<div class="comment-container">
+				<div class="comment-box">
+					<p class="comment-writer">작성자</p>
+					<div class="comment-content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
+					<div class="comment-date">2025-01-01 12:12:12</div>
+					<button class="site-btn comment-button">답글</button>
+				</div>
+				
+				<div class="comment-box">
+					<p class="comment-writer">작성자</p>
+					<div class="comment-content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
+					<div class="comment-date">2025-01-01 12:12:12</div>
+					<button class="site-btn comment-button">답글</button>
+				</div>
+				
+				<div class="comment-box">
+					<p class="comment-writer">작성자</p>
+					<div class="comment-content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
+					<div class="comment-date">2025-01-01 12:12:12</div>
+					<button class="site-btn comment-button">답글</button>
+				</div>
+			</div>
           </div>
         </div>
         
