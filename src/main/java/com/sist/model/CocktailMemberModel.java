@@ -162,7 +162,7 @@ public class CocktailMemberModel {
 			   return "../member/error.jsp";
 			}
 	   }
-	   
+	   /*
 	   @RequestMapping("..member/update_ok.do")
 	   public String member_update_ok(HttpServletRequest requset, HttpServletResponse response)
 	   {
@@ -198,6 +198,6 @@ public class CocktailMemberModel {
 			   
 	   }
 	   return "../member/member_update_ok.jsp";
-	   
+	 */  
 	}
 
