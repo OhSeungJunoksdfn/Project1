@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.product__details__text .cart-icon {
+	
+}
+</style>
 </head>
 <body>
     <!-- Breadcrumb Section Begin -->
@@ -44,6 +49,7 @@
                     <div class="product__details__text">
                       <h3>${vo.name }</h3>
                        <div class="product__details__price">${vo.price }</div>
+                         <h6 style="color: red; font-weight: bold; ">해당 상품은 픽업만 가능한 상품입니다!</h6>
                         <c:choose>
                          <c:when test="${vo.cno>=1 && vo.cno<=4 }">
                            <p>상품 상세 참조</p>
@@ -64,8 +70,10 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">구매하기</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <a href="#" class="heart-icon"><span class="icon_cart_alt"></span></a>
+                        <a href="#" class="primary-btn">구매하기</a>
+                        <a href="#" class="primary-btn">목록</a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
@@ -129,7 +137,7 @@
                         <div class="product__item__pic set-bg">
                           <a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">
                             <img src="${vo.poster }" style="width: 100%; height: 200px;">
-                          </a> 
+                          </a>
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
