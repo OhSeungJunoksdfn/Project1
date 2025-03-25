@@ -71,6 +71,85 @@ public class CocktailMemberDAO {
 		
 	   }
 	   /*
+	    * 	<update id="memberUpdate" parameterType="CocktailMemberVO">
+		  	UPDATE cocktail_member SET
+		  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},
+		  	post=#{post},address=#{address},address_detail=#{address_detail},SYSDATE,
+		  	coment=#{coment},'n','n',phone=#{phone},avatar=#{avatar}
+		  	WHERE id=#{id}
+		    </update>
+	    * 
+	    */
+	   public static void memberUpdate(CocktailMemberVO vo)
+	   {
+		   SqlSession session=null;
+		   try
+		   {
+			   session = ssf.openSession(true);
+			   session.update("memberUpdate",vo);
+		   }catch(Exception ex)
+		   {
+			  ex.printStackTrace(); 
+		   }
+		   finally
+		   {
+			   if(session != null)
+				   session.close();
+		   }
+		
+	   }
+	   /*
+	    * <update id="memberSecession" parameterType="string">
+		  	UPDATE cocktail_member
+		  	WHERE id = #{id}
+		  	AND pwd=#{pwd}
+		  	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
+		  </update>
+	    */
+	   public static void memberSecession(CocktailMemberVO vo)
+	   {
+		   SqlSession session=null;
+		   try
+		   {
+			   session = ssf.openSession(true);
+			   session.update("memberSecession",vo);
+		   }catch(Exception ex)
+		   {
+			  ex.printStackTrace(); 
+		   }
+		   finally
+		   {
+			   if(session != null)
+				   session.close();
+		   }
+		
+	   }
+	   /*
+	    * <delete id="memberDelete" parameterType="int">
+		    DELETE FROM cocktail_member
+		    WHERE id=#{id}
+		  </delete>
+	    */
+	   public static void memberDelete(CocktailMemberVO vo)
+	   {
+		   SqlSession session=null;
+		   try
+		   {
+			   session = ssf.openSession(true);
+			   session.delete("memberDelete",vo);
+		   }catch(Exception ex)
+		   {
+			  ex.printStackTrace(); 
+		   }
+		   finally
+		   {
+			   if(session != null)
+				   session.close();
+		   }
+		
+	   }
+	   
+	   /*
 	    * <select id="memberIdCheckCount" resultType="int" parameterType="string">
 	      SELECT COUNT(*) FROM cocktail_member
 	      WHERE id=#{id}

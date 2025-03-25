@@ -28,7 +28,7 @@
       #{post},#{address},#{address_detail},SYSDATE,
       #{coment},'n','n',#{phone},#{avatar}
     )
-  </insert>
+   </insert>
   <!-- 로그인 -->
   <select id="memberIdCheckCount" resultType="int" parameterType="string">
     SELECT COUNT(*) FROM cocktail_member
@@ -39,5 +39,21 @@
    FROM cocktail_member
    WHERE id=#{id}
   </select>
-
+  <update id="memberUpdate" parameterType="CocktailMemberVO">
+  	UPDATE cocktail_member SET
+  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},
+  	post=#{post},address=#{address},address_detail=#{address_detail},regdate=SYSDATE,
+  	coment=#{coment},admin='n',login='n',phone=#{phone},avatar=#{avatar}
+  	WHERE id=#{id}
+  </update>
+  <update id="memberSecession" parameterType="string">
+  	UPDATE cocktail_member
+  	WHERE id = #{id}
+  	AND pwd=#{pwd}
+  	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
+  </update>
+  <delete id="memberDelete" parameterType="int">
+    DELETE FROM cocktail_member
+    WHERE id=#{id}
+  </delete>
 </mapper>
