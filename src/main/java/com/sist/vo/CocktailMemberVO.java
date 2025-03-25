@@ -20,11 +20,12 @@ import lombok.Data;
 	LOGIN                   VARCHAR2(1)   
 	PHONE                   VARCHAR2(13)  
 	AVATAR                  VARCHAR2(100) 
+	DELETEDATE              DATE  
  */
 
 @Data
 public class CocktailMemberVO {
 	private String id,pwd,name,sex,email,birthday,post,address,address_detail,coment,admin,login,phone,avatar,msg;
-	private Date regdate;
+	private Date regdate,deletdate;
 	
 }

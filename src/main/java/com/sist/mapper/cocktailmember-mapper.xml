@@ -20,40 +20,59 @@
 	ADMIN                   VARCHAR2(1)   
 	LOGIN                   VARCHAR2(1)   
 	PHONE                   VARCHAR2(13)  
-	AVATAR  
+	AVATAR                  VARCHAR2(100) 
+	DELETEDATE              DATE  
   -->
    <insert id="memberInsert" parameterType="CocktailMemberVO">
     INSERT INTO cocktail_member VALUES(
       #{id},#{pwd},#{name},#{sex},#{email},#{birthday},
       #{post},#{address},#{address_detail},SYSDATE,
-      #{coment},'n','n',#{phone},#{avatar}
+      #{coment},'n','y',#{phone},#{avatar}
     )
    </insert>
   <!-- 로그인 -->
   <select id="memberIdCheckCount" resultType="int" parameterType="string">
     SELECT COUNT(*) FROM cocktail_member
     WHERE id=#{id}
+    AND login='y'
   </select>
+  <!-- 회원정보 -->
+  <select id="memberUpdateData" resultType="CocktailMemberVO" parameterType="string">
+   SELECT id,name,sex,email,birthday,post,address,address_detail,coment,phone,avatar
+   FROM cocktail_member
+   WHERE id=#{id}
+  </select>
+  <!-- 회원수정 -->
   <select id="memberGetPassword" resultType="CocktailMemberVO" parameterType="string">
    SELECT id,pwd,name,sex,email,admin
    FROM cocktail_member
    WHERE id=#{id}
   </select>
+  
   <update id="memberUpdate" parameterType="CocktailMemberVO">
   	UPDATE cocktail_member SET
-  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},
-  	post=#{post},address=#{address},address_detail=#{address_detail},regdate=SYSDATE,
-  	coment=#{coment},admin='n',login='n',phone=#{phone},avatar=#{avatar}
+  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},post=#{post},
+  	address=#{address},address_detail=#{address_detail},regdate=SYSDATE,
+  	coment=#{coment},phone=#{phone},avatar=#{avatar}
   	WHERE id=#{id}
   </update>
+  <!-- 회원탈퇴처리 -->
   <update id="memberSecession" parameterType="string">
   	UPDATE cocktail_member
+  	SET login = 'n'
   	WHERE id = #{id}
   	AND pwd=#{pwd}
   	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
   </update>
-  <delete id="memberDelete" parameterType="int">
+  <!-- 회원삭제 -->
+  <delete id="deleteOldSecessionMembers">
     DELETE FROM cocktail_member
-    WHERE id=#{id}
+    WHERE login = 'n'
+    AND deletedate &lt;= ADD_MONTHS(SYSDATE, -3)
+  </delete>
+  <delete id="memberDelete" parameterType="CocktailMemberVO">
+    DELETE FROM cocktail_member
+    WHERE login = 'n'
+    AND id = #{id}
   </delete>
 </mapper>

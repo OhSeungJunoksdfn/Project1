@@ -48,7 +48,7 @@ public class CocktailMemberDAO {
 	      INSERT INTO cocktail_member VALUES(
 	      #{id},#{pwd},#{name},#{sex},#{email},#{birthday},
 	      #{post},#{address},#{address_detail},#{regdate},
-	      #{coment},'n','n',#{phone},#{avater}
+	      #{coment},'n','y',#{phone},#{avater}
            )
           </insert>
 	    */
@@ -71,36 +71,85 @@ public class CocktailMemberDAO {
 		
 	   }
 	   /*
-	    * 	<update id="memberUpdate" parameterType="CocktailMemberVO">
-		  	UPDATE cocktail_member SET
-		  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},
-		  	post=#{post},address=#{address},address_detail=#{address_detail},SYSDATE,
-		  	coment=#{coment},'n','n',phone=#{phone},avatar=#{avatar}
-		  	WHERE id=#{id}
-		    </update>
-	    * 
-	    */
-	   public static void memberUpdate(CocktailMemberVO vo)
+	   <!-- 회원정보 -->
+	   <select id="memberUpdateData" resultType="CocktailMemberVO" parameterType="string">
+	    SELECT id,name,sex,email,birthday,post,address,address_detail,coment,phone,avatar
+	    FROM cocktail_member
+	    WHERE id=#{id}
+	   </select>
+	   */
+	   
+	   public static CocktailMemberVO memberUpdateData(String id)
 	   {
-		   SqlSession session=null;
-		   try
-		   {
-			   session = ssf.openSession(true);
-			   session.update("memberUpdate",vo);
-		   }catch(Exception ex)
-		   {
-			  ex.printStackTrace(); 
-		   }
-		   finally
-		   {
-			   if(session != null)
-				   session.close();
-		   }
-		
+		   CocktailMemberVO vo=new CocktailMemberVO();
+	 	  SqlSession session=null;
+	 	  try
+	 	  {
+	 		  session=ssf.openSession(true);
+	 		  vo=session.selectOne("memberUpdateData", id);
+	 	  }catch(Exception ex)
+	 	  {
+	 		  ex.printStackTrace();
+	 	  }
+	 	  finally
+	 	  {
+	 		  if(session!=null)
+	 			  session.close();
+	 	  }
+		return vo;
+	 	  
+	 	 
 	   }
+	   /*
+	    * <!-- 회원수정 -->
+		  <select id="memberGetPassword" resultType="CocktailMemberVO" parameterType="string">
+		   SELECT id,pwd,name,sex,email,admin
+		   FROM cocktail_member
+		   WHERE id=#{id}
+		  </select>
+  
+		   <update id="memberUpdate" parameterType="CocktailMemberVO">
+		  	UPDATE cocktail_member SET
+		  	name=#{name},sex=#{sex},email=#{email},birthday=#{birthday},post=#{post},
+		  	address=#{address},address_detail=#{address_detail},regdate=SYSDATE,
+		  	coment=#{coment},phone=#{phone},avatar=#{avatar}
+		  	WHERE id=#{id}
+		  </update>
+	    */
+	   public static boolean memberUpdate(CocktailMemberVO vo)
+	   {
+	 	  boolean bCheck=false;
+	 	  SqlSession session=null;
+	 	  try
+	 	  {
+	 		  session=ssf.openSession();
+	 		  String db_pwd=session.selectOne("memberGetPassword", vo.getId());
+	 		  if(db_pwd.equals(vo.getPwd()))
+	 		  {
+	 			  bCheck=true;
+	 			  session.update("memberUpdate",vo);
+	 			  session.commit();
+	 		  }
+	 		  else
+	 		  {
+	 			  bCheck=false;
+	 		  }
+	 	  }catch(Exception ex)
+	 	  {
+	 		  ex.printStackTrace();
+	 	  }
+	 	  finally
+	 	  {
+	 		  if(session!=null)
+	 			  session.close();
+	 	  }
+	 	  return bCheck;
+	   }
+	   
 	   /*
 	    * <update id="memberSecession" parameterType="string">
 		  	UPDATE cocktail_member
+		  	SET login = 'n'
 		  	WHERE id = #{id}
 		  	AND pwd=#{pwd}
 		  	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
@@ -125,11 +174,35 @@ public class CocktailMemberDAO {
 		
 	   }
 	   /*
-	    * <delete id="memberDelete" parameterType="int">
-		    DELETE FROM cocktail_member
-		    WHERE id=#{id}
-		  </delete>
-	    */
+	   <!-- 회원삭제 -->
+	   <delete id="deleteOldSecessionMembers">
+	     DELETE FROM cocktail_member
+	     WHERE login = 'n'
+	     AND deletedate &lt;= ADD_MONTHS(SYSDATE, -3)
+	   </delete>
+	   <delete id="memberDelete" parameterType="CocktailMemberVO">
+	     DELETE FROM cocktail_member
+	     WHERE login = 'n'
+	     AND id = #{id}
+	   </delete>
+	   */
+	   public static void deleteOldSecessionMembers() {
+		   
+	        SqlSession session = null;
+	        try 
+	        {
+	            session = ssf.openSession(true);
+	            session.delete("deleteOldSecessionMembers");
+	        } catch (Exception ex) 
+	        {
+	            ex.printStackTrace();
+	        } finally 
+	        {
+	            if (session != null) 
+	            	session.close();
+	        }
+	    }
+	   
 	   public static void memberDelete(CocktailMemberVO vo)
 	   {
 		   SqlSession session=null;
@@ -153,6 +226,7 @@ public class CocktailMemberDAO {
 	    * <select id="memberIdCheckCount" resultType="int" parameterType="string">
 	      SELECT COUNT(*) FROM cocktail_member
 	      WHERE id=#{id}
+	      AND login='y'
 	      </select>
 	      <select id="memberGetPassword" resultType="MemberVO" parameterType="string">
 	      SELECT id,pwd,name,sex,admin
