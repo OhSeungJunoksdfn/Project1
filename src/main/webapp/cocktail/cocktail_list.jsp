@@ -100,6 +100,5 @@ $(function(){
            		</div>
          </div>
     </section>
-    
 </body>
 </html>

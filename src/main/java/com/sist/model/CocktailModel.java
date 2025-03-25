@@ -359,8 +359,46 @@ public class CocktailModel {
 		request.setAttribute("list", list);
 		request.setAttribute("vo", vo);
 		request.setAttribute("tags", tags);
+		request.setAttribute("cno", cno);
 		
 		request.setAttribute("main_jsp", "../cocktail/cocktail_update.jsp");
 		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("cocktail/cocktail_update_ok.do")
+	public String cocktail_update_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		String name= request.getParameter("name");
+		String ename= request.getParameter("ename");
+		String comments= request.getParameter("comments");
+		String content= request.getParameter("content");
+		String[] ing_no= request.getParameterValues("ing_no");
+		String[] unit= request.getParameterValues("unit");
+		String[] volume= request.getParameterValues("volume");
+		String[] alc= request.getParameterValues("alc");
+		String cocktail_no = request.getParameter("cno");
+		
+		int totalAlc=0;
+		int totalVolume=0;
+		for(int i=0;i<volume.length;i++)
+		{
+			int isAlc=Integer.parseInt(alc[i].trim());
+			int isVolume=Integer.parseInt(volume[i].trim());
+			totalAlc+=(isAlc*isVolume);
+			totalVolume+=isVolume;
+		}
+		int itAlc=totalAlc/totalVolume;
+		CocktailVO vo = new CocktailVO();
+		vo.setName(name);
+		vo.setEname(ename);
+		vo.setComments(comments);
+		vo.setContent(content);
+		vo.setAlc(String.valueOf(itAlc));
+		System.out.println(totalAlc);
+		System.out.println(totalVolume);
+		vo.setImage("../img/illust_no_image.png");
+		CocktailDAO.cocktailUpdate(vo, ing_no, unit, volume,Integer.parseInt(cocktail_no));
+		
+		return"redirect:../cocktail/cocktail_detail.do?cno="+cocktail_no;
 	}
 }
