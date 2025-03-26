@@ -182,4 +182,5 @@
 	WHERE cocktail_no=#{cocktail_no}
 	</delete> 
 	
+	
 </mapper>

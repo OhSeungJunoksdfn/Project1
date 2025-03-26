@@ -36,5 +36,6 @@
   	<mapper resource="com/sist/mapper/product2-mapper.xml"/>
   	<mapper resource="com/sist/mapper/reply-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktail_product-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/cocktailsupport-mapper.xml"/>
   </mappers>
  </configuration>

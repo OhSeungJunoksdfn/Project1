@@ -146,7 +146,7 @@
                             <li><a href="#">칵테일바</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="../cocktailbar/cocktailbar_list.do">칵테일바 목록</a></li>
-                                    <li><a href="#">칵테일바 관리</a></li>
+                                    <li><a href="../cocktailbar/cocktailbar_find.do">칵테일바 검색</a></li>
                                     <c:if test="${sessionScope.id!=null }">
                                     <li><a href="#">칵테일바 예약</a></li>
                                     </c:if>
@@ -156,8 +156,6 @@
                                 <ul class="header__menu__dropdown">
                                     <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
                                     <li><a href="../product2/product_list.do">칵테일용품 목록</a></li>
-                                    <li><a href="../cocktail_product/cocktail_product_list.do">주류상품 목록</a></li>
-                                    <li><a href="./shoping-cart.html">용품 목록</a></li>
                                     <li><a href="./shoping-cart.html">주류상품 검색</a></li>
                                     <li><a href="../product2/product_find.do">칵테일용품 검색</a></li>
                                 </ul>
