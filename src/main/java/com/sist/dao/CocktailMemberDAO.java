@@ -122,16 +122,13 @@ public class CocktailMemberDAO {
 		    try {
 		        session = ssf.openSession();
 
-		        // ID가 null일 수 있으니 체크 먼저
 		        String id = vo.getId();
 		        if (id == null || id.trim().isEmpty()) {
 		            return false;
 		        }
 
-		        // DB에서 해당 ID의 비밀번호 가져오기
 		        String db_pwd = session.selectOne("memberGetPassword1", id);
 
-		        // null 체크
 		        if (db_pwd != null && db_pwd.equals(vo.getPwd())) {
 		            session.update("memberUpdate", vo);
 		            session.commit();
@@ -146,6 +143,155 @@ public class CocktailMemberDAO {
 		    }
 		    return bCheck;
 		}
+	   
+	   /*
+	    * <!-- 아이디 찾기 -->
+	    * <select id="memberIdFindData" resultType="String" parameterType="CocktailMemberVO">
+		   SELECT RPAD(SUBSTR(id,1,2),LENGTH(id),'*') FROM cocktail_member
+		   WHERE name=#{name} AND email=#{email}
+		  </select>
+		  <select id="memberGetEmailData" resultType="string" parameterType="string">
+		    SELECT COUNT(*) FROM cocktail_member
+		    WHERE email=#{email}
+		  </select>
+	    */
+	   public static String memberIdFindData(CocktailMemberVO vo) 
+	   {
+		    String result = "";
+		    SqlSession session = null;
+		    
+		    try {
+		        session = ssf.openSession();
+		        int count = session.selectOne("memberIdFindCount", vo);
+		        
+		        if (count == 0) 
+		        {
+		            result = "no";
+		        } 
+		        else 
+		        {
+		            result = session.selectOne("memberIdFindData", vo);
+		        }
+		    } catch (Exception ex) 
+		    {
+		        ex.printStackTrace();
+		    } finally 
+		    {
+		        if (session != null) 
+		        {
+		            session.close();
+		        }
+		    }
+		    
+		    return result;
+		}
+	   
+	   public static String memberGetEmailData(String email) 
+	   {
+		    String result = "0";
+		    SqlSession session = null;
+
+		    try {
+		        session = ssf.openSession();
+		        result = session.selectOne("memberGetEmailData", email);
+		    } catch (Exception ex)
+		    {
+		        ex.printStackTrace();
+		    } finally 
+		    {
+		        if (session != null) 
+		        	session.close();
+		    }
+
+		    return result;
+		}
+	   /*
+	    * <select id="memberPwdFindCount" resultType="int" parameterType="string">
+		   SELECT COUNT(*) FROM cocktail_member
+		   WHERE id=#{id}
+		  </select>
+		  <select id="memberPwdFindData" resultType="String" parameterType="string">
+		   SELECT pwd FROM cocktail_member
+		   WHERE id=#{id}
+		  </select>
+	    */
+	   public static String memberPwdFindData(String id)
+	   {
+	 	  String result="";
+	 	  SqlSession session=null;
+	 	  try
+	 	  {
+	 		  session=ssf.openSession();
+	 		  int count=session.selectOne("memberPwdFindCount",id);
+	 		  if(count==0)
+	 		  {
+	 			  result="no";
+	 		  }
+	 		  else
+	 		  {
+	 			  String pwd=session.selectOne("memberPwdFindData",id);
+	 			  result=pwd;
+	 		  }
+	 	  }catch(Exception ex)
+	 	  {
+	 		  ex.printStackTrace();
+	 	  }
+	 	  finally
+	 	  {
+	 		  if(session!=null)
+	 			  session.close();
+	 	  }
+	 	  return result;
+	   }
+	   /*
+	    * <select id="memberPwdFindData" resultType="String" parameterType="string">
+		   SELECT pwd FROM cocktail_member
+		   WHERE id=#{id}
+		  </select>
+		  <update id="pwdChange" parameterType="hashmap">
+		   UPDATE cocktail_member SET
+		   pwd=#{pwd}
+		   WHERE id=#{id}
+		  </update>
+	    */
+	   public static int pwdCheckData(Map map)
+	   {
+	 	  int count=0;
+	 	  SqlSession session=null;
+	 	  try
+	 	  {
+	 		  session=ssf.openSession();
+	 		  count=session.selectOne("pwdCheckData",map);
+	 	  }catch(Exception ex)
+	 	  {
+	 		  ex.printStackTrace();
+	 	  }
+	 	  finally
+	 	  {
+	 		  if(session!=null)
+	 			  session.close();
+	 	  }
+	 	  return count;
+	   }
+	   public static void pwdChange(Map map)
+	   {
+	 	  SqlSession session=null;
+	 	  try
+	 	  {
+	 		  session=ssf.openSession(true);
+	 		  session.update("pwdChange",map);
+	 	  }catch(Exception ex)
+	 	  {
+	 		  ex.printStackTrace();
+	 	  }
+	 	  finally
+	 	  {
+	 		  if(session!=null)
+	 			  session.close();
+	 	  }
+	   }
+	
+	   
 	   
 	   /*
 	    * <update id="memberSecession" parameterType="string">
@@ -275,4 +421,5 @@ public class CocktailMemberDAO {
 		   }
 		   return mvo;
 	   }
+	  
 }

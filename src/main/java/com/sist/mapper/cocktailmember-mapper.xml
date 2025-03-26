@@ -61,15 +61,43 @@
   	coment=#{coment},phone=#{phone},avatar=#{avatar}
   	WHERE id=#{id}
   </update>
-  <!-- 패스워드 확인
-  <select id="memberPassword_ok" resultType="int" parameterType="string">
-    SELECT COUNT(*) FROM cocktail_member
-    WHERE id = #{id}
-    AND pwd = #{pwd}
-    AND login='y' 
+  <!-- 아이디 찾기 -->
+  <select id="memberIdFindData" resultType="String" parameterType="CocktailMemberVO">
+   SELECT RPAD(SUBSTR(id,1,2),LENGTH(id),'*') FROM cocktail_member
+   WHERE name=#{name} AND email=#{email}
   </select>
-  -->
-  <!-- 회원탈퇴처리 -->
+  <select id="memberGetEmailData" resultType="string" parameterType="string">
+    SELECT COUNT(*) FROM cocktail_member
+    WHERE email=#{email}
+  </select>
+  <select id="memberIdFindCount" resultType="int" parameterType="CocktailMemberVO">
+   SELECT COUNT(*) FROM cocktail_member
+   WHERE name=#{name} AND email=#{email}
+  </select>
+  <select id="memberInfoData" resultType="CocktailMemberVO" parameterType="string">
+    SELECT * FROM cocktail_member
+    WHERE id=#{id}
+  </select>
+  <!-- 비밀번호 찾기 -->
+  <select id="memberPwdFindCount" resultType="int" parameterType="string">
+   SELECT COUNT(*) FROM cocktail_member
+   WHERE id=#{id}
+  </select>
+  <select id="memberPwdFindData" resultType="String" parameterType="string">
+   SELECT pwd FROM cocktail_member
+   WHERE id=#{id}
+  </select>
+  <select id="pwdCheckData" resultType="int" parameterType="hashmap">
+   SELECT COUNT(*) FROM cocktail_member
+   WHERE id=#{id} 
+   AND pwd=#{pwd}
+  </select>
+  <update id="pwdChange" parameterType="hashmap">
+   UPDATE cocktail_member SET
+   pwd=#{pwd}
+   WHERE id=#{id}
+  </update>
+ <!--회원탈퇴-->
   <update id="memberSecession" parameterType="string">
   	UPDATE cocktail_member
   	SET login='n'
