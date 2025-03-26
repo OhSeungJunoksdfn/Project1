@@ -1,17 +1,134 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
-.product__details__text .cart-icon {
-	
+.pro-qty_total_box {
+    background: #f5f5f5;
+    padding: 30px;
+    padding-top: 20px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.m-qty {
+    height: 100%;
+	width: 100%;
+	font-size: 16px;
+	color: #6f6f6f;
+	width: 30px;
+	border: none;
+	background: #f5f5f5;
+	text-align: center;
+}
+
+.p-qty {
+    height: 100%;
+	width: 100%;
+	font-size: 16px;
+	color: #6f6f6f;
+	width: 30px;
+	border: none;
+	background: #f5f5f5;
+	text-align: center;
+}
+
+.text-qty {
+	height: 100%;
+	width: 100%;
+	font-size: 16px;
+	color: #6f6f6f;
+	width: 50px;
+	border: none;
+	background: #f5f5f5;
+	text-align: center;
+}
+
 </style>
+<script type="text/javascript">
+$(function(){
+    // 총 금액
+    function updateTotal(){
+        // data-price에 vo.priceInt 값
+        let price = Number($('.product__details__quantity').data('price'))
+        let quantity = Number($('#in-qty').val())
+        if(isNaN(quantity) || quantity < 1) {
+            quantity = 1
+            $('#in-qty').val(quantity)
+        }
+        let total = price * quantity
+        
+        // 화면에 표시
+        $('#total').text(total.toLocaleString() + "원")
+        
+        $('#account-hidden').val(quantity)
+        $('#total-price-hidden').val(total)
+        $('#price-hidden').val(price)
+    }
+    
+    // 플러스 버튼 클릭 시
+    $('.p-qty').click(function(){
+        let quantity = Number($('#in-qty').val())
+        if(quantity < 10){
+            $('#in-qty').val(quantity + 1)
+        } else {
+            alert("최대 수량은 10개 입니다.")
+        }
+        updateTotal()
+    })
+    
+    // 마이너스 버튼 클릭 시
+    $('.m-qty').click(function(){
+        let quantity = Number($('#in-qty').val())
+        if(quantity > 1){
+            $('#in-qty').val(quantity - 1)
+        } else {
+            alert("최소 수량은 1개 입니다.")
+        }
+        updateTotal()
+    })
+    
+    // 직접 입력 시 1~10 정수
+    $('.text-qty').on('input change', function(){
+        let val = $(this).val()
+        val = val.replace(/[^0-9]/g, '')
+        if(val === "" || Number(val) < 1) {
+            val = 1
+        } else if(Number(val) > 10) {
+            val = 10
+            alert("최대 수량은 10개 입니다.")
+        }
+        $(this).val(val)
+        updateTotal()
+    })
+    
+    // 장바구니 담기 버튼 클릭 시
+    $('.icon_cart_alt').click(function(e){
+        e.preventDefault()
+        let quantity = Number($('#in-qty').val())
+        if(quantity < 1){
+            alert("수량을 선택 해주세요.")
+            return
+        }
+        updateTotal() 
+        $('#frm').submit()
+    })
+    
+    updateTotal()
+})
+
+
+</script>
 </head>
 <body>
     <!-- Breadcrumb Section Begin -->
@@ -22,9 +139,9 @@
                     <div class="breadcrumb__text">
                         <h2>주류 스토어</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">스토어 홈</a>
+                            <a href="../cocktail_product/cocktail_product_list.do">스토어 홈</a>
                             <a href="../cocktail_product/cocktail_product_list.do?cno=${cno }">${vo.type }</a>
-                            <span>상품 페이지</span>
+                            <span>상품 상세</span>
                         </div>
                     </div>
                 </div>
@@ -63,30 +180,39 @@
                          </ul>
                          </c:otherwise>
                         </c:choose>
-                        <div class="product__details__quantity">
+                        
+                     <hr>
+                  
+                    <div class="pro-qty_total_box" style="display: flex;">
+                        <div class="product__details__quantity" data-price="${vo.priceInt }">
                             <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
+                                  <button type="button" class="m-qty">-</button>
+                                   <input type="text" class="text-qty" id="in-qty" value="1">
+                                  <button type="button" class="p-qty">+</button>
                             </div>
                         </div>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                        <a href="#" class="heart-icon"><span class="icon_cart_alt"></span></a>
+                        <span style="right: 0px; bottom: 0px;">
+                          총 금액 : <span id="total"><fmt:formatNumber value="${vo.priceInt}" pattern="#,##0" />원</span>
+                        </span>
+                    </div>
+                     <c:if test="${sessionScope.id!=null }">
+                       
+                        <a href="../jjim/jjim_insert.do?rno=${vo.product_no }&type=1" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                       <form method="post" action="../cart/cart_insert.do" class="heart-icon" id="frm"> 
+                         <input type="hidden" name="pno" id="product_no-hidden" value="${product_no }">
+                         <input type="hidden" name="poster" id="poster-hidden" value="${vo.poster }">
+                         <input type="hidden" name="name" id="name-hidden" value="${vo.name }">
+                         <input type="hidden" name="price" id="price-hidden" value="${vo.priceInt }">
+                         <input type="hidden" name="account" id="account-hidden" value="1">
+                         <input type="hidden" name="total-price" id="total-price-hidden" value="${priceInt }">
+                         <input type="hidden" name="cno" id="cno-hidden" value="${cno }">
+                         <button type="button" class="icon_cart_alt" style="background: none; border: none;"></button>
+                       </form>
                         <a href="#" class="primary-btn">구매하기</a>
-                        <a href="#" class="primary-btn">목록</a>
-                        <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
-                            <li><b>Share on</b>
-                                <div class="share">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </li>
-                        </ul>
+                     </c:if>
+                        <a href="javascript:history.back()" class="primary-btn">목록</a>  
+                      
+                      
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -139,7 +265,7 @@
                             <img src="${vo.poster }" style="width: 100%; height: 200px;">
                           </a>
                             <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <c:if test="${sessionScope.id!=null }"><li><a href="#"><i class="fa fa-heart"></i></a></li></c:if>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
