@@ -126,7 +126,7 @@ textarea{
 				</tr>
 				<tr><td colspan="3"></td></tr>
            </table>
-           	<%-- <iframe class="ifr" src="../community/get_htmlfile.do?htmlfile=${vo.htmlfile }" scrolling="no" style="width:100%;height:${vo.documentheight}px;margin-bottom:200px;border:none;"></iframe> --%>
+           	<iframe class="ifr" src="../community/get_htmlfile.do?htmlfile=${vo.htmlfile }" scrolling="no" style="width:100%;height:${vo.documentheight}px;margin-bottom:200px;border:none;"></iframe>
           
            <!-- <table class="table">
            	

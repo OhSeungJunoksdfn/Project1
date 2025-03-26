@@ -261,6 +261,9 @@ public class CommunityModel {
 			String no=request.getParameter("board_no");
 			String page=request.getParameter("page");
 			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
+			
+			//댓글 기능
+			
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			request.setAttribute("main_jsp", "../community/freeboard_detail.jsp");

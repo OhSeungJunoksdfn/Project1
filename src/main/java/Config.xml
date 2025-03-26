@@ -14,6 +14,7 @@
   <typeAlias type="com.sist.vo.Product2VO" alias="Product2VO"/>
   <typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
   <typeAlias type="com.sist.vo.Cocktail_ProductVO" alias="Cocktail_ProductVO"/>
+  <typeAlias type="com.sist.vo.CommunityCommentVO" alias="CommunityCommentVO"/>
   </typeAliases>
   <environments default="development">
   	<environment id="development">
@@ -37,5 +38,6 @@
   	<mapper resource="com/sist/mapper/reply-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktail_product-mapper.xml"/>
   	<mapper resource="com/sist/mapper/cocktailsupport-mapper.xml"/>
+  	<mapper resource="com/sist/mapper/community-comment-mapper.xml"/>
   </mappers>
  </configuration>

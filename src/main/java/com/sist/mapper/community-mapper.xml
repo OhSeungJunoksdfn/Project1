@@ -108,4 +108,5 @@
 		DELETE FROM cocktail_board
 		WHERE board_no=#{board_no}
 	</delete>
+	
 </mapper>
