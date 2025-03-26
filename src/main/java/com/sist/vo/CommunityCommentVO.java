@@ -16,7 +16,7 @@ PARENT_COMMENT_NO          NUMBER
 
 @Data
 public class CommunityCommentVO {
-	int comment_no,board_no,parent_comment_no;
+	int comment_no,board_no,parent_comment_no,is_reply;
 	String id,content;
 	Date regdate;
 	

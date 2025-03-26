@@ -18,9 +18,11 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.CocktailDAO;
 import com.sist.dao.CocktailbarDAO;
+import com.sist.dao.CommunityCommentDAO;
 import com.sist.dao.CommunityDAO;
 import com.sist.vo.CocktailVO;
 import com.sist.vo.CocktailbarVO;
+import com.sist.vo.CommunityCommentVO;
 import com.sist.vo.CommunityFreeboardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +30,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
-	//삭제 기능 만들기
 	//세션에서 아이디 가져오도록 처리
 	//댓글기능 만들기
 	private final String uploadPath = "./upload/";
@@ -39,7 +40,7 @@ public class CommunityModel {
 		try {
 			//1. 사용자 요청 => page
 			String page=request.getParameter("page");
-			if(page==null)
+			if(page==null||page.length()==0)
 				page="1"; // default page
 			
 			String tag=request.getParameter("tag");
@@ -263,7 +264,9 @@ public class CommunityModel {
 			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
 			
 			//댓글 기능
+			List<CommunityCommentVO> list = CommunityCommentDAO.getCommentData(Integer.parseInt(no));
 			
+			request.setAttribute("comment_list", list);
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			request.setAttribute("main_jsp", "../community/freeboard_detail.jsp");

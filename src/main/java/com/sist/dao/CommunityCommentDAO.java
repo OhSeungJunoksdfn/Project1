@@ -16,9 +16,30 @@ public class CommunityCommentDAO {
 	public static List<CommunityCommentVO> getCommentData(int board_no){
 		
 		SqlSession session=ssf.openSession();
-		List<CommunityCommentVO> list=session.selectList("",board_no);
+		List<CommunityCommentVO> list=session.selectList("getCommentData",board_no);
 		session.close();
 		return list;
 		
+	}
+	
+	public static void insertComment(Map map)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("insertComment",map);
+		session.close();
+	}
+	
+	public static void insertCommentReply(Map map)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.insert("insertCommentReply",map);
+		session.close();
+	}
+	
+	public static void deleteComment(int comment_no)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.update("deleteComment",comment_no);
+		session.close();
 	}
 }

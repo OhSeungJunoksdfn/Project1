@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.community-comment-mapper">
 	<select id="getCommentData" parameterType="int" resultType="CommunityCommentVO">
-		select * from community_comment order by group_id,comment_no;
+		select * from community_comment 
+		where board_no=#{board_no} 
+		order by group_id,comment_no
 	</select>
+	
+	<insert id="insertComment" parameterType="hashmap" >
+		INSERT INTO community_comment (comment_no, board_no, id, content, regdate, group_id, is_reply)
+		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{board_no}, #{id}, #{content}, SYSDATE,
+		(SELECT NVL(MAX(comment_no)+1,1) FROM community_comment),#{is_reply})
+	</insert>
+	
+	<insert id="insertCommentReply" parameterType="hashmap" >
+		INSERT INTO community_comment (comment_no, board_no, id, content, regdate, group_id, is_reply)
+		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{board_no}, #{id}, #{content}, SYSDATE,
+		#{group_id},#{is_reply})
+	</insert>
+	
+	<update id="deleteComment" parameterType="int" >
+		UPDATE community_comment SET content='' WHERE comment_no=#{comment_no}
+	</update>
 </mapper>

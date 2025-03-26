@@ -40,12 +40,26 @@
 	color:black;
 	border-bottom:solid rgb(235, 235, 235) 1px;
 	width:100%;
-	
 }
 
 .comment-box:last-child{
 	border-bottom:none;
 	
+}
+
+.delete-box{
+	text-align:left;
+	padding:10px;
+	padding-top:20px;
+	padding-bottom:20px;
+	float:left;
+	color:rgb(200, 200, 200);
+	border-bottom:solid rgb(235, 235, 235) 1px;
+	width:100%;
+}
+
+.delete-box:last-child{
+	border-bottom:none;
 }
 
 .comment-writer{
@@ -65,9 +79,11 @@
 }
 
 .comment-button{
-	padding:5px;
-	padding-left:10px;
-	padding-right:10px;
+	padding:3px;
+	padding-left:7px;
+	padding-right:7px;
+	font-size:12px;
+	color:white;
 }
 
 textarea{
@@ -92,6 +108,10 @@ textarea{
 	padding-top:15px;
 	border-top:dotted rgb(200, 200, 200) 1px;
 
+}
+
+.comment-replybox{
+	padding-left:30px
 }
 
 </style>
@@ -140,25 +160,61 @@ textarea{
 			
 			
 			<div class="comment-container">
-				
-				<div class="comment-box" style="display:flex">
-					<textarea placeholder="댓글을 입력하세요"></textarea>
+				<form method="post" action="../comment/comment_insert.do">
+				<div class="comment-box " style="display:flex">
+					<input type="hidden" name="board_no" value="${vo.board_no }"/>
+					
+					<!-- 유저아이디 세션에서 가져오도록 처리 -->
+					<c:set var="userid" value="user"/>
+					<input type="hidden" name="id" value="${userid }"/>
+					
+					<input type="hidden" name="is_reply" value="${0 }"/>
+					<textarea placeholder="댓글을 입력하세요" name="content" required></textarea>
 					<button class="site-btn comment-save" style="margin-left:10px" >확인</button>
 				</div>
-				
-				<c:forEach var="i" begin="1" end="5">
-					<div class="comment-box">
-						<p class="comment-writer">작성자</p>
-						<div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-						<div class="comment-date">2025-01-01 12:12:12</div>
-						<button class="site-btn comment-button comment-${i }">답글</button>
+				</form>
+				<c:forEach var="comment" items="${comment_list }" varStatus="status">
+					<c:choose>
+					<c:when test="${comment.content!=null }">
+					<div class="comment-box ${comment.is_reply==1?'comment-replybox':'' }">
+						<p class="comment-writer">${comment.is_reply==1?'':''} 
+						 	<c:if test="${comment.is_reply==1 }"><span style="position:relative;top:-4px">↳&nbsp;</span></c:if>
+						${comment.id }</p>
+						
+						<div class="comment-content ">${comment.content }</div>
+						<div class="comment-date"><fmt:formatDate value="${comment.regdate }" pattern="yyyy-MM-dd hh:mm:ss"/></div>
+						<c:if test="${comment.is_reply==0 }">
+							<button class="site-btn reply-button comment-button comment-${status.index }">답글</button>
+							
+							
+						</c:if>
+						<!-- 수정 삭제 아이디 세션에서 가져오도록 처리 -->
+						<a href="#" class="site-btn comment-button ">수정</a>
+						<a href="../comment/comment_delete.do?comment_no=${comment.comment_no }&board_no=${vo.board_no}" class="site-btn comment-button ">삭제</a>
 						
 						
-						<div class="comment-reply reply-${i }" style="display:none" >
-							<textarea placeholder="답글을 입력하세요" style=""></textarea>
+						
+						<form method="post" action="../comment/comment_insert_reply.do">
+						<div class="comment-reply reply-${status.index }" style="display:none" >
+							<input type="hidden" name="board_no" value="${vo.board_no }"/>
+					
+							<!-- 유저아이디 세션에서 가져오도록 처리 -->
+							<c:set var="userid" value="user"/>
+							<input type="hidden" name="id" value="${userid }"/>
+							
+							<input type="hidden" name="is_reply" value="${1 }"/>
+							<input type="hidden" name="group_id" value="${comment.comment_no }"/>
+							<textarea placeholder="답글을 입력하세요" style="" name="content" required></textarea>
 							<button class="site-btn comment-save" style="margin-left:10px" >확인</button>
 						</div>
+						</form>
 					</div>
+					</c:when>
+					
+					<c:otherwise>
+			            <div class="delete-box">삭제된 댓글입니다.</div>
+			        </c:otherwise>
+					</c:choose>
 				</c:forEach>
 				
 				
@@ -172,9 +228,8 @@ textarea{
 </div>
 <script type="text/javascript">
 //답글버튼 보이기/숨기기
-$(".comment-button").click(function (){
-	const commentNo = $(this).prop('classList')[2].split("-")[1]
-	
+$(".reply-button").click(function (){
+	const commentNo = $(this).prop('classList')[3].split("-")[1]
 	let replystate = $(".reply-"+commentNo).css('display')==='none'
 	$(".comment-reply").hide()
 	
