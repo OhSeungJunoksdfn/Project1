@@ -32,7 +32,7 @@ public class MyPageModel {
 	 	    vo.setPhone(phone);
 	        request.setAttribute("vo", vo);
 	        request.setAttribute("title","회원 수정");
-	        request.setAttribute("mypage_jsp", "../member/join_update.jsp");
+	        request.setAttribute("my_jsp", "../member/join_update.jsp");
 	        request.setAttribute("main_jsp", "../mypage/my_main.jsp");
 	        return "../main/main.jsp";
 
