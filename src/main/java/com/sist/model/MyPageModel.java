@@ -2,8 +2,8 @@ package com.sist.model;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
-import com.sist.dao.CocktailMemberDAO;
-import com.sist.vo.CocktailMemberVO;
+import com.sist.dao.*;
+import com.sist.vo.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +32,8 @@ public class MyPageModel {
 	 	    vo.setPhone(phone);
 	        request.setAttribute("vo", vo);
 	        request.setAttribute("title","회원 수정");
-	        request.setAttribute("main_jsp", "../member/join_update.jsp");
-	        request.setAttribute("main_jsp", "../mypage/mypage_main.jsp");
+	        request.setAttribute("mypage_jsp", "../member/join_update.jsp");
+	        request.setAttribute("main_jsp", "../mypage/my_main.jsp");
 	        return "../main/main.jsp";
 
 	    } catch (Exception ex) {
@@ -80,7 +80,7 @@ public class MyPageModel {
 
 
 	        if (bCheck) {
-	            return "redirect:../member/mypage.do";
+	            return "redirect:../member/join_update_ok.do";
 	        } else {
 	            request.setAttribute("msg", "비밀번호가 일치하지 않아 수정에 실패했습니다.");
 	            request.setAttribute("vo", vo);

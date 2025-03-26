@@ -30,8 +30,8 @@
                          <span>개인정보</span>
                       </div>
                       <ul>
-                    <li><a href="../member/update.jsp">회원수정</a></li>
-                    <li><a href="../member/delete.jsp">회원탈퇴</a></li>
+                    <li><a href="../member/join_update.do">회원수정</a></li>
+                    <li><a href="../member/join_delete.jsp">회원탈퇴</a></li>
 				    <li><a href="../member/password.jsp">비밀번호변경</a></li>
                  </ul>
               </div>
