@@ -29,8 +29,9 @@ public class Product2DAO {
 	
 	public static List<Product2VO> productListData(Map map)
 	{
-		List<Product2VO> list=null;
+		
 		SqlSession session=null;
+		List<Product2VO> list=null;
 		try
 		{
 			session=ssf.openSession();
@@ -83,11 +84,21 @@ public class Product2DAO {
 		return vo;
 	}
 	public static Product2VO productCookieData(int product_no)
-	{
-		 SqlSession session=ssf.openSession();
-		 Product2VO vo=session.selectOne("productDetailData",product_no);
-		 session.close();
-		 return vo;
+	{	SqlSession session=null;
+		Product2VO vo=null;
+		try
+		{
+			session = ssf.openSession();
+			vo=session.selectOne("productDetailData",product_no);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return vo;
 	}
 	  public static List<Product2VO> RecommendData6()
 	  {
@@ -96,6 +107,66 @@ public class Product2DAO {
 		  session.close();
 		  return list;
 	  }
+	  public static List<CocktailVO> RelatedData4()
+	  {
+		  SqlSession session=null;
+		  List<CocktailVO> elist = null;
+		  try
+		  {
+			session = ssf.openSession();
+			elist=session.selectList("RelatedData4");
+		  }
+		  catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  if(session!=null) session.close();
+		  }
+		  return elist;
+		
+	  }
+
+	  public static List<Product2VO> productFindData(Map map)
+	  {
+		  SqlSession session=null;
+		  List<Product2VO> list=null;
+		  try {
+			  	session=ssf.openSession();
+			  	list=session.selectList("productFindData",map);
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }finally {
+			  if(session!=null)
+				  session.close();
+		  }
+		  return list;
+		  
+	  }
+	  public static int productFindTotalPage(Map map)
+		{
+			
+			SqlSession session=null;
+			int total=0;
+			try
+			{
+				session=ssf.openSession();
+				total=session.selectOne("productFindTotalPage",map);
+			  }catch(Exception ex)
+			  {
+				  ex.printStackTrace();
+			  }
+			  finally
+			  {
+				  if(session!=null)
+					  session.close();
+			  }
+			  return total;
+		}
+
 	
 
 }
