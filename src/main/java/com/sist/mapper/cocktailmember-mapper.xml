@@ -46,7 +46,12 @@
   <select id="memberGetPassword" resultType="CocktailMemberVO" parameterType="string">
    SELECT id,pwd,name,sex,email,admin
    FROM cocktail_member
-   WHERE id=#{id}
+   WHERE id=#{id, jdbcType=VARCHAR}
+  </select>
+  
+  <select id="memberGetPassword1" resultType="string" parameterType="string">
+   SELECT pwd FROM cocktail_member
+   WHERE id = #{id, jdbcType=VARCHAR}
   </select>
   
   <update id="memberUpdate" parameterType="CocktailMemberVO">
@@ -56,11 +61,19 @@
   	coment=#{coment},phone=#{phone},avatar=#{avatar}
   	WHERE id=#{id}
   </update>
+  <!-- 패스워드 확인
+  <select id="memberPassword_ok" resultType="int" parameterType="string">
+    SELECT COUNT(*) FROM cocktail_member
+    WHERE id = #{id}
+    AND pwd = #{pwd}
+    AND login='y' 
+  </select>
+  -->
   <!-- 회원탈퇴처리 -->
   <update id="memberSecession" parameterType="string">
   	UPDATE cocktail_member
-  	SET login = 'n'
-  	WHERE id = #{id}
+  	SET login='n'
+  	WHERE id=#{id}
   	AND pwd=#{pwd}
   	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
   </update>

@@ -116,35 +116,36 @@ public class CocktailMemberDAO {
 		  	WHERE id=#{id}
 		  </update>
 	    */
-	   public static boolean memberUpdate(CocktailMemberVO vo)
-	   {
-	 	  boolean bCheck=false;
-	 	  SqlSession session=null;
-	 	  try
-	 	  {
-	 		  session=ssf.openSession();
-	 		  String db_pwd=session.selectOne("memberGetPassword", vo.getId());
-	 		  if(db_pwd.equals(vo.getPwd()))
-	 		  {
-	 			  bCheck=true;
-	 			  session.update("memberUpdate",vo);
-	 			  session.commit();
-	 		  }
-	 		  else
-	 		  {
-	 			  bCheck=false;
-	 		  }
-	 	  }catch(Exception ex)
-	 	  {
-	 		  ex.printStackTrace();
-	 	  }
-	 	  finally
-	 	  {
-	 		  if(session!=null)
-	 			  session.close();
-	 	  }
-	 	  return bCheck;
-	   }
+	   public static boolean memberUpdate(CocktailMemberVO vo) {
+		    boolean bCheck = false;
+		    SqlSession session = null;
+		    try {
+		        session = ssf.openSession();
+
+		        // ID가 null일 수 있으니 체크 먼저
+		        String id = vo.getId();
+		        if (id == null || id.trim().isEmpty()) {
+		            return false;
+		        }
+
+		        // DB에서 해당 ID의 비밀번호 가져오기
+		        String db_pwd = session.selectOne("memberGetPassword1", id);
+
+		        // null 체크
+		        if (db_pwd != null && db_pwd.equals(vo.getPwd())) {
+		            session.update("memberUpdate", vo);
+		            session.commit();
+		            bCheck = true;
+		        } else {
+		            bCheck = false;
+		        }
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    } finally {
+		        if (session != null) session.close();
+		    }
+		    return bCheck;
+		}
 	   
 	   /*
 	    * <update id="memberSecession" parameterType="string">

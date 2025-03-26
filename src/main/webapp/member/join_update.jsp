@@ -26,21 +26,8 @@
     <link rel="stylesheet" href="../shadow/css/shadowbox.css">
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
-    <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
     <script type="text/javascript">
-    Shadowbox.init({
-    	players:['iframe']
-    })
     $(function(){
-    	$('#idBtn').on('click',function(){
-    		Shadowbox.open({
-    			content:'../member/idcheck.do',
-    			player:'iframe',
-    			width:370,
-    			height:250,
-    			title:'아이디 중복체크'
-    		})
-    	})
     	
     	$('#postBtn').click(function(){
 		new daum.Postcode({
@@ -51,44 +38,7 @@
 					}
 				}).open()
 			})
-		    		
-    	$('#joinBtn').click(function(){
-    		let id=$('#id').val()
-    		if(id.trim()==="")
-    		{
-    			alert("ID 중복체크를 해야 됩니다")
-    			return
-    		}
-    		let pwd1=$('#pwd1').val()
-    		if(pwd1.trim()==="")
-    		{
-    			$('#pwd1').focus()
-    			return
-    		}
-    		let pwd2=$('#pwd2').val()
-    		if(pwd1!==pwd2)
-    		{
-    		    alert("비밀번호가 틀립니다")
-    		    $('#pwd2').val("")
-    		    $('#pwd2').focus()
-    		    return
-    		}
     		
-    		let name=$('#name').val()
-    		if(name.trim()==="")
-    		{
-    			$('#name').focus()
-    			return
-    		}
-    		
-    		let post=$('#post').val()
-    		if(post.trim()==="")
-    		{
-    			alert("우편번호 검색을 해야 됩니다")
-    			return
-    		}
-    		
-    		$('#frm').submit()
     	})
     })
     </script>
@@ -119,18 +69,16 @@
         <div class="container">
             <div class="checkout__form">
                 <h4>회원수정</h4>
-                 <form method=post action="../member/join_update_ok.do" name="frm" id="frm" enctype="multipart/form-data">
+                 <form method=post action="../member/join_update_ok.do" name="frm" id="frm">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                            <!-- <div class="row">   -->
-
+                           
                            <div class="checkout__input">
-							    <p>아이디<span>*</span></p>
-							    <input type="text" name="id" id="id" size="15" class="form-control-sm" value="${vo.id }" readonly>
-							    <input type="button" id="idBtn" value="아이디중복체크" class="btn-sm btn-primary">
-							    <span id="idCheckResult"></span>
-							</div>
 
+                                <input type="hidden" name="id" value="${vo.id}">
+                           </div>
+                           
                            <div class="checkout__input">
                                 <p>패스워드<span>*</span></p>
                                 <input type="password"name="pwd" id="pwd">
@@ -198,7 +146,7 @@
                       </div>
                       <br>
                       <div class="col-lg-8 col-md-6">
-                      		<input type=button value="회원수정" class="btn-sm btn-primary" id="joinBtn">
+                      		<input type="submit" value="회원수정" class="btn-sm btn-primary" id="joinBtn">
                       		<input type=button value="취소" class="btn-sm btn-warning" onclick="javascript:history.back()">
                     </div>
 

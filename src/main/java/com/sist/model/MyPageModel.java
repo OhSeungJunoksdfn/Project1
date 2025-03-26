@@ -77,14 +77,21 @@ public class MyPageModel {
 	        vo.setAvatar(avatar);
 
 	        boolean bCheck = CocktailMemberDAO.memberUpdate(vo);
+	        
 
-
-	        if (bCheck) {
-	            return "redirect:../member/join_update_ok.do";
+	        if (bCheck) 
+	        {
+	        	response.setContentType("text/html;charset=UTF-8");
+	            java.io.PrintWriter out = response.getWriter();
+	            out.println("<script>");
+	            out.println("alert('회원수정이 완료되었습니다. 다시 로그인부탁드립니다.');");
+	            out.println("location.href='../member/login.do';");
+	            out.println("</script>");
+	            return null;
 	        } else {
 	            request.setAttribute("msg", "비밀번호가 일치하지 않아 수정에 실패했습니다.");
 	            request.setAttribute("vo", vo);
-	            request.setAttribute("main_jsp", "../member/update.jsp");
+	            request.setAttribute("main_jsp", "../member/join_update.jsp");
 	            return "../main/main.jsp";
 	        }
 
