@@ -6,6 +6,6 @@ import lombok.Data;
 public class Product2VO {
 //dfd
 	
-	private int product_no,hit,jjimcount,likecount,replycount;
-	private String name,price,poster,cno,delivery_fee;
+	private int product_no,hit,jjimcount,likecount,replycount,cno,price2;
+	private String name,price,poster,delivery_fee,type;
 }

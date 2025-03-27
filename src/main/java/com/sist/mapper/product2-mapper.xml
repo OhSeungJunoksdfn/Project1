@@ -20,17 +20,29 @@
 		hit=hit+1
 		WHERE product_no=#{product_no}
 	</update>
-	<!-- 
+	<select id="productFindData" resultType="Product2VO" parameterType="hashmap">
+		SELECT product_no,name,poster,price,num
+		FROM (SELECT product_no,name,poster,price,type,delivery_fee,likecount,replycount,rownum as num
+		FROM (SELECT /*+INDEX_ASC(cocktail_product2 cp2_product_no_pk)*/product_no,name,poster,price,type,delivery_fee,likecount,replycount
+		FROM cocktail_product2 WHERE ${fd} LIKE '%'||#{ss}||'%'))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
 	<select id="productFindTotalPage" resultType="int" parameterType="hashmap">
 		SELECT CEIL(COUNT(*)/12.0)
 		FROM cocktail_product2
-		WHERE ${}
+		WHERE ${fd} LIKE '%'||#{ss}||'%'
 	</select>
-	-->
 	<select id="RecommendData6" resultType="Product2VO">
     	SELECT * FROM (SELECT * FROM cocktail_product2
       	ORDER BY DBMS_RANDOM.RANDOM)
     	WHERE rownum&lt;=6
   </select>
-	
+  <select id="RelatedData4" resultType="CocktailVO">
+  		SELECT * FROM (SELECT * FROM cocktail
+  		ORDER BY DBMS_RANDOM.RANDOM)
+    	WHERE rownum&lt;=4
+  </select>
+  <select id="productTotalCount" resultType="int" parameterType="hashmap">
+   		SELECT COUNT(*) FROM cocktail_product2
+ </select>
 </mapper>

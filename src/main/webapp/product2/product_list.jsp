@@ -6,6 +6,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+	/* --------------------
+:: 12.0 Paginatio Area CSS
+-------------------- */
+
+.pagination-area {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+}
+
+.pagination-area .pagination .page-link {
+    color: #51545f;
+    margin: 0 2.5px;
+}
+
+.pagination-area .pagination .page-item.active .page-link,
+.pagination-area .pagination .page-link:focus,
+.pagination-area .pagination .page-link:hover {
+    color: #fff;
+    background-color: #fc6c3f;
+    border-color: transparent;
+}
+
+.pagination-area .page-status p,
+.contact-info-area .single-contact-info p {
+    margin-bottom: 0;
+}
+</style>
 </head>
 <body>
  <!-- Hero Section Begin -->
@@ -73,10 +107,10 @@
                     <div class="sidebar__item">
                             <h4>칵테일 용품</h4>
                             <ul>
-                                <li><a href="#">바텐딩 도구</a></li>
-                                <li><a href="#">테이블 용품</a></li>
-                                <li><a href="#">글라스</a></li>
-                                <li><a href="#">식자재</a></li>
+                                <li><a href="../product2/product_list.do?cno='30'">바텐딩 도구</a></li>
+           						<li><a href="../product2/product_list.do?cno=31">테이블 용품</a></li>
+           						<li><a href="../product2/product_list.do?cno=32">식자재</a></li>
+           						<li><a href="../product2/product_list.do?cno=33">글라스</a></li>
                             </ul>
                         </div>
                         <div class="sidebar__item">
@@ -98,66 +132,21 @@
                         </div>
                         <div class="sidebar__item">
                             <div class="latest-product__text">
-                                <h4>Latest Products</h4>
+                                <h4>오늘 본 상품</h4>
                                 <div class="latest-product__slider owl-carousel">
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                    </div>
+                                	<c:forEach var="vo" items="${clist }">
+	                                    <div class="latest-prdouct__slider__item">
+	                                        <a href="#" class="latest-product__item">
+	                                            <div class="latest-product__item__pic">
+	                                                <img src="${vo.poster }" alt="">
+	                                            </div>
+	                                            <div class="latest-product__item__text">
+	                                                <h6>${vo.name }</h6>
+	                                                <span>${vo.price }</span>
+	                                            </div>
+	                                        </a>
+	                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -178,9 +167,9 @@
 	                                            data-setbg="${vo.poster }">
 	                                         
 	                                            <ul class="product__item__pic__hover">
-	                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+				                                      <li><a href="#"><i class="fa fa-heart"></i></a></li>
+				                                      <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+				                                      <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
 	                                            </ul>
 	                                        </div>
 	                                        <div class="product__discount__item__text">
@@ -206,17 +195,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="filter__found">
-                                    <h6><span>12</span> Products found</h6>
-                                </div>
+                           <div class="col-lg-4 col-md-4">
+                            <div class="filter__found">
+                                <h6><span>${totalcount }</span> Products found</h6>
                             </div>
-                            <div class="col-lg-4 col-md-3">
-                                <div class="filter__option">
-                                    <span class="icon_grid-2x2"></span>
-                                    <span class="icon_ul"></span>
-                                </div>
-                            </div>
+                        </div>
+   
                         </div>
                     </div>
                     <div class="row">
@@ -225,15 +209,14 @@
                             <div class="product__item">
                                 <div class="product__item__pic set-bg" data-setbg="${vo.poster }">
                                     <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                      <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                      <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                      <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
                                  	<h6><a href="../product2/product_detail_before.do?product_no=${vo.product_no }">${vo.name }</a></h6>
                                     <h5>${vo.price }</h5>
-                               
                                 </div>
                             </div>
                         </div>
@@ -273,6 +256,7 @@
                         </div>
                     </div>
                 </div>
+               
             </div>
                 </div>
             </div>
