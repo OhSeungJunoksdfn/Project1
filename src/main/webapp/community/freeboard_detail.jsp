@@ -82,6 +82,24 @@
 </div>
 <script type="text/javascript">
 //답글버튼 보이기/숨기기
+$(".write-button").click(function (){
+	const commentNo = $(this).prop('classList')[3].split("-")[1]
+	const buttontype= $(this).prop('classList')[4]
+	let replystate = $(".reply-"+commentNo+"."+buttontype).css('display')==='none'
+	
+	$(".comment-reply").hide()
+	
+	
+	if(replystate)
+	{
+		$(".reply-"+commentNo+"."+buttontype).css({"display":"flex"})
+		
+	}else
+	{
+		$(".reply-"+commentNo+"."+buttontype).hide()
+	}
+})
+
 $(".delete-button").click(function(){
 	if (confirm("삭제하시겠습니까?")) {
 		alert("삭제되었습니다")
