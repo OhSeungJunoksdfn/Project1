@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,8 +56,83 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	let
+    // 한 행(tr) 내에서 총액 및 hidden 필드 업데이트 함수
+    function updateTotal(tr){
+        // 해당 행의 단가(td의 data-price에 숫자만 담김)
+        let rawPrice=tr.find('.shoping__cart__price').data('price')
+        let price=Number(String(rawPrice).replace(/[^0-9]/g, ''))
+        
+        // 해당 행의 수량(input)
+        let qtyInput=tr.find('.text-qty')
+        let quantity = Number(qtyInput.val())
+        if(isNaN(quantity) || quantity < 1)
+        {
+            quantity = 1
+            qtyInput.val(quantity)
+        }
+        
+        let total=price*quantity
+        
+        tr.find('.shoping__cart__total').text(total.toLocaleString() + "원")
+        
+    }
+    
+    // 플러스 버튼 클릭 시 (각 행 기준)
+    $('.p-qty').click(function(){
+        let tr = $(this).closest('tr')
+        let qtyInput = tr.find('.text-qty')
+        let quantity = Number(qtyInput.val())
+        if(quantity < 10)
+        {
+            qtyInput.val(quantity + 1)
+        } 
+        else 
+        {
+            alert("최대 수량은 10개 입니다.")
+        }
+        updateTotal(tr)
+    })
+    
+    // 마이너스 버튼 클릭 시 (각 행 기준)
+    $('.m-qty').click(function(){
+        let tr=$(this).closest('tr')
+        let qtyInput=tr.find('.text-qty')
+        let quantity=Number(qtyInput.val())
+        if(quantity>1)
+        {
+            qtyInput.val(quantity - 1)
+        } 
+        else 
+        {
+            alert("최소 수량은 1개 입니다.")
+        }
+        updateTotal(tr)
+    })
+    
+    // 직접 입력 시, 숫자만 받고 1~10 범위로 제한 (각 행 기준)
+    $('.text-qty').on('input change', function(){
+        let tr=$(this).closest('tr')
+        let val=$(this).val()
+        val = val.replace(/[^0-9]/g, '')
+        if(val === "" || Number(val) < 1) 
+        {
+            val = 1
+        } 
+        else if(Number(val) > 10) 
+        {
+            val = 10
+            alert("최대 수량은 10개 입니다.")
+        }
+        $(this).val(val)
+        updateTotal(tr)
+    })
+    
+    // 페이지 로드시 각 행마다 총액과 hidden 필드 값 갱신
+    $('tr').each(function(){
+        updateTotal($(this))
+    })
 })
+
 </script>
 </head>
 <body>
@@ -139,10 +215,10 @@ $(function(){
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th class="shoping__product">상품 목록</th>
+                                    <th>상품 금액</th>
+                                    <th>상품 수량</th>
+                                    <th>총 금액</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -155,19 +231,23 @@ $(function(){
                                     </td>
                                     
                                     
-                                    <td class="shoping__cart__price">${vo.cpvo.price }</td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                  <button type="button" class="m-qty">-</button>
-                                   <input type="text" class="text-qty" id="in-qty" value="${vo.account }">
-                                  <button type="button" class="p-qty">+</button>
-                            </div>
+                                    <td class="shoping__cart__price" 
+                                      data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
+                                      ${vo.cpvo.price}
                                     </td>
-                                    
-                                    
-                                   <td class="shoping__cart__total">${vo.cpvo.price }${vo.account }</td>
+                                 <td class="shoping__cart__quantity">
+                              <div class="quantity">
+                                <button type="button" class="m-qty">-</button>
+                                   <input type="text" class="text-qty" id="in-qty" value="${vo.account }">
+                                <button type="button" class="p-qty">+</button>
+                              </div>
+                                 </td>
+                                   <td class="shoping__cart__total"
+                                     data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
+                                     ${vo.cpvo.price}
+                                   </td>
                                    <td class="shoping__cart__item__close">
-                                      <a href="../cart/cart_delete.do?cno=${cart.cno}" onclick="return confirm('삭제하시겠습니까?');">
+                                      <a href="../cart/cart_delete.do?cno=${vo.cno}" onclick="return confirm('삭제하시겠습니까?');">
                                        <span class="icon_close"></span>
                                       </a>
                                    </td>

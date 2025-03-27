@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <h3> 결제 테스트 진행 완료 </h3>
+  <h3> 결제 테스트 </h3>
 </body>
 </html>
