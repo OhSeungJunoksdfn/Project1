@@ -205,7 +205,7 @@ $(function(){
                          <input type="hidden" name="price" id="price-hidden" value="${vo.priceInt }">
                          <input type="hidden" name="account" id="account-hidden" value="1">
                          <input type="hidden" name="total-price" id="total-price-hidden" value="${priceInt }">
-                         <input type="hidden" name="cno" id="cno-hidden" value="${cno }">
+                         <input type="hidden" name="cno" id="cno-hidden" value="${vo.cno }">
                          <button type="button" class="icon_cart_alt" style="background: none; border: none;"></button>
                        </form>
                         <a href="#" class="primary-btn">구매하기</a>
