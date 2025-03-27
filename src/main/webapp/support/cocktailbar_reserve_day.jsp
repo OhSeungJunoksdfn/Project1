@@ -107,7 +107,7 @@ $(function(){
    </table>
    <div style="height: 10px"></div>
    <table class="table">
-    <tr class="table-danger">
+    <tr style="background-color:rgba(24, 27, 97,0.5)">
       <c:forEach var="i" items="${weeks }" varStatus="s">
         <c:choose>
           <c:when test="${s.index==0 }">

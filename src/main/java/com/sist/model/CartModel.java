@@ -46,7 +46,7 @@ public class CartModel {
 		CartDAO.cartInsert(vo);
 		
 
-		return "redirect:cocktail_product_detail.do?product_no=" + product_no + "&cno=" + request.getParameter("cno");
+		return "redirect:../cocktail_product/cocktail_product_detail.do?product_no=" + product_no + "&cno=" + request.getParameter("cno");
 	}
 	
 	@RequestMapping("cart/cart_delete.do")
@@ -54,10 +54,10 @@ public class CartModel {
 	{
 		String cno=request.getParameter("cno");
 		CartDAO.cartDelete(Integer.parseInt(cno));
+		
 		System.out.println("cno 값 ="+cno);
 		request.setAttribute("cno", cno);
-		
-		return "../cart/cart_list.jsp";
+		return "redirect:../cart/cart_list.do"+cno;
 	}
 	
 	@RequestMapping("cart/buy_insert.do")
@@ -68,6 +68,7 @@ public class CartModel {
 		String price=request.getParameter("price");
 		
 		
+		 
 		HttpSession session=request.getSession();
 		String id=(String)session.getAttribute("id");
 		

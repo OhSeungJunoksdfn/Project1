@@ -100,7 +100,6 @@ public class CocktailSupportModel {
 		  String strMonth=request.getParameter("month");
 		  String strDay="";
 		  String rdays=request.getParameter("rdays");
-		  System.out.println(rdays);
 				  
 				  
 		  Date date=new Date();
@@ -183,16 +182,13 @@ public class CocktailSupportModel {
 			  HttpServletResponse response)
 	  {
 		  String day=request.getParameter("day");
-		  System.out.println("day:"+day);
 		  String times=CocktailSupportDAO.reserveDayTimeInfoData(Integer.parseInt(day));
-		  System.out.println(times);
 		  List<String> tList=new ArrayList<String>();
 		  // 1(09:00),64,,...
 		  StringTokenizer st=new StringTokenizer(times,",");
 		  while(st.hasMoreTokens())
 		  {
 			  String strTime=CocktailSupportDAO.reserveGetTimeData(Integer.parseInt(st.nextToken()));
-			  System.out.println("시간:"+strTime);
 			  tList.add(strTime);
 		  }
 		  request.setAttribute("tList", tList);
@@ -216,11 +212,6 @@ public class CocktailSupportModel {
 		  HttpSession session=request.getSession();
 		  String id=(String)session.getAttribute("id");
 		  
-		  System.out.println("bar_no:"+bar_no);
-		  System.out.println("day:"+day);
-		  System.out.println("time:"+time);
-		  System.out.println("inwon:"+inwon);
-		  System.out.println("ID:"+id);
 		  
 		  ReserveVO vo=new ReserveVO();
 		  vo.setId(id);
