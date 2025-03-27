@@ -395,7 +395,7 @@ public class CocktailMemberDAO {
 	      <select id="memberGetPassword" resultType="MemberVO" parameterType="string">
 	      SELECT id,pwd,name,sex,admin
 	      FROM cocktail_member
-	      WHERE id=#{id}
+	      WHERE id=#{id} 
 	      </select>
 	    */
 	   public static CocktailMemberVO memberLogin(String id,String pwd)
