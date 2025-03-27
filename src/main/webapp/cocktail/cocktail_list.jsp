@@ -14,7 +14,12 @@
   font-size:16px;
   margin: 0 5px;
   }
-
+.product__item{
+	 transition: 0.5s;	
+}
+.product__item:hover{
+	box-shadow: 4px 4px 8px rgba(24, 27, 97, 0.4);
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -78,8 +83,10 @@ $(function(){
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }">${vo.name }</a></h6>
+                                <a href="../cocktail/cocktail_detail_before.do?cno=${vo.cocktail_no }">
+                                    <h6>${vo.name }</h6>
                                     <h5>${vo.ename }</h5>
+                                    </a>
                                 </div>
                             </div>
                         </div>

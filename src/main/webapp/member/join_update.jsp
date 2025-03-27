@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link rel="stylesheet" href="../shadow/css/shadowbox.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
     <script type="text/javascript">
@@ -65,13 +66,14 @@
 		
 		 -->
     <!-- Checkout Section Begin -->
+    <div class="login-container1">
     <section class="checkout spad">
-        <div class="container">
-            <div class="checkout__form">
-                <h4>회원수정</h4>
+            <div class="checkout__form" style="text-align:center;">
+                <h4 >회원수정</h4>
+             </div>
                  <form method=post action="../member/join_update_ok.do" name="frm" id="frm">
                     <div class="row">
-                        <div class="col-lg-8 col-md-6">
+                        <div class="col-lg-12">
                            <!-- <div class="row">   -->
                            
                            <div class="checkout__input">
@@ -144,17 +146,18 @@
                          </div>
                             <p>수정에 동의하시면 체크해주세요.</p>
                       </div>
+                      </div>
                       <br>
-                      <div class="col-lg-8 col-md-6">
+
+                      <div class="col-lg-12 col-md-6 text-center">
                       		<input type="submit" value="회원수정" class="btn-sm btn-primary" id="joinBtn">
                       		<input type=button value="취소" class="btn-sm btn-warning" onclick="javascript:history.back()">
-                    </div>
 
-                    </div>
+					  </div>
+                 
                 </form>
-            </div>
-        </div>
     </section>
+    </div>
     <!-- Checkout Section End -->
 
 

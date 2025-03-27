@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cart2-mapper">
+  <insert id="cartInsert" parameterType="Cart2VO">
+    INSERT INTO cart2 VALUES(
+      cart2_cno_seq.nextval,#{pno},#{id},#{account},
+      #{cart_price},'n',SYSDATE
+    )
+  </insert>
+  
+  <insert id="buyInsert" parameterType="Cart2VO">
+    INSERT INTO cart2 VALUES(
+      cart2_cno_seq.nextval,#{pno},#{id},#{account},
+      #{cart_price},'y',SYSDATE
+    )
+  </insert>
+  
+  <resultMap type="Cart2VO" id="cartMap">
+    <result property="pvo.name" column="name"/>
+    <result property="pvo.poster" column="poster"/>
+    <result property="pvo.price" column="price"/>
+  </resultMap>
+  <select id="cartListData" resultMap="cartMap" 
+     parameterType="string">
+    SELECT cno,name,poster,cart_price,
+           account,price
+    FROM cart2 c,cocktail_product2 p
+    WHERE c.pno=p.product_no
+    AND id=#{id} AND isbuy='n'
+    ORDER BY cno DESC
+  </select>
+  <select id="buyListData" resultMap="cartMap" 
+     parameterType="string">
+    SELECT cno,name,poster,cart_price,
+           account,price
+    FROM cart2 c,cocktail_product2 p
+    WHERE c.pno=p.product_no
+    AND id=#{id} AND isbuy='y'
+    ORDER BY cno DESC
+  </select>
+  <update id="cartUpdate" parameterType="Cart2VO">
+    UPDATE cart2 SET
+    account=account+#{account}
+    WHERE pno=#{pno} AND id=#{id}
+  </update>
+  <select id="cartCount" resultType="int" parameterType="Cart2VO">
+    SELECT COUNT(*) FROM cart2
+    WHERE pno=#{pno} AND id=#{id}
+  </select>
+  <delete id="cartCancel" parameterType="int">
+    DELETE FROM cart2
+    WHERE cno=#{cno}
+  </delete>
+</mapper>
