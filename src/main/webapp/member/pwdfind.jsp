@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/login.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 <script>
@@ -32,7 +32,7 @@
 	    			}
 	    			else
 	    			{
-	    				$('#result').html('<font color="blue">메일로 비밀번호를 전송하였습니다</font>')
+	    				$('#result').html('<font color="blue">메일로 비밀번호를<br>전송하였습니다.</font>')
 	    			}
 	    		},
 	    		error:function(request,status,error){
@@ -42,25 +42,20 @@
 	    })
 	  })
 </script>
-<style type="text/css">
-#tabs{
-  width: 450px;
-}
-</style>
 </head>
 <body>
-<div class="wrapper row3">
+   <div class="login-container" >
+   <div class="checkout__form">
   <main class="container clear">
-   <h2 class="sectiontitle">비밀번호 찾기</h2>
+   <div class="checkout__form" style="text-align:center;">
+   <h4 style="display:inline-block; width:240px;" >비밀번호 찾기</h4>
+   </div>
    <div id="tabs">
-	  <ul>
-	    <li><a href="#tabs-1">비밀번호 찾기</a></li>
-	  </ul>
 	  <div id="tabs-1">
 	   <table class="table">
 	     <tr>
-	      <td class="inline">
-	        ID:<input type=text name="id" id="p_id" size=15 class="input-sm">
+	      <td class="text-center">
+	        ID<input type=text name="id" id="p_id" size=15 class="input-sm">
 	        <input type=button value="검색" class="btn-sm btn-danger" id="pwdBtn">
 	      </td>
 	     </tr>
@@ -73,6 +68,7 @@
 	  </div>
 	</div>
 	</main>
+</div>
 </div>
 </body>
 </html>

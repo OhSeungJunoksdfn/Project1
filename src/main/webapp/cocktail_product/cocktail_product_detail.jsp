@@ -60,8 +60,8 @@ $(function(){
     // 총 금액
     function updateTotal(){
         // data-price에 vo.priceInt 값
-        let price = Number($('.product__details__quantity').data('price'))
-        let quantity = Number($('#in-qty').val())
+        let price=Number($('.product__details__quantity').data('price'))
+        let quantity=Number($('#in-qty').val())
         if(isNaN(quantity) || quantity < 1) {
             quantity = 1
             $('#in-qty').val(quantity)

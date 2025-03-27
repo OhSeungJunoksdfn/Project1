@@ -45,7 +45,7 @@
                                     <li><a href="../cocktailbar/cocktailbar_list.do">칵테일바 목록</a></li>
                                     <li><a href="./shoping-cart.html">칵테일바 관리</a></li>
                                     <c:if test="${sessionScope.id!=null }">
-                                    <li><a href="./checkout.html">칵테일바 예약</a></li>
+                                    <li><a href="../reserve/cocktailbar_reserve_main.do">칵테일바 예약</a></li>
                                     </c:if>
                                 </ul>
                             </li>
@@ -148,7 +148,7 @@
                                     <li><a href="../cocktailbar/cocktailbar_list.do">칵테일바 목록</a></li>
                                     <li><a href="../cocktailbar/cocktailbar_find.do">칵테일바 검색</a></li>
                                     <c:if test="${sessionScope.id!=null }">
-                                    <li><a href="#">칵테일바 예약</a></li>
+                                    <li><a href="../reserve/cocktailbar_reserve_main.do">칵테일바 예약</a></li>
                                     </c:if>
                                 </ul>
                             </li>

@@ -15,6 +15,33 @@
     WHERE REGEXP_LIKE(${fd},#{ss})
   </select>
 	
-	
 	<!-- 칵테일바 검색기능 끝부분 -->
+	
+	<!-- 칵테일바 예약기능 -->
+	<select id="cocktailbarRserveList" resultType="CocktailbarVO" parameterType="String">
+	SELECT bar_no,name,image,loc,rdays
+	FROM cocktailbar
+	WHERE REGEXP_LIKE(loc,#{loc})
+	</select>
+	
+	<select id="reserveDayTimeInfoData" resultType="string"
+   parameterType="int"
+ >
+   SELECT time FROM reserve_day
+   WHERE rno=#{rno}
+ </select>
+ <select id="reserveGetTimeData" resultType="string"
+   parameterType="int"
+ >
+   SELECT time FROM reserve_time
+   WHERE tno=#{tno}
+ </select>
+ <insert id="reserveInsert" parameterType="ReserveVO">
+  INSERT INTO reserve_info VALUES(
+    (SELECT NVL(MAX(rno)+1,1) FROM reserve_info),
+    #{id},#{bar_no},#{day},#{time},#{inwon},
+    SYSDATE,'n'
+  )
+ </insert>
+	<!-- 칵테일바 예약기능 끄부분-->
 </mapper>

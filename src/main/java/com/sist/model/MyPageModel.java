@@ -100,7 +100,7 @@ public class MyPageModel {
 	        request.setAttribute("error_message", "회원 정보 수정 중 오류 발생");
 	        return "../member/error.jsp";
 	    }
-
   }
+  
   
 }

@@ -16,6 +16,7 @@
   <typeAlias type="com.sist.vo.Cocktail_ProductVO" alias="Cocktail_ProductVO"/>
   <typeAlias type="com.sist.vo.CommunityCommentVO" alias="CommunityCommentVO"/>
   <typeAlias type="com.sist.vo.CartVO" alias="CartVO"/>
+  <typeAlias type="com.sist.vo.ReserveVO" alias="ReserveVO"/>
   </typeAliases>
   <environments default="development">
   	<environment id="development">

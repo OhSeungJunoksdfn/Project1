@@ -45,4 +45,71 @@ public class CocktailSupportDAO {
 		}
 		return count;
 	}
+	//칵테일바 예약
+	public static List<CocktailbarVO> cocktailbarRserveList(String loc)
+	{
+		SqlSession session = null;
+		List<CocktailbarVO> list = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("cocktailbarRserveList",loc);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	public static String reserveDayTimeInfoData(int rno)
+	{
+		SqlSession session = null;
+		String time = null;
+		try {
+			session = ssf.openSession();
+			time = session.selectOne("reserveDayTimeInfoData",rno);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return time;
+	}
+	public static String reserveGetTimeData(int tno)
+	{
+		SqlSession session = null;
+		String time = null;
+		try {
+			session = ssf.openSession();
+			time = session.selectOne("reserveGetTimeData",tno);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return time;
+	}
+	public static void reserveInsert(ReserveVO vo)
+	{
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.insert("reserveInsert",vo);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+	}
 }

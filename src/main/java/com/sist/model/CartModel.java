@@ -29,7 +29,6 @@ public class CartModel {
 		        request.setAttribute("error", "필수 파라미터가 누락되었습니다.");
 		    }
 		
-		
 		HttpSession session=request.getSession();
 		String id=(String)session.getAttribute("id");
 		
@@ -54,8 +53,10 @@ public class CartModel {
 	public String cart_delete(HttpServletRequest request, HttpServletResponse response)
 	{
 		String cno=request.getParameter("cno");
-		System.out.println("cno 값 ="+cno);
 		CartDAO.cartDelete(Integer.parseInt(cno));
+		System.out.println("cno 값 ="+cno);
+		request.setAttribute("cno", cno);
+		
 		return "../cart/cart_list.jsp";
 	}
 	
@@ -87,6 +88,7 @@ public class CartModel {
 	{
 	    HttpSession session=request.getSession();
 	    String id=(String)session.getAttribute("id");
+	    String cno=request.getParameter("cno");
 	    
 	    if(id == null || id.trim().isEmpty()){
 	        request.setAttribute("error", "로그인이 필요합니다.");
@@ -96,6 +98,7 @@ public class CartModel {
 	    
 	    // DAO를 통해 해당 사용자의 장바구니 목록을 가져옴
 	    List<CartVO> cartList=CartDAO.cartListData(id);
+	    request.setAttribute("cno", cno);
 	    request.setAttribute("cartList", cartList);
 	    
 	    request.setAttribute("main_jsp", "../cart/cart_list.jsp");

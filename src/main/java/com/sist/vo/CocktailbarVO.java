@@ -17,5 +17,5 @@ SUBWAY	VARCHAR2(500 BYTE)
 @Data
 public class CocktailbarVO {
 	private int bar_no,hit;
-	private String name,address,phone,image,profile,time,loc,subway;
+	private String name,address,phone,image,profile,time,loc,subway,rdays;
 }

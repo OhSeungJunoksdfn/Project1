@@ -59,40 +59,54 @@ public class CocktailMemberModel {
 	 
 	 @RequestMapping("member/join_ok.do")
 	   // MemberVO vo
-	   public String member_join_ok(HttpServletRequest request,
-			   HttpServletResponse response)
-	   {
-		   String id=request.getParameter("id");
-		   String pwd=request.getParameter("pwd");
-		   String name=request.getParameter("name");
-		   String sex=request.getParameter("sex");
-		   String birthday=request.getParameter("birthday");
-		   String email=request.getParameter("email");
-		   String post=request.getParameter("post");
-		   String address=request.getParameter("address");
-		   String address_detail=request.getParameter("address_detail");
-		   String phone1=request.getParameter("phone1");
-		   String phone2=request.getParameter("phone2");
-		   String coment=request.getParameter("coment");
-		   String avatar=request.getParameter("avatar");
-		   
-		   CocktailMemberVO vo=new CocktailMemberVO();
-		   vo.setId(id);
-		   vo.setPwd(pwd);
-		   vo.setName(name);
-		   vo.setSex(sex);
-		   vo.setBirthday(birthday);
-		   vo.setEmail(email);
-		   vo.setPost(post);
-		   vo.setAddress(address);
-		   vo.setAddress_detail(address_detail);
-		   vo.setPhone(phone1+"-"+phone2);
-		   vo.setComent(coment);
-		   vo.setAvatar(avatar);
-		   CocktailMemberDAO.memberInsert(vo);
-		   
-		   return "redirect:../main/main.do";
-	   }
+	 public String member_join_ok(HttpServletRequest request,
+	                              HttpServletResponse response) {
+	     try {
+	         request.setCharacterEncoding("UTF-8");
+
+	         String id = request.getParameter("id");
+	         String pwd = request.getParameter("pwd");
+	         String name = request.getParameter("name");
+	         String sex = request.getParameter("sex");
+	         String birthday = request.getParameter("birthday");
+	         String email = request.getParameter("email");
+	         String post = request.getParameter("post");
+	         String address = request.getParameter("address");
+	         String address_detail = request.getParameter("address_detail");
+	         String phone1 = request.getParameter("phone1");
+	         String phone2 = request.getParameter("phone2");
+	         String coment = request.getParameter("coment");
+	         String avatar = request.getParameter("avatar");
+
+	         CocktailMemberVO vo = new CocktailMemberVO();
+	         vo.setId(id);
+	         vo.setPwd(pwd);
+	         vo.setName(name);
+	         vo.setSex(sex);
+	         vo.setBirthday(birthday);
+	         vo.setEmail(email);
+	         vo.setPost(post);
+	         vo.setAddress(address);
+	         vo.setAddress_detail(address_detail);
+	         vo.setPhone(phone1 + "-" + phone2);
+	         vo.setComent(coment);
+	         vo.setAvatar(avatar);
+
+	         CocktailMemberDAO.memberInsert(vo);
+	         HttpSession session = request.getSession();
+	         session.setAttribute("msg", "회원가입이 완료되었습니다!");
+
+	         return "redirect:../main/main.do";
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         request.setAttribute("error_message", "회원가입 중 오류가 발생했습니다.");
+
+	         // Shadowbox로 열릴 페이지
+	         request.setAttribute("main_jsp", "../member/error.jsp");
+	         return "../main/main.jsp";
+	     }
+	 }
+
 	   
 	 
 	@RequestMapping("member/login.do")

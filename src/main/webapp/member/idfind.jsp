@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link rel="stylesheet" href="../shadow/css/shadowbox.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
     <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
@@ -71,34 +72,22 @@
 	    })
   })
   </script>
-  <style type="text/css">
-  #tabs{
-    width: 600px;
-  }
-  </style>
 </head>
 <body>
-<div class="breadcumb-area" style="background-image: url(../img/bg-img/breadcumb.jpg);">
+<div class="login-container1">
         <div class="container h-100">
-            <div class="row h-100 align-items-center">
+            <div class="checkout__form" style="text-align:center;">
                 <div class="col-12">
-                    <div class="bradcumb-title text-center">
-                        <h2>아이디 찾기</h2>
-                    </div>
+                        <h4>아이디 찾기</h4>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ****** Breadcumb Area End ****** -->
 
     <!-- ****** Archive Area Start ****** -->
-    <section class="archive-area section_padding_80">
-        <div class="container">
-            <div class="row" style="width:800px;margin:0px auto">
-              <div id="tabs">
+        <div class="checkout__form">
+            <div class="row">
 
-	  <div id="tabs-1">
-	    <table class="table">
+	  <div class="checkout__input">
 	     <tr>
 	      <td width=20%>이름</td>
 	      <td width=80%>
@@ -121,10 +110,9 @@
 	       <span id="result_email"></span>
 	      </td>
 	     </tr>
-	    </table>
 	  </div>
-	  <div id="tabs-2">
-	    <table class="table">
+	  <div class="checkout__input">
+	    
 	     <tr>
 	      <td width=20%>이름</td>
 	      <td width=80%>
@@ -147,11 +135,9 @@
 	       <span id="result_phone"></span>
 	      </td>
 	     </tr>
-	    </table>
 	  </div>
-	</div>
             </div>
          </div>
-    </section>
+        </div>
 </body>
 </html>
