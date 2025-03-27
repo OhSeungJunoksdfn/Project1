@@ -37,13 +37,13 @@ $(function(){
         <div class="row" >
            <div class="col-8" >
            <h4>칵테일바 목록</h4>
-           	<div  id="reserveList" style="height:500px; border:1px solid black;overflow-y:scroll"></div>
-           	<div  id="reserveDay" style="height:500px; border:1px solid black;display:none"></div>
-           	<div  id="reserveTime" style="height:80px; border:1px solid black;display:none"></div>
-           	<div  id="reserveInwon" style="height:80px; border:1px solid black;display:none"></div>
+           	<div  id="reserveList" style="height:500px; overflow-y:scroll"></div>
+           	<div  id="reserveDay" style="height:500px; display:none"></div>
+           	<div  id="reserveTime" style="height:80px;display:none"></div>
+           	<div  id="reserveInwon" style="height:80px; display:none"></div>
            </div>
            <div class="col-4" style="position:relative;">
-           	<div style="position:sticky; top: 0;">
+           	<div style="position:sticky; top: 100px;">
            	 <table class="table">
                      <tr><td colspan="2"><h4 class="primary-btn text-center" style="width:100%;">예약 정보</h4></td></tr>
                      <tr>

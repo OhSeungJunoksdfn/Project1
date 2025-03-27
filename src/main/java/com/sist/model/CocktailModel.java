@@ -27,7 +27,6 @@ public class CocktailModel {
 		if(sort==null) sort="1";
 		int curpage= Integer.parseInt(page);
 		Map map = new HashMap();
-		System.out.println("sorts:"+sorts[Integer.parseInt(sort)]);
 		map.put("start", (curpage*12)-11);
 		map.put("end", (curpage*12));
 		map.put("detail","y");
@@ -138,7 +137,6 @@ public class CocktailModel {
 		String[] contents = vo.getContent().split("\\d+\\.\\s*");
 		List<CocktailVO> tags = CocktailDAO.cocktailTagData(Integer.parseInt(cno));
 		List<CocktailVO> clist = CocktailDAO.cocktailData4();
-		System.out.println(vo.getContent());
 		request.setAttribute("list", list);
 		request.setAttribute("vo", vo);
 		request.setAttribute("contents", contents);
@@ -308,7 +306,6 @@ public class CocktailModel {
 	public void ingredients_find_ajax(HttpServletRequest request, HttpServletResponse response)
 	{
 		String fd = request.getParameter("fd");
-		System.out.println(fd.toString());
 		List<CocktailIngredientsVO> list = CocktailDAO.ingredientsFindData(fd);
 		JSONArray arr = new JSONArray();
 		int i = 0;
@@ -355,7 +352,6 @@ public class CocktailModel {
 		CocktailVO vo = CocktailDAO.cocktailDetailData(Integer.parseInt(cno));
 		List<CocktailVO> list = CocktailDAO.cocktailRecipeData(Integer.parseInt(cno));
 		List<CocktailVO> tags = CocktailDAO.cocktailTagData(Integer.parseInt(cno));
-		System.out.println(vo.getContent());
 		request.setAttribute("list", list);
 		request.setAttribute("vo", vo);
 		request.setAttribute("tags", tags);
@@ -394,8 +390,6 @@ public class CocktailModel {
 		vo.setComments(comments);
 		vo.setContent(content);
 		vo.setAlc(String.valueOf(itAlc));
-		System.out.println(totalAlc);
-		System.out.println(totalVolume);
 		vo.setImage("../img/illust_no_image.png");
 		CocktailDAO.cocktailUpdate(vo, ing_no, unit, volume,Integer.parseInt(cocktail_no));
 		

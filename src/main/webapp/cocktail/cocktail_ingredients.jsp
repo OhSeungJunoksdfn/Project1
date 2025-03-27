@@ -18,6 +18,12 @@
   	background-color: #181b61 !important;
   	color:white !important;
   }
+  .product__item{
+	 transition: 0.5s;	
+}
+.product__item:hover{
+	box-shadow: 4px 4px 8px rgba(24, 27, 97, 0.4);
+}
 </style>
 </head>
 <body>
@@ -64,8 +70,10 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="../cocktail/cocktail_ingredient_detail.do?no=${vo.civo.ing_no }">${vo.civo.ingname }</a></h6>
+                                <a href="../cocktail/cocktail_ingredient_detail.do?no=${vo.civo.ing_no }">
+                                    <h6>${vo.civo.ingname }</h6>
                                     <h5>${vo.civo.ename }</h5>
+                                    </a>
                                 </div>
                             </div>
                         </div>

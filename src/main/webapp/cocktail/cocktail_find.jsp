@@ -63,8 +63,8 @@ let jsonView = (json) => {
         	+'</ul>'
     		+'</div>'
     		+'<div class="product__item__text">'
-        	+'<h6><a href="../cocktail/cocktail_detail_before.do?cno='+cocktail.cocktail_no+'">'+cocktail.name+'</a></h6>'
-        	+'<h5>'+cocktail.ename+'</h5>'
+        	+'<a href="../cocktail/cocktail_detail_before.do?cno='+cocktail.cocktail_no+'"><h6>'+cocktail.name+'</h6>'
+        	+'<h5>'+cocktail.ename+'</h5></a>'
     		+'</div>'
 			+'</div>'
 			+'</div>'
@@ -115,6 +115,12 @@ let jsonView = (json) => {
   	margin-top: 10px;
   	margin-bottom: 10px;
   }
+  .product__item{
+	 transition: 0.5s;	
+}
+.product__item:hover{
+	box-shadow: 4px 4px 8px rgba(24, 27, 97, 0.4);
+}
 </style>
 </head>
 <body>
