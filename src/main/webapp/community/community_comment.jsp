@@ -198,6 +198,24 @@ $('#myForm').on('submit', function(event) {
     event.preventDefault();  // 기본 제출 동작 방지
 });
 
+$(".write-button").click(function (){
+	const commentNo = $(this).prop('classList')[3].split("-")[1]
+	const buttontype= $(this).prop('classList')[4]
+	let replystate = $(".reply-"+commentNo+"."+buttontype).css('display')==='none'
+	
+	$(".comment-reply").hide()
+	
+	
+	if(replystate)
+	{
+		$(".reply-"+commentNo+"."+buttontype).css({"display":"flex"})
+		
+	}else
+	{
+		$(".reply-"+commentNo+"."+buttontype).hide()
+	}
+})
+
 const handleSearch = () => {
 	const tag = $('.tag.active').text()
 	const selectsearch = $('#selectsearch').val()
