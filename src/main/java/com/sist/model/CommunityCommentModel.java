@@ -30,6 +30,9 @@ public class CommunityCommentModel {
 		String is_reply=request.getParameter("is_reply");
 		String post_type=request.getParameter("post_type");
 		
+		System.out.println("replyyuyyyyyyyyyyyyyyy"+is_reply);
+		System.out.println("posttypeeeeeeeeeeeeeee"+post_type);
+		
 		Map map = new HashMap();
 		map.put("post_no", post_no);
 		map.put("id", id);

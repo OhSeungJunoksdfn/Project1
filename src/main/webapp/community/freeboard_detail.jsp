@@ -167,23 +167,7 @@
 </div>
 <script type="text/javascript">
 //답글버튼 보이기/숨기기
-$(".write-button").click(function (){
-	const commentNo = $(this).prop('classList')[3].split("-")[1]
-	const buttontype= $(this).prop('classList')[4]
-	let replystate = $(".reply-"+commentNo+"."+buttontype).css('display')==='none'
-	
-	$(".comment-reply").hide()
-	
-	
-	if(replystate)
-	{
-		$(".reply-"+commentNo+"."+buttontype).css({"display":"flex"})
-		
-	}else
-	{
-		$(".reply-"+commentNo+"."+buttontype).hide()
-	}
-})
+
 
 
 </script>

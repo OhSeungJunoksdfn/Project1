@@ -137,6 +137,18 @@ public class CocktailModel {
 		String[] contents = vo.getContent().split("\\d+\\.\\s*");
 		List<CocktailVO> tags = CocktailDAO.cocktailTagData(Integer.parseInt(cno));
 		List<CocktailVO> clist = CocktailDAO.cocktailData4();
+		
+		//댓글 기능
+		String posType = "cocktail";//게시물 종류
+		Map map=new HashMap();
+		map.put("post_type", posType);
+		map.put("post_no", Integer.parseInt(cno));//게시물번호
+		List<CommunityCommentVO> ilist = CommunityCommentDAO.getCommentData(map);
+		int numberOfComment = CommunityCommentDAO.getNumberOfComment(map);
+		request.setAttribute("comment_list", ilist);
+		request.setAttribute("number_of_comment", numberOfComment);
+		//
+		
 		request.setAttribute("list", list);
 		request.setAttribute("vo", vo);
 		request.setAttribute("contents", contents);

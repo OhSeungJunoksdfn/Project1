@@ -104,7 +104,7 @@ textarea{
 	<div class="comment-container">
 		<form method="post" action="../comment/comment_insert.do">
 		<div class="comment-box " style="display:flex">
-			<input type="hidden" name="post_no" value="${vo.board_no }"/>
+			<input type="hidden" name="post_no" value="${param.post_no }"/>
 			
 			<!-- 유저아이디 세션에서 가져오도록 처리 -->
 			<c:set var="userid" value="user"/>
@@ -136,13 +136,13 @@ textarea{
 				</c:if>
 				<!-- 수정 삭제 아이디 세션에서 가져오도록 처리 -->
 				<button class="site-btn comment-button write-button comment-${status.index } update">수정</button>
-				<a href="../comment/comment_delete.do?comment_no=${comment.comment_no }&board_no=${vo.board_no}" class="site-btn comment-button ">삭제</a>
+				<a href="../comment/comment_delete.do?comment_no=${comment.comment_no }&post_no=${param.post_no}" class="site-btn comment-button ">삭제</a>
 				
 				
 				<!-- 답글 쓰기 -->
 				<form method="post" action="../comment/comment_insert_reply.do">
 				<div class="comment-reply reply-${status.index } reply" style="display:none" >
-					<input type="hidden" name="post_no" value="${vo.board_no }"/>
+					<input type="hidden" name="post_no" value="${param.post_no }"/>
 			
 					<!-- 유저아이디 세션에서 가져오도록 처리 -->
 					<c:set var="userid" value="user"/>
@@ -158,7 +158,7 @@ textarea{
 				<!-- 댓글 수정하기 -->
 				<form method="post" action="../comment/comment_update.do">
 				<div class="comment-reply reply-${status.index } update" style="display:none" >
-					<input type="hidden" name="board_no" value="${vo.board_no }"/>
+					<input type="hidden" name="post_no" value="${param.post_no }"/>
 			
 					<!-- 유저아이디 세션에서 가져오도록 처리 -->
 					<c:set var="userid" value="user"/>
@@ -214,6 +214,23 @@ $('.tag').on('click',function(){
 	
 })
 
+$(".write-button").click(function (){
+	const commentNo = $(this).prop('classList')[3].split("-")[1]
+	const buttontype= $(this).prop('classList')[4]
+	let replystate = $(".reply-"+commentNo+"."+buttontype).css('display')==='none'
+	
+	$(".comment-reply").hide()
+	
+	
+	if(replystate)
+	{
+		$(".reply-"+commentNo+"."+buttontype).css({"display":"flex"})
+		
+	}else
+	{
+		$(".reply-"+commentNo+"."+buttontype).hide()
+	}
+})
 
 </script>
 </body>
