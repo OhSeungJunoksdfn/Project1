@@ -32,7 +32,7 @@ $(function(){
 		$('#cocktailbar_name').text(name)
 		$('#rno').val(no);
 		$('.nameBtn').css({'background':"none","color":"black"})
-		$(this).css({'background':'rgb(24, 27, 97)',"color":"white"});
+		$(this).css({'background':'rgba(24, 27, 97,0.5)',"color":"white"});
 		$("#reserveDay").show();
 		$("#reserveTime").hide();
 		$("#reserveInwon").hide();

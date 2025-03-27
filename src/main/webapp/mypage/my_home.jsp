@@ -22,7 +22,8 @@
 		                    <li><a href="#">댓글관리</a></li>
 							<li><a href="#">찜관리</a></li>
 							<li><a href="#">좋아요관리</a></li>
-						    <li><a href="#">장바구니관리</a></li>
+						    <li><a href="../mypage/mypage_cart_list.do">장바구니관리</a></li>
+						    <li><a href="../mypage/mypage_buy_list.do">구매관리</a></li>
 							<li><a href="#">회원예약관리</a></li>
                         </ul>
                     </div>

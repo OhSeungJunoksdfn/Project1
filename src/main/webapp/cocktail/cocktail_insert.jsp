@@ -290,13 +290,13 @@ input[type=text]{
             </tr>
             </table>
             <table>
-				<h4 class="text-center">재료 정보</h4>
+				<h4 class="text-center" style="">재료 정보</h4>
 				<table class="table" id="ingtable">
 					<tr>
 					 <th class="text-center" width="60%">재료</th>
 					 <th class="text-center" width="15%">용량</th>
 					 <th class="text-center" width="15%">단위</th>
-					 <th class="text-center" width="10%"><input type="button" value="추가" style="float:right;" class="createBtn btn-sm btn-danger"></th>
+					 <th class="text-center" width="10%"><input type="button" value="추가"  class="createBtn btn-sm btn-danger"></th>
 					</tr>
 					<tr>
 					 <td class="text-center" width="60%" >
