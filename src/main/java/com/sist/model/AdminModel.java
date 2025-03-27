@@ -53,15 +53,18 @@ public class AdminModel {
    }
 
    @RequestMapping("adminpage/blacklist_delete.do")
-   public String admin_blacklist_delete(HttpServletRequest request,
-                                        HttpServletResponse response) {
-       try {
-           int no = Integer.parseInt(request.getParameter("black_list_no"));
-           BlackListDAO.deleteBlacklist(no);
+   public String admin_blacklist_delete(HttpServletRequest request,HttpServletResponse response) {
+	   try {
+           String id = request.getParameter("id");
+           CocktailMemberVO vo = new CocktailMemberVO();
+           vo.setId(id);
+           CocktailMemberDAO.memberDelete(vo);
+           return "redirect:../adminpage/blacklist.do";
        } catch (Exception ex) {
            ex.printStackTrace();
+           request.setAttribute("msg", "회원 삭제 중 오류가 발생했습니다.");
+           return "../member/error.jsp";
        }
-       return "redirect:blacklist.do";
    }
 }
   

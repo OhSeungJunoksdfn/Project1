@@ -31,7 +31,7 @@
 
 <body>
 	
-		<jsp:include page="${admin_jsp }"/> 
+		<jsp:include page="${admin_jsp }"/>
 
 
      <!-- Js Plugins -->

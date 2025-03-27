@@ -34,8 +34,7 @@
                          <span>회원운영정보</span>
                       </div>
                       <ul>
-                    <li><a href="../member/join_update.do">블랙리스트추가</a></li>
-                    <li><a href="../member/join_secession.jsp">회원탈퇴</a></li>
+                    <li><a href="../adminpage/blacklist.do">블랙리스트추가</a></li>
                     <li><a href="../member/join_delete.jsp">회원삭제</a></li>
 				    <li><a href="../member/pwdChange.do">비밀번호변경</a></li>
                  </ul>
