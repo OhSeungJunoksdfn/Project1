@@ -49,9 +49,10 @@
 				<td style="vertical-align:bottom;border:none"><h4 class="text-left" style="float:left">[${vo.tag }] ${vo.subject }</h4></td>
 				<td class="text-right" style="border:none">
 				<!-- 유저아이디 세션에서 가져오도록 처리 -->
-                <c:set var="userid" value="user"/>
-				<a href="../community/freeboard_update.do?board_no=${vo.board_no}&id=${userid}" class="site-btn" style="">수정</a> 
-				<a href="../community/freeboard_delete.do?board_no=${vo.board_no}&id=${userid}" class="site-btn" style="">삭제</a> 
+                <c:if test="${sessionScope.id==vo.id }">
+				<a href="../community/freeboard_update.do?board_no=${vo.board_no}&id=${sessionScope.id}" class="site-btn" style="">수정</a> 
+				<button class="site-btn delete-post" style="">삭제</button> 
+				</c:if>
 				<a href="../community/freeboard_list.do?page=${page }" class="site-btn" style="">목록</a> 
 				</td>
 			</tr>
@@ -159,6 +160,7 @@
         
         <jsp:include page="community_comment.jsp" >
         	<jsp:param name="post_type" value="freeboard"/>
+        	<jsp:param name="post_no" value="${vo.board_no }"/>
         </jsp:include>
         	
         
@@ -167,7 +169,13 @@
 </div>
 <script type="text/javascript">
 //답글버튼 보이기/숨기기
-
+$('.delete-post').on('click',function(){
+	if (confirm("삭제하시겠습니까?")) {
+        alert("삭제되었습니다")
+        window.location.href = "../community/freeboard_delete.do?board_no=${vo.board_no}&id=${sessionScope.id}";
+    } else {
+    }
+})
 
 
 </script>

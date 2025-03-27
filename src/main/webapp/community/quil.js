@@ -1,5 +1,3 @@
-const serverURL = "http://localhost:8080/CocktailProject1"
-
 const toolbarOptions = [
 	[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
     ['bold', 'italic', 'underline', 'strike'],
@@ -22,13 +20,6 @@ $(document).ready(function(){
 	$('.ql-toolbar.ql-snow').css('text-align','left')
 	$(".ql-editor").css({"overflow":"hidden","min-height":"500px"})
 });
-
-$("#test").click(()=>{
-	const file = convertBase64ImgToImgFile($("#img-0").attr("src"),"img-0.png")
-	uploadImage(file)
-	//console.log($("#form"))
-	//axiosTest();
-})
 
 const imageUploadAndConvertedImageApply = (id) => {//이미지 업로드하고 가져오기
 	const file = convertBase64ImgToImgFile($(`#${id}`).attr("src"),`${id}.png`)

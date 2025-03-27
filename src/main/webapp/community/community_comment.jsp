@@ -100,15 +100,15 @@ textarea{
 </style>
 </head>
 <body>
+	
 	<div style="margin:0px;padding:0px;text-align:left;padding:10px;border-top:solid rgb(235, 235, 235) 1px;font-size:15px">총 댓글  ${number_of_comment }</div>
 	<div class="comment-container">
+		<c:if test="${sessionScope.id!=null }">
 		<form method="post" action="../comment/comment_insert.do">
 		<div class="comment-box " style="display:flex">
 			<input type="hidden" name="post_no" value="${param.post_no }"/>
 			
-			<!-- 유저아이디 세션에서 가져오도록 처리 -->
-			<c:set var="userid" value="user"/>
-			<input type="hidden" name="id" value="${userid }"/>
+			<input type="hidden" name="id" value="${sessionScope.id }"/>
 			
 			<input type="hidden" name="is_reply" value="${0 }"/>
 			<input type="hidden" name="post_type" value="${param.post_type }"/>
@@ -116,6 +116,7 @@ textarea{
 			<button class="site-btn comment-save" style="margin-left:10px" >확인</button>
 		</div>
 		</form>
+		</c:if>
 		<c:forEach var="comment" items="${comment_list }" varStatus="status">
 			<c:choose>
 			<c:when test="${comment.content!=null }">
@@ -129,15 +130,14 @@ textarea{
 					<span style="margin-right:2px"><fmt:formatDate value="${comment.regdate }" pattern="yyyy-MM-dd"/></span>
 					<span><fmt:formatDate value="${comment.regdate }" pattern="hh:mm:ss"/></span>
 				</div>
-				<c:if test="${comment.is_reply==0 }">
+				<c:if test="${comment.is_reply==0 and sessionScope.id!=null}">
 					<button class="site-btn write-button comment-button comment-${status.index } reply">답글</button>
-					
-					
 				</c:if>
-				<!-- 수정 삭제 아이디 세션에서 가져오도록 처리 -->
-				<button class="site-btn comment-button write-button comment-${status.index } update">수정</button>
-				<a href="../comment/comment_delete.do?comment_no=${comment.comment_no }&post_no=${param.post_no}" class="site-btn comment-button ">삭제</a>
 				
+				<c:if test="${sessionScope.id==comment.id }">
+				<button class="site-btn comment-button write-button comment-${status.index } update">수정</button>
+				<button class="site-btn comment-button delete-comment ${comment.comment_no}">삭제</button>
+				</c:if>
 				
 				<!-- 답글 쓰기 -->
 				<form method="post" action="../comment/comment_insert_reply.do">
@@ -145,8 +145,7 @@ textarea{
 					<input type="hidden" name="post_no" value="${param.post_no }"/>
 			
 					<!-- 유저아이디 세션에서 가져오도록 처리 -->
-					<c:set var="userid" value="user"/>
-					<input type="hidden" name="id" value="${userid }"/>
+					<input type="hidden" name="id" value="${sessionScope.id}"/>
 					
 					<input type="hidden" name="is_reply" value="${1 }"/>
 					<input type="hidden" name="post_type" value="${param.post_type }"/>
@@ -159,10 +158,8 @@ textarea{
 				<form method="post" action="../comment/comment_update.do">
 				<div class="comment-reply reply-${status.index } update" style="display:none" >
 					<input type="hidden" name="post_no" value="${param.post_no }"/>
-			
-					<!-- 유저아이디 세션에서 가져오도록 처리 -->
-					<c:set var="userid" value="user"/>
-					<input type="hidden" name="id" value="${userid }"/>
+					<input type="hidden" name="post_type" value="${param.post_type }"/>
+					<input type="hidden" name="id" value="${sessionScope.id}"/>
 					
 					<input type="hidden" name="comment_no" value="${comment.comment_no }"/>
 					<input type="hidden" name="group_id" value="${comment.comment_no }"/>
@@ -230,6 +227,15 @@ $(".write-button").click(function (){
 	{
 		$(".reply-"+commentNo+"."+buttontype).hide()
 	}
+})
+
+$('.delete-comment').on('click',function(){
+	const comment_no= $(this).prop('classList')[3]
+	if (confirm("삭제하시겠습니까?")) {
+        alert("삭제되었습니다")
+        window.location.href = "../comment/comment_delete.do?comment_no="+comment_no+"&post_no=${param.post_no}&post_type=${param.post_type}";
+    } else {
+    } 
 })
 
 </script>

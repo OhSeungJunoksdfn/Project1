@@ -30,8 +30,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
-	//세션에서 아이디 가져오도록 처리
-	//댓글기능 만들기
 	private final String uploadPath = "./upload/";
 	
 	@RequestMapping("community/freeboard_list.do")
