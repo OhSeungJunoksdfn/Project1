@@ -7,20 +7,54 @@
     <meta charset="UTF-8">
     <title>회원 삭제</title>
     <link rel="stylesheet" href="../css/login.css">
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+    <style>
+      .input-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      .input-wrapper input {
+        width: 250px;
+        text-align: center;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .btn-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .btn-box button {
+        width: 250px;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: navy;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
 </head>
 <body>
-<div class="login-container1">
-    <h2 style="text-align: center;">회원 삭제 (관리자)</h2>
-    
+<div class="login-container">
+    <h2 style="text-align: center; color: navy;">회원 삭제 (관리자)</h2>
+
     <form method="post" action="../admin/member_delete.do">
         <div class="checkout__input">
-            <p>삭제할 회원 ID</p>
-            <input type="text" name="id" placeholder="회원 ID를 입력하세요">
+            <p style="text-align: center;">삭제할 회원 ID</p>
+            <div class="input-wrapper">
+              <input type="text" name="id" placeholder="회원 ID를 입력하세요">
+            </div>
         </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <button type="submit" class="btn-sm btn-danger">삭제</button>
-            <button type="button" class="btn-sm btn-primary" onclick="history.back()">취소</button>
+
+        <div class="btn-box">
+            <button type="submit">삭제</button>
+            <button type="button" onclick="history.back()">취소</button>
         </div>
     </form>
 
