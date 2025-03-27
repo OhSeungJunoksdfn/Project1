@@ -30,6 +30,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CommunityModel {
+	//세션에서 아이디 가져오도록 처리
+	//댓글기능 만들기
 	private final String uploadPath = "./upload/";
 	
 	@RequestMapping("community/freeboard_list.do")
@@ -243,7 +245,7 @@ public class CommunityModel {
 			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
 			
 			//댓글 기능
-			String posType = "freeboard";//게시물 종류 (freeboard,cocktail,cocktailbar,product1,product2)
+			String posType = "freeboard";//게시물 종류
 			Map map=new HashMap();
 			map.put("post_type", posType);
 			map.put("post_no", no);//게시물번호

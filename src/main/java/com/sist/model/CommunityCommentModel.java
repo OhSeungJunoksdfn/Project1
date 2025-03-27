@@ -81,15 +81,14 @@ public class CommunityCommentModel {
 			page="1";
 		
 		String comment_no=request.getParameter("comment_no");
-		String post_no=request.getParameter("post_no");
+		String board_no=request.getParameter("board_no");
 		String id=request.getParameter("id");
 		
 		
 		
 		CommunityCommentDAO.deleteComment(Integer.parseInt(comment_no));
 		
-		//return "redirect:../community/freeboard_detail.do?board_no="+board_no+"&page="+page;
-		return "redirect:../main/main.do";
+		return "redirect:../community/freeboard_detail.do?board_no="+board_no+"&page="+page;
 	}
 	
 	@RequestMapping("comment/comment_update.do")//댓글에 답글 쓰기
