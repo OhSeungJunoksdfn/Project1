@@ -89,7 +89,7 @@ public class MailManager {
 		String data="";
 		try
 		{
-			FileReader fr=new FileReader("c:\\pwd.txt");
+			FileReader fr=new FileReader("c://pwd.txt");
 			int i=0;
 			while((i=fr.read())!=-1)
 			{

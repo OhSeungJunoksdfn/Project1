@@ -27,7 +27,7 @@
     INSERT INTO cocktail_member VALUES(
       #{id},#{pwd},#{name},#{sex},#{email},#{birthday},
       #{post},#{address},#{address_detail},SYSDATE,
-      #{coment},'n','y',#{phone},#{avatar}
+      #{coment},'n','y',#{phone},#{avatar},null
     )
    </insert>
   <!-- 로그인 -->
@@ -98,9 +98,14 @@
    WHERE id=#{id}
   </update>
  <!--회원탈퇴-->
+  <select id="memberGetPassword2" resultType="string" parameterType="string">
+   SELECT pwd FROM cocktail_member
+   WHERE id = #{id, jdbcType=VARCHAR}
+  </select>
+ 
   <update id="memberSecession" parameterType="string">
   	UPDATE cocktail_member
-  	SET login='n'
+  	SET login='n',, deletedate=SYSDATE
   	WHERE id=#{id}
   	AND pwd=#{pwd}
   	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
@@ -116,4 +121,5 @@
     WHERE login = 'n'
     AND id = #{id}
   </delete>
+
 </mapper>

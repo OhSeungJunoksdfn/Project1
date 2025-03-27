@@ -9,7 +9,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>회원페이지</title>
+    <title>관리자페이지</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 
 <body>
 	
-		<jsp:include page="${my_jsp }"/> 
+		<jsp:include page="${admin_jsp }"/> 
 
 
      <!-- Js Plugins -->

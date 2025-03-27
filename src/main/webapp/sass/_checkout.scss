@@ -27,13 +27,17 @@
 }
 
 .checkout__form {
-
+	
     h4 {
         color: $normal-color;
         font-weight: 700;
+		display: inline-block;                  // 블록 요소로 유지
+		width: 300px; 
         border-bottom: 1px solid #e1e1e1;
-        padding-bottom: 20px;
+        padding-bottom: 5px;
         margin-bottom: 25px;
+		
+
     }
 
     p {

@@ -19,22 +19,24 @@
                         </div>
                         <ul>
                             <li><a href="#">게시판관리</a></li>
+                        
 		                    <li><a href="#">댓글관리</a></li>
 							<li><a href="#">찜관리</a></li>
 							<li><a href="#">좋아요관리</a></li>
 						    <li><a href="#">장바구니관리</a></li>
-							<li><a href="#">회원예약관리</a></li>
+							<li><a href="#">예약관리</a></li>
                         </ul>
                     </div>
                     
                     <div class="hero__categories">
                       <div class="hero__categories__all">
                           <i class="fa fa-bars"></i>
-                         <span>개인정보</span>
+                         <span>회원운영정보</span>
                       </div>
                       <ul>
-                    <li><a href="../member/join_update.do">회원수정</a></li>
+                    <li><a href="../member/join_update.do">블랙리스트추가</a></li>
                     <li><a href="../member/join_delete.jsp">회원탈퇴</a></li>
+                    <li><a href="../member/join_delete.jsp">회원삭제</a></li>
 				    <li><a href="../member/pwdChange.do">비밀번호변경</a></li>
                  </ul>
               </div>

@@ -321,17 +321,34 @@ public class CocktailMemberDAO {
 		
 	   }
 	   /*
-	   <!-- 회원삭제 -->
-	   <delete id="deleteOldSecessionMembers">
-	     DELETE FROM cocktail_member
-	     WHERE login = 'n'
-	     AND deletedate &lt;= ADD_MONTHS(SYSDATE, -3)
-	   </delete>
-	   <delete id="memberDelete" parameterType="CocktailMemberVO">
-	     DELETE FROM cocktail_member
-	     WHERE login = 'n'
-	     AND id = #{id}
-	   </delete>
+	   <!-- 회원 비밀번호 확인 -->
+		<select id="memberGetPassword2" resultType="string" parameterType="string">
+		  SELECT pwd FROM cocktail_member
+		  WHERE id = #{id, jdbcType=VARCHAR}
+		</select>
+		
+		<!-- 회원 상태 변경 (탈퇴 처리) -->
+		<update id="memberSecession" parameterType="CocktailMemberVO">
+		  UPDATE cocktail_member
+		  SET login = 'n'
+		  WHERE id = #{id}
+		  AND pwd = #{pwd}
+		  AND login = 'y'
+		</update>
+		
+		<!-- 3개월 이상 된 탈퇴 회원 삭제 -->
+		<delete id="deleteOldSecessionMembers">
+		  DELETE FROM cocktail_member
+		  WHERE login = 'n'
+		  AND deletedate <= ADD_MONTHS(SYSDATE, -3)
+		</delete>
+		
+		<!-- 관리자가 수동으로 회원 삭제할 때 (login이 'n'인 경우만) -->
+		<delete id="memberDelete" parameterType="CocktailMemberVO">
+		  DELETE FROM cocktail_member
+		  WHERE login = 'n'
+		  AND id = #{id}
+		</delete>
 	   */
 	   public static void deleteOldSecessionMembers() {
 		   

@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>에러 발생</title>
+<title>Insert title here</title>
 </head>
 <body>
-<h2 style="color:red;">오류 발생</h2>
-  <p>${error_message}</p>
-  <button onclick="self.close()">닫기</button>
+
 </body>
 </html>

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link rel="stylesheet" href="../shadow/css/shadowbox.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
     <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
@@ -115,13 +116,14 @@
 		
 		 -->
     <!-- Checkout Section Begin -->
-    <section class="checkout spad">
-        <div class="container">
+        <div class="login-container1">
             <div class="checkout__form">
-                <h4>회원가입</h4>
+              <div class="checkout__form" style="text-align:center;">
+                <h4 style="display:inline-block; width:520px; " >회원가입</h4>
+                 </div>
                  <form method=post action="../member/join_ok.do" name="frm" id="frm">
                     <div class="row">
-                        <div class="col-lg-8 col-md-6">
+                        <div class="col-12">
                            <!-- <div class="row">   -->
 
                            <div class="checkout__input">
@@ -145,12 +147,12 @@
                            </div>
                            
                            <th width=15% class="text-center" style="color:gray">성별<br></th>
-				                <br>
 				                <td width=85%>
-				                <input type="radio" name="sex" value="남자" checked>남자
+				                <input type="radio" name="sex" value="남자" >남자
 				                <input type="radio" name="sex" value="여자">여자
 				             </td>
-
+							<br>
+							<br>
                            <div class="checkout__input">
                                 <p>이메일<span>*</span></p>
                                 <input type="text" name="email" >
@@ -201,7 +203,7 @@
                             <p>정보제공에 동의하시면 체크해주세요.</p>
                       </div>
                       <br>
-                      <div class="col-lg-8 col-md-6">
+                      <div class="col-lg-12 col-md-6 text-center">
                       		<input type=button value="회원가입" class="btn-sm btn-primary" id="joinBtn">
                       		<input type=button value="취소" class="btn-sm btn-warning" onclick="javascript:history.back()">
                     </div>
@@ -210,7 +212,6 @@
                 </form>
             </div>
         </div>
-    </section>
     <!-- Checkout Section End -->
 
 
