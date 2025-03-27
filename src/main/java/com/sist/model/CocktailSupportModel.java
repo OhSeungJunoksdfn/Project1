@@ -85,7 +85,7 @@ public class CocktailSupportModel {
 	public String reserve_cocktailbar_list(HttpServletRequest request,HttpServletResponse response)
 	{
 		String loc = request.getParameter("loc");
-		if(loc==null) loc="*";
+		if(loc==null) loc="*"; 
 		List<CocktailbarVO> list = CocktailSupportDAO.cocktailbarRserveList(loc);
 		
 		request.setAttribute("list", list);
