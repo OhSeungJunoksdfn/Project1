@@ -14,7 +14,7 @@ import java.util.*;
 import lombok.Data;
 @Data
 public class ReserveVO {
-   private int rno,fno;
+   private int rno,bar_no;
    private String id,day,time,inwon,isok,dbday;
    private Date regdate;
    private CocktailbarVO cbvo=new CocktailbarVO();

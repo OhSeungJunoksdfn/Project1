@@ -39,8 +39,8 @@ $(function(){
            <h4>칵테일바 목록</h4>
            	<div  id="reserveList" style="height:500px; border:1px solid black;overflow-y:scroll"></div>
            	<div  id="reserveDay" style="height:500px; border:1px solid black;display:none"></div>
-           	<div  id="reserveTime" style="height:500px; border:1px solid black;display:none"></div>
-           	<div  id="reserveInwon" style="height:500px; border:1px solid black;display:none"></div>
+           	<div  id="reserveTime" style="height:80px; border:1px solid black;display:none"></div>
+           	<div  id="reserveInwon" style="height:80px; border:1px solid black;display:none"></div>
            </div>
            <div class="col-4" style="position:relative;">
            	<div style="position:sticky; top: 0;">
@@ -72,7 +72,7 @@ $(function(){
                      
                      <tr id="reserveBtn" style="display:none">
                        <td colspan="2" class="text-center">
-                         <form method="post" action="../reserve/reserve_insert.do">
+                         <form method="post" action="../reserve/cocktailbar_reserve_insert.do">
                            <input type="hidden" name="bar_no" value="" id="rno">
                            <input type="hidden" name="day" value="" id="rday">
                            <input type="hidden" name="time" value="" id="rtime">

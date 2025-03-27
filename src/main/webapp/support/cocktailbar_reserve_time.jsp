@@ -11,11 +11,14 @@
 $(function(){
 	$('.times').click(function(){
 		let time=$(this).text()
-		$('#food_reserve_time').text(time)
+		
+		$('#cocktailbar_reserve_time').text(time)
 		$('#rtime').val(time)
+		
+		$('#reserveInwon').show()
 		$.ajax({
 			type:'post',
-			url:'reserve/cocktailbar_inwon_info.do',
+			url:'../reserve/cocktailbar_inwon_info.do',
 			success:function(result)
 			{
 				$('#reserveInwon').html(result)

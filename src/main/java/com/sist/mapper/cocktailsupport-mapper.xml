@@ -39,7 +39,7 @@
  <insert id="reserveInsert" parameterType="ReserveVO">
   INSERT INTO reserve_info VALUES(
     (SELECT NVL(MAX(rno)+1,1) FROM reserve_info),
-    #{id},#{fno},#{day},#{time},#{inwon},
+    #{id},#{bar_no},#{day},#{time},#{inwon},
     SYSDATE,'n'
   )
  </insert>

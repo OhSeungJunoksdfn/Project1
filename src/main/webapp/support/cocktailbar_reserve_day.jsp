@@ -56,21 +56,24 @@ $(function(){
 	
 	// 예약일을 클릭
 	$('.rdays_can').click(function(){
+		$("#cocktailbar_reserve_time").text("");
+		$("#cocktailbar_reserve_inwon").text("");
+		$("#rtime").val("");
+		$("#rinwon").val("");
 		let year=$(this).attr("data-year")
 		let month=$(this).attr("data-month")
 		let day=$(this).attr("data-day")
 		let rday=year+"년도 "+month+"월 "+day+"일"
 		$('#cocktailbar_reserve_day').text(rday)
-		
 		$('#rday').val(year+"-"+month+"-"+day)
-		
+		$('#reserveTime').show()
 		$.ajax({
 			type:'post',
-			url:'../reserve/time_info.do',
+			url:'../reserve/cocktailbar_time_info.do',
 			data:{"day":day},
 			success:function(result)
 			{
-				$('#reserve_time2').html(result)
+				$('#reserveTime').html(result)
 			},
 			error:function(request,status,error)
 			{

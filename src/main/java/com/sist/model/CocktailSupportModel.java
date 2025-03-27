@@ -196,19 +196,19 @@ public class CocktailSupportModel {
 			  tList.add(strTime);
 		  }
 		  request.setAttribute("tList", tList);
-		  return "../reserve/reserve_time.jsp";
+		  return "../support/cocktailbar_reserve_time.jsp";
 	  }
 	  @RequestMapping("reserve/cocktailbar_inwon_info.do")
 	  public String reserve_inwon(HttpServletRequest request,
 			  HttpServletResponse response)
 	  {
-		  return "../reserve/reserve_inwon.jsp";
+		  return "../support/cocktailbar_reserve_inwon.jsp";
 	  }
 	  @RequestMapping("reserve/cocktailbar_reserve_insert.do")
 	  public String reserve_insert(HttpServletRequest request,
 			  HttpServletResponse response)
 	  {
-		  String fno=request.getParameter("fno");
+		  String bar_no=request.getParameter("bar_no");
 		  String day=request.getParameter("day");
 		  String time=request.getParameter("time");
 		  String inwon=request.getParameter("inwon");
@@ -216,7 +216,7 @@ public class CocktailSupportModel {
 		  HttpSession session=request.getSession();
 		  String id=(String)session.getAttribute("id");
 		  
-		  System.out.println("fno:"+fno);
+		  System.out.println("bar_no:"+bar_no);
 		  System.out.println("day:"+day);
 		  System.out.println("time:"+time);
 		  System.out.println("inwon:"+inwon);
@@ -227,10 +227,10 @@ public class CocktailSupportModel {
 		  vo.setDay(day);
 		  vo.setTime(time);
 		  vo.setInwon(inwon);
-		  vo.setFno(Integer.parseInt(fno));
+		  vo.setBar_no(Integer.parseInt(bar_no));
 		  
 		  CocktailSupportDAO.reserveInsert(vo);
-		  return "redirect:../mypage/mypage_reserve.do";
+		  return "redirect:../cocktailbar/cocktailbar_detail.do?bar_no="+bar_no;
 	  }
 	
 
