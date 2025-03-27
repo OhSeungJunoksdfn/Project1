@@ -10,12 +10,12 @@ import com.sist.vo.*;
 import com.sist.dao.*;
 @Controller
 public class AdminModel {
-   @RequestMapping("admin/admin_main.do")
+   @RequestMapping("adminpage/admin_main.do")
    public String adminpage_main(HttpServletRequest request,
 		   HttpServletResponse response)
    {
-	   request.setAttribute("admin_jsp", "../admin/admin_home.jsp");
-	   request.setAttribute("main_jsp", "../admin/admin_main.jsp");
+	   request.setAttribute("admin_jsp", "../adminpage/admin_home.jsp");
+	   request.setAttribute("main_jsp", "../adminpage/admin_main.jsp");
 	   return "../main/main.jsp";
    }
   

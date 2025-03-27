@@ -35,7 +35,7 @@
                       </div>
                       <ul>
                     <li><a href="../member/join_update.do">회원수정</a></li>
-                    <li><a href="../member/join_delete.jsp">회원탈퇴</a></li>
+                    <li><a href="../member/join_secession.do">회원탈퇴</a></li>
 				    <li><a href="../member/pwdChange.do">비밀번호변경</a></li>
                  </ul>
               </div>

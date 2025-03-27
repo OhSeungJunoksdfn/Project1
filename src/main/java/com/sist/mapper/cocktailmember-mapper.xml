@@ -105,7 +105,7 @@
  
   <update id="memberSecession" parameterType="string">
   	UPDATE cocktail_member
-  	SET login='n',, deletedate=SYSDATE
+  	SET login='n',deletedate=SYSDATE
   	WHERE id=#{id}
   	AND pwd=#{pwd}
   	AND login = 'y' <!-- 탈퇴처리 로그 불가-->

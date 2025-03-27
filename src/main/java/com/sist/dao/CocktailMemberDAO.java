@@ -244,9 +244,10 @@ public class CocktailMemberDAO {
 	 	  return result;
 	   }
 	   /*
-	    * <select id="memberPwdFindData" resultType="String" parameterType="string">
-		   SELECT pwd FROM cocktail_member
-		   WHERE id=#{id}
+	    * <select id="pwdCheckData" resultType="int" parameterType="hashmap">
+		   SELECT COUNT(*) FROM cocktail_member
+		   WHERE id=#{id} 
+		   AND pwd=#{pwd}
 		  </select>
 		  <update id="pwdChange" parameterType="hashmap">
 		   UPDATE cocktail_member SET
@@ -291,35 +292,6 @@ public class CocktailMemberDAO {
 	 	  }
 	   }
 	
-	   
-	   
-	   /*
-	    * <update id="memberSecession" parameterType="string">
-		  	UPDATE cocktail_member
-		  	SET login = 'n'
-		  	WHERE id = #{id}
-		  	AND pwd=#{pwd}
-		  	AND login = 'y' <!-- 탈퇴처리 로그 불가-->
-		  </update>
-	    */
-	   public static void memberSecession(CocktailMemberVO vo)
-	   {
-		   SqlSession session=null;
-		   try
-		   {
-			   session = ssf.openSession(true);
-			   session.update("memberSecession",vo);
-		   }catch(Exception ex)
-		   {
-			  ex.printStackTrace(); 
-		   }
-		   finally
-		   {
-			   if(session != null)
-				   session.close();
-		   }
-		
-	   }
 	   /*
 	   <!-- 회원 비밀번호 확인 -->
 		<select id="memberGetPassword2" resultType="string" parameterType="string">
@@ -350,6 +322,34 @@ public class CocktailMemberDAO {
 		  AND id = #{id}
 		</delete>
 	   */
+	   public static String getPassword(String id) {
+	        String pwd = "";
+	        SqlSession session = null;
+	        try {
+	            session = ssf.openSession();
+	            pwd = session.selectOne("memberGetPassword2", id);
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            if (session != null)
+	                session.close();
+	        }
+	        return pwd;
+	    }
+	   
+	   public static void memberSecession(CocktailMemberVO vo) {
+	        SqlSession session = null;
+	        try {
+	            session = ssf.openSession(true); // auto commit
+	            session.update("memberSecession", vo);
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            if (session != null)
+	                session.close();
+	        }
+	    }
+	   
 	   public static void deleteOldSecessionMembers() {
 		   
 	        SqlSession session = null;

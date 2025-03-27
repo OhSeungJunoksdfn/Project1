@@ -1,6 +1,9 @@
 package com.sist.model;
 
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
@@ -43,6 +46,93 @@ public class MyPageModel {
 	        return "../member/error.jsp";
 	    }
 	}
+  
+  @RequestMapping("member/pwdChange.do")
+  public String member_pwdChange(HttpServletRequest request,HttpServletResponse response)
+  {
+	  request.setAttribute("title", "비밀번호 변경");
+	  request.setAttribute("my_jsp", "../member/pwdChange.jsp");
+	  request.setAttribute("main_jsp", "../mypage/my_main.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("member/pwdChange_ok.do")
+  public void member_pwdChange_ok(HttpServletRequest request, HttpServletResponse response) {
+      response.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = null;
+      try {
+          HttpSession session = request.getSession();
+          String id = (String) session.getAttribute("id");
+          String opwd = request.getParameter("old_pwd");
+          String npwd = request.getParameter("new_pwd");
+
+          Map map = new HashMap();
+          map.put("id", id);
+          map.put("pwd", opwd);
+
+          int count = CocktailMemberDAO.pwdCheckData(map);
+          out = response.getWriter();
+
+          if (count != 0) {
+              map.put("pwd", npwd);
+              CocktailMemberDAO.pwdChange(map);
+              session.invalidate();
+              out.write("비밀번호가 성공적으로 변경되었습니다.");
+          } else {
+              out.write("기존 비밀번호가 일치하지 않습니다.");
+          }
+
+      } catch (Exception ex) {
+          ex.printStackTrace();
+          try {
+              if (out != null) out.write("오류가 발생했습니다.");
+          } catch (Exception e) {}
+      }
+  }
+  
+  @RequestMapping("member/join_secession.do")
+   public String mypage_join_secession(HttpServletRequest request, HttpServletResponse response) {
+       try {
+           request.setAttribute("main_jsp", "../member/join_secession.jsp");
+           return "../main/main.jsp";
+       } catch (Exception ex) {
+           ex.printStackTrace();
+           request.setAttribute("msg", "탈퇴 페이지 이동 중 오류 발생");
+           return "../member/error.jsp";
+       }
+   }
+  @RequestMapping("member/join_secession_ok.do")
+   public String mypage_join_secession_ok(HttpServletRequest request, HttpServletResponse response) {
+       try {
+           request.setCharacterEncoding("UTF-8");
+
+           HttpSession session = request.getSession();
+           String id = (String) session.getAttribute("id");
+           String pwd = request.getParameter("pwd");
+
+           String db_pwd = CocktailMemberDAO.getPassword(id);
+
+           if (db_pwd != null && db_pwd.equals(pwd)) {
+               // 비밀번호 일치 → 탈퇴 처리
+               CocktailMemberVO vo = new CocktailMemberVO();
+               vo.setId(id);
+               vo.setPwd(pwd);
+
+               CocktailMemberDAO.memberSecession(vo);
+               session.invalidate();
+
+               return "../member/join_secession_ok.jsp";
+           } else {
+               request.setAttribute("msg", "비밀번호가 일치하지 않습니다.");
+               request.setAttribute("main_jsp", "../member/join_secession.jsp");
+               return "../main/main.jsp";
+           }
+
+       } catch (Exception ex) {
+           ex.printStackTrace();
+           request.setAttribute("msg", "탈퇴 처리 중 오류 발생");
+           return "../member/error.jsp";
+       }
+   }
   
   @RequestMapping("member/join_update_ok.do")
   public String mypage_join_update_ok(HttpServletRequest request,HttpServletResponse response)
@@ -103,6 +193,7 @@ public class MyPageModel {
 	        return "../member/error.jsp";
 	    }
   }
+  
   // cart
   @RequestMapping("mypage/mypage_cart_list.do")
   public String mypage_cart_list(HttpServletRequest request,
