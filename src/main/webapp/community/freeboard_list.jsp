@@ -25,12 +25,23 @@ background-color: transparent;
 </head>
 <body>
 <div>
+<section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>자유 게시판</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 	<section class="">
       <div class="container">
         
         <div class="row">
           <div class="col-md-12 text-center mb-5 section-title">
-            <h2 class="display-4">자유게시판</h2>
+            
 	        <div style="vertical-align:bottom;display-flex;justify-content:flex-end;height:50px;width:100%;margin-top:40px;position:relative">
 	            <div class="featured__controls" style="vertical-align:bottom;margin:0px;padding:0px;position:absolute;bottom:0;margin-bottom:10px">
 	                <ul style="margin:0px;float:left;padding:0px;margin-left:10px;">
@@ -61,20 +72,20 @@ background-color: transparent;
            		<tr>
 					<th class="text-center" width=5% onclick="click()">번호</th>
 					<th class="text-center" width=5%>분류</th>
-					<th class="text-center" width=45%>제목</th>
-					<th class="text-center" width=15%>작성자</th>
-					<th class="text-center" width=20%>작성일</th>
+					<th class="text-center" width=60%>제목</th>
+					<th class="text-center" width=10%>작성자</th>
+					<th class="text-center" width=10%>작성일</th>
 					<th class="text-center" width=10%>조회수</th>
 				</tr>
 				<c:forEach var="vo" items="${list }">
 				<tr>
 					<td class="text-center" width=5%>${vo.board_no }</td>
 					<td class="text-center" width=5%>${vo.tag }</td>
-					<td  width=45%>
+					<td  width=60%>
 						<a href="../community/freeboard_detail.do?board_no=${vo.board_no }&page=${page}" style="color:black">${vo.subject }</a>
 					</td>
-					<td class="text-center" width=15%>${vo.id }</td>
-					<td class="text-center" width=20%><fmt:formatDate value="${vo.regdate }" pattern="yyyy-MM-dd"/></td>
+					<td class="text-center" width=10%>${vo.id }</td>
+					<td class="text-center" width=10%><fmt:formatDate value="${vo.regdate }" pattern="yyyy-MM-dd"/></td>
 					<td class="text-center" width=10%>${vo.hit }</td>
 				</tr>
 				</c:forEach>

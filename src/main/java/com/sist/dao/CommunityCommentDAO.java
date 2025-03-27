@@ -13,13 +13,21 @@ public class CommunityCommentDAO {
 		ssf = CreateSqlSessionFactory.getSsf();
 	}
 	
-	public static List<CommunityCommentVO> getCommentData(int board_no){
+	public static List<CommunityCommentVO> getCommentData(Map map){
 		
 		SqlSession session=ssf.openSession();
-		List<CommunityCommentVO> list=session.selectList("getCommentData",board_no);
+		List<CommunityCommentVO> list=session.selectList("getCommentData",map);
 		session.close();
 		return list;
 		
+	}
+	
+	public static int getNumberOfComment(Map map){
+		
+		SqlSession session=ssf.openSession();
+		int numberOfComment=session.selectOne("getNumberOfComment",map);
+		session.close();
+		return numberOfComment;
 	}
 	
 	public static void insertComment(Map map)
@@ -40,6 +48,13 @@ public class CommunityCommentDAO {
 	{
 		SqlSession session=ssf.openSession(true);
 		session.update("deleteComment",comment_no);
+		session.close();
+	}
+	
+	public static void updateComment(Map map)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.update("updateComment",map);
 		session.close();
 	}
 }

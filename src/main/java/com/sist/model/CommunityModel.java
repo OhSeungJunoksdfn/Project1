@@ -54,7 +54,6 @@ public class CommunityModel {
 			String searchdata=request.getParameter("searchdata");
 			if(searchdata==null)
 				searchdata="";
-			System.out.println("searchdataaaaaaaa:"+searchdata);
 			// 현재 페이지 지정
 			int curpage=Integer.parseInt(page);
 			// 데이터 읽기
@@ -113,29 +112,11 @@ public class CommunityModel {
 		request.setAttribute("main_jsp", "../community/freeboard_insert.jsp");
 		return "../main/main.jsp";
 	}
-	//이미지 파일 삭제하기
-	@RequestMapping("서블릿메소드아님")
-	public void free_board_delete_image(String[] imageNames,int board_no) 
-	{
-		CommunityDAO.boardDeleteImage(imageNames);
-		for(String imageName:imageNames)
-		{
-			File file=new File(uploadPath+imageName);
-			file.delete();
-		}
-		
-		List<String> unsavedImages = CommunityDAO.boardDeleteImageUnsaved(board_no);
-		for(String imageName:unsavedImages)
-		{
-			File file=new File(uploadPath+imageName);
-			file.delete();
-		}
-	}
+
 	@RequestMapping("community/freeboard_insert.do")
 	public String freeboard_insert(HttpServletRequest request, HttpServletResponse response)
 	{	
 		
-		// 게시물 시간 표시 고치기
 		if (JakartaServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
             JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
@@ -264,9 +245,16 @@ public class CommunityModel {
 			CommunityFreeboardVO vo=CommunityDAO.boardDetailData(Integer.parseInt(no));
 			
 			//댓글 기능
-			List<CommunityCommentVO> list = CommunityCommentDAO.getCommentData(Integer.parseInt(no));
-			
+			String posType = "freeboard";//게시물 종류
+			Map map=new HashMap();
+			map.put("post_type", posType);
+			map.put("post_no", no);//게시물번호
+			List<CommunityCommentVO> list = CommunityCommentDAO.getCommentData(map);
+			int numberOfComment = CommunityCommentDAO.getNumberOfComment(map);
 			request.setAttribute("comment_list", list);
+			request.setAttribute("number_of_comment", numberOfComment);
+			//
+			
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			request.setAttribute("main_jsp", "../community/freeboard_detail.jsp");

@@ -29,14 +29,6 @@ $("#test").click(()=>{
 	//console.log($("#form"))
 	//axiosTest();
 })
-const axiosTest = () =>{
-	axios.post(`${serverURL}/community/image_convert.do`,
-			{
-				params:{image:"test blank"},
-			}).then((res)=>{
-			console.log(res)
-	})
-}
 
 const imageUploadAndConvertedImageApply = (id) => {//이미지 업로드하고 가져오기
 	const file = convertBase64ImgToImgFile($(`#${id}`).attr("src"),`${id}.png`)
@@ -48,30 +40,26 @@ const uploadImage = (file,id) =>{//이미지를 서버에 업로드
 	//formData에 문자열도 보낼 수 있게 해서 게시물번호도 전송할 수 있도록 처리
 	formData.append("userfile", file);
 	formData.append("postID",$("#editor").data('postid'));
-	axios.post(`${serverURL}/community/image_convert.do`, formData, 
+	axios.post(`../community/image_convert.do`, formData, 
 	{
 		headers: {
 	   		"Content-Type": "multipart/form-data",
 	    },
 	}).then(
 		(res)=>{
-			const imageURL = `${serverURL}/community/get_converted_image.do?image=${res.data.imageName}`
+			const imageURL = `../community/get_converted_image.do?image=${res.data.imageName}`
 			$(`#${id}`).attr('src',imageURL)
 			$(`#${id}`).css({"max-width":"100%","max-height":"100%"})
 		}
-	
 	);
 	
-	formData.forEach(function(value, key) {//form데이터 console.log로 출력하면 값 안나옴. 순회해서 출력해야됨
-	    console.log(key + ': ' + value);
-	});
 }
 
 const serverImageDelete = (deletedImages) => {
 	const deleteImageNames = deletedImages.map((image)=>{
 		return image.src.split("?image=")[1]
 	}).join()
-	axios.post(`${serverURL}/community/delete_image.do`,null,
+	axios.post(`../community/delete_image.do`,null,
 		{params:{imageNames:deleteImageNames}}
 		).then((res)=>{
 		console.log(res)

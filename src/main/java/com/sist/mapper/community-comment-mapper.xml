@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.community-comment-mapper">
-	<select id="getCommentData" parameterType="int" resultType="CommunityCommentVO">
+	<select id="getCommentData" parameterType="hashmap" resultType="CommunityCommentVO">
 		select * from community_comment 
-		where board_no=#{board_no} 
+		where post_no=#{post_no} and post_type=#{post_type}
 		order by group_id,comment_no
 	</select>
 	
+	<select id="getNumberOfComment" parameterType="hashmap" resultType="int">
+		select count(*) from community_comment 
+		where post_no=#{post_no} and post_type=#{post_type} and content is not null 
+	</select>
+	
 	<insert id="insertComment" parameterType="hashmap" >
-		INSERT INTO community_comment (comment_no, board_no, id, content, regdate, group_id, is_reply)
-		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{board_no}, #{id}, #{content}, SYSDATE,
-		(SELECT NVL(MAX(comment_no)+1,1) FROM community_comment),#{is_reply})
+		INSERT INTO community_comment (comment_no, post_no, id, content, regdate, group_id, is_reply, post_type)
+		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{post_no}, #{id}, #{content}, SYSDATE,
+		(SELECT NVL(MAX(comment_no)+1,1) FROM community_comment),#{is_reply},#{post_type})
 	</insert>
 	
 	<insert id="insertCommentReply" parameterType="hashmap" >
-		INSERT INTO community_comment (comment_no, board_no, id, content, regdate, group_id, is_reply)
-		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{board_no}, #{id}, #{content}, SYSDATE,
-		#{group_id},#{is_reply})
+		INSERT INTO community_comment (comment_no, post_no, id, content, regdate, group_id, is_reply, post_type)
+		VALUES ( (SELECT NVL(MAX(comment_no)+1,1) FROM community_comment), #{post_no}, #{id}, #{content}, SYSDATE,
+		#{group_id},#{is_reply},#{post_type})
 	</insert>
 	
 	<update id="deleteComment" parameterType="int" >
 		UPDATE community_comment SET content='' WHERE comment_no=#{comment_no}
+	</update>
+	
+	<update id="updateComment" parameterType="hashmap" >
+		UPDATE community_comment SET content=#{content}, regdate=SYSDATE WHERE comment_no=#{comment_no}
 	</update>
 </mapper>

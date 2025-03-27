@@ -9,7 +9,7 @@
 </head>
 <body>
 <section>
-	<div class="container">
+	<div class="container mb-5">
 		<div class="row">
 			<div class="categories__slider owl-carousel">
                 <c:forEach var="vo" items="${clist }">
@@ -19,7 +19,6 @@
                         </div>
                     </div>
                 </c:forEach>
-                    
                 </div>
 		</div>
 	</div>
