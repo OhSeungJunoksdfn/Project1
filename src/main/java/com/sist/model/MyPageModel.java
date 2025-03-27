@@ -111,7 +111,7 @@ public class MyPageModel {
 
 	  HttpSession session=request.getSession();
 	  String id=(String)session.getAttribute("id");
-	  List<Cart2VO> list=Cart2DAO.cartListData(id);
+	  List<Cart2VO> list=Cart2DAO.cartListData2(id);
 	  request.setAttribute("list", list);
 	  request.setAttribute("count", list.size());
 	  request.setAttribute("my_jsp", "../cart2/cart_list.jsp");
@@ -125,7 +125,7 @@ public class MyPageModel {
   {
 	  HttpSession session=request.getSession();
 	  String id=(String)session.getAttribute("id");
-	  List<Cart2VO> list=Cart2DAO.buyListData(id);
+	  List<Cart2VO> list=Cart2DAO.buyListData2(id);
 	  request.setAttribute("count", list.size());
 	  request.setAttribute("list", list);
 	  request.setAttribute("my_jsp", "../cart2/buy_list.jsp");

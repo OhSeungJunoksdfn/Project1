@@ -29,7 +29,7 @@
     AND id=#{id} AND isbuy='n'
     ORDER BY cno DESC
   </select>
-  <select id="buyListData" resultMap="cartMap" 
+  <select id="buyListData2" resultMap="cartMap" 
      parameterType="string">
     SELECT cno,name,poster,cart_price,
            account,price
@@ -38,16 +38,16 @@
     AND id=#{id} AND isbuy='y'
     ORDER BY cno DESC
   </select>
-  <update id="cartUpdate" parameterType="Cart2VO">
+  <update id="cartUpdate2" parameterType="Cart2VO">
     UPDATE cart2 SET
     account=account+#{account}
     WHERE pno=#{pno} AND id=#{id}
   </update>
-  <select id="cartCount" resultType="int" parameterType="Cart2VO">
+  <select id="cartCount2" resultType="int" parameterType="Cart2VO">
     SELECT COUNT(*) FROM cart2
     WHERE pno=#{pno} AND id=#{id}
   </select>
-  <delete id="cartCancel" parameterType="int">
+  <delete id="cartCancel2" parameterType="int">
     DELETE FROM cart2
     WHERE cno=#{cno}
   </delete>

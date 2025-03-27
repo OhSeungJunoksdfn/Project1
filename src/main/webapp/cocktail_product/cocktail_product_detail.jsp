@@ -253,7 +253,7 @@ $(function(){
                     <div class="section-title related__product__title">
                         <h2>관련 상품 보기</h2>
                     </div>
-                </div>
+                </div>c
             </div>
             <div class="row">
               <c:forEach var="vo" items="${rList4 }">

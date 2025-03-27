@@ -153,7 +153,7 @@ $(function(){
 		let name=$('#title').text()
 		$.ajax({
 			type:'post',
-			url:'../cart/buy_insert.do',
+			url:'../cart2/buy_insert.do',
 			data:{"pno":pno,"cart_price":price2,"account":account},
 			success:function(result)
 			{
@@ -278,7 +278,7 @@ $(function(){
 					 <tr>
 						   <td width="70%">
 						     <c:if test="${sessionScope.id!=null and sessionScope.admin=='n'}">
-						      <form method="post" action="../cart/cart_insert.do" style="float: left" id="frm">
+						      <form method="post" action="../cart2/cart_insert.do" style="float: left" id="frm">
 						        <input type="hidden" name="pno" value="${vo.product_no}" id="pno">
 						        <input type="hidden" name="price" value="${vo.price}" id="price3">
 						        <input type="hidden" name="account" value="" id="account">

@@ -54,44 +54,44 @@ public class Cart2DAO {
 	   session.close();
 		  
     */
-   public static void cartInsert(Cart2VO vo)
+   public static void cartInsert2(Cart2VO vo)
    {
 	      SqlSession session=ssf.openSession(true);
-	      int count=session.selectOne("cartCount",vo);
+	      int count=session.selectOne("cartCount2",vo);
 	      if(count==0)
 	      {
-		     session.insert("cartInsert",vo);
+		     session.insert("cartInsert2",vo);
 	      }
 	      else
 	      {
-	    	  session.update("cartUpdate",vo);
+	    	  session.update("cartUpdate2",vo);
 	      }
 		  session.close();
 		  
    }
-   public static List<Cart2VO> cartListData(String id)
+   public static List<Cart2VO> cartListData2(String id)
    {
 	   SqlSession session=ssf.openSession();
-	   List<Cart2VO> list=session.selectList("cartListData", id);
+	   List<Cart2VO> list=session.selectList("cartListData2", id);
 	   session.close();
 	   return list;
    }
    
 
-   public static List<Cart2VO> buyListData(String id)
+   public static List<Cart2VO> buyListData2(String id)
    {
 	   SqlSession session=ssf.openSession();
-	   List<Cart2VO> list=session.selectList("buyListData", id);
+	   List<Cart2VO> list=session.selectList("buyListData2", id);
 	   session.close();
 	   return list;
    }
    
-   public static void cartCancel(int cno)
+   public static void cartCancel2(int cno)
    {
 	      SqlSession session=ssf.openSession(true);
 	      try
 	      {
-		  session.delete("cartCancel",cno);
+		  session.delete("cartCancel2",cno);
 	      }catch(Exception ex)
 	      {
 	    	  ex.printStackTrace();

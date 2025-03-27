@@ -34,7 +34,7 @@ public class Cart2Model {
 	  vo.setCart_price(Integer.parseInt(cart_price));
 	  vo.setId(id);
 	  
-	  Cart2DAO.cartInsert(vo);
+	  Cart2DAO.cartInsert2(vo);
 	  return "redirect:../mypage/mypage_cart_list.do";
   }
   @RequestMapping("cart2/cart_cancel.do")
@@ -43,7 +43,7 @@ public class Cart2Model {
   {
 	  String cno=request.getParameter("cno");
 	  System.out.println("cno="+cno);
-	  Cart2DAO.cartCancel(Integer.parseInt(cno));
+	  Cart2DAO.cartCancel2(Integer.parseInt(cno));
 	  return "redirect:../mypage/mypage_cart_list.do";
   }
   @RequestMapping("cart2/buy_insert.do")
@@ -68,7 +68,7 @@ public class Cart2Model {
 	  
 	  vo.setId(id);
 	  
-	  Cart2DAO.cartInsert(vo);
+	  Cart2DAO.cartInsert2(vo);
 	 
 	  CocktailMemberVO mvo=CocktailMemberDAO.memberUpdateData(id);
 	  System.out.println("id:"+id+",name="+mvo.getName());
