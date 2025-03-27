@@ -18,5 +18,50 @@ public class AdminModel {
 	   request.setAttribute("main_jsp", "../adminpage/admin_main.jsp");
 	   return "../main/main.jsp";
    }
-  
+   @RequestMapping("adminpage/blacklist.do")
+   public String admin_blacklist(HttpServletRequest request,
+                                 HttpServletResponse response) {
+       List<BlackListVO> list = BlackListDAO.getBlacklist();
+       request.setAttribute("list", list);
+       request.setAttribute("admin_jsp", "../adminpage/blacklist.jsp");
+       request.setAttribute("main_jsp", "../adminpage/admin_main.jsp");
+       return "../main/main.jsp";
+   }
+
+   @RequestMapping("adminpage/blacklist_insert.do")
+   public String admin_blacklist_insert(HttpServletRequest request,
+                                        HttpServletResponse response) {
+       try {
+           request.setCharacterEncoding("UTF-8");
+           String id = request.getParameter("id");
+           String name = request.getParameter("name");
+           String email = request.getParameter("email");
+           String reason = request.getParameter("reason");
+
+           BlackListVO vo = new BlackListVO();
+           vo.setId(id);
+           vo.setName(name);
+           vo.setEmail(email);
+           vo.setReason(reason);
+
+           BlackListDAO.insertBlacklist(vo);
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
+
+       return "redirect:blacklist.do";
+   }
+
+   @RequestMapping("adminpage/blacklist_delete.do")
+   public String admin_blacklist_delete(HttpServletRequest request,
+                                        HttpServletResponse response) {
+       try {
+           int no = Integer.parseInt(request.getParameter("black_list_no"));
+           BlackListDAO.deleteBlacklist(no);
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
+       return "redirect:blacklist.do";
+   }
 }
+  
