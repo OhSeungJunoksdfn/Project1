@@ -25,12 +25,23 @@ background-color: transparent;
 </head>
 <body>
 <div>
+<section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>자유 게시판</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 	<section class="">
       <div class="container">
         
         <div class="row">
           <div class="col-md-12 text-center mb-5 section-title">
-            <h2 class="display-4">자유게시판</h2>
+            
 	        <div style="vertical-align:bottom;display-flex;justify-content:flex-end;height:50px;width:100%;margin-top:40px;position:relative">
 	            <div class="featured__controls" style="vertical-align:bottom;margin:0px;padding:0px;position:absolute;bottom:0;margin-bottom:10px">
 	                <ul style="margin:0px;float:left;padding:0px;margin-left:10px;">
