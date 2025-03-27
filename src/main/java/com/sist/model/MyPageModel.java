@@ -1,5 +1,7 @@
 package com.sist.model;
 
+import java.util.List;
+
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.*;
@@ -101,6 +103,34 @@ public class MyPageModel {
 	        return "../member/error.jsp";
 	    }
   }
-  
+  // cart
+  @RequestMapping("mypage/mypage_cart_list.do")
+  public String mypage_cart_list(HttpServletRequest request,
+		  HttpServletResponse response)
+  {
+
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  List<Cart2VO> list=Cart2DAO.cartListData(id);
+	  request.setAttribute("list", list);
+	  request.setAttribute("count", list.size());
+	  request.setAttribute("my_jsp", "../cart2/cart_list.jsp");
+	  request.setAttribute("main_jsp", "../mypage/my_main.jsp");
+	  return "../main/main.jsp";
+	  
+  }
+  @RequestMapping("mypage/mypage_buy_list.do")
+  public String mypage_buy_list(HttpServletRequest request,
+		  HttpServletResponse response)
+  {
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  List<Cart2VO> list=Cart2DAO.buyListData(id);
+	  request.setAttribute("count", list.size());
+	  request.setAttribute("list", list);
+	  request.setAttribute("my_jsp", "../cart2/buy_list.jsp");
+	  request.setAttribute("main_jsp", "../mypage/my_main.jsp");
+	  return "../main/main.jsp";
+  }
   
 }
