@@ -14,7 +14,7 @@ public class CommunityCommentModel {
 	private Map urlMap = new HashMap<String, String>() {{
         put("freeboard", "community/freeboard_detail.do?board_no=");
         put("cocktail", "cocktail/cocktail_detail.do?cno=");
-        put("cokctailbar", "cocktailbar/cocktailbar_detail.do?bar_no=");
+        put("cocktailbar", "cocktailbar/cocktailbar_detail.do?bar_no=");
     }};
 	//댓글 jsp include로 바꿔보기
 	@RequestMapping("comment/comment_insert.do")//댓글 쓰기
@@ -30,6 +30,8 @@ public class CommunityCommentModel {
 		String content=request.getParameter("content");
 		String is_reply=request.getParameter("is_reply");
 		String post_type=request.getParameter("post_type");
+		
+		System.out.println("post_typeeeeeeeeeeee"+post_type);
 		
 		Map map = new HashMap();
 		map.put("post_no", post_no);
