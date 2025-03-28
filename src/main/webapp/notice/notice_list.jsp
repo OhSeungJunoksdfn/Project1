@@ -73,7 +73,7 @@
   <div class="top-bar">
     <h2 style="color: navy;">공지사항 목록</h2>
     <c:if test="${sessionScope.id!=null }">
-    <c:if test="${sessionScope.admin=='n' }">
+    <c:if test="${sessionScope.admin=='y' }">
     <a href="../notice/notice_insert.do" class="btn-insert">공지 등록</a>
     </c:if>
     </c:if>
