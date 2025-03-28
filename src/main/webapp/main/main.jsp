@@ -29,15 +29,17 @@
     
 </head>
 
-<body>
-    <!-- Page Preloder -->
+<body >
+	<div style=" height: 100%;margin: 0;display: flex;flex-direction: column;">
+		<!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
+	
    <jsp:include page="header.jsp" />
-
+		<div style="flex:1">
 		<jsp:include page="${main_jsp }"/> 
+		</div>
 		
  	<jsp:include page="footer.jsp" />
 
@@ -50,6 +52,8 @@
     <script src="../js/mixitup.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/main.js"></script>
+	</div>
+    
 
 </body>
 

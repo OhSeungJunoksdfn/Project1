@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-    <section class="hero">
+<body >
+    <section class="hero" style="flex:1">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">

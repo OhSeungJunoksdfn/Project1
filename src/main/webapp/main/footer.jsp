@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <footer class="footer spad">
+    <footer class="footer spad" >
         <div class="container">
 
             <div class="row">
