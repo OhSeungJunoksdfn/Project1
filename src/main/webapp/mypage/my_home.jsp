@@ -24,7 +24,7 @@
 							<li><a href="#">좋아요관리</a></li>
 						    <li><a href="../mypage/mypage_cart_list.do">장바구니관리</a></li>
 						    <li><a href="../mypage/mypage_buy_list.do">구매관리</a></li>
-							<li><a href="#">회원예약관리</a></li>
+							<li><a href="../reserve/cocktailbar_reserve_mypage.do">회원예약관리</a></li>
                         </ul>
                     </div>
                     
@@ -41,7 +41,7 @@
               </div>
                 </div>
                 <div class="col-lg-9">
-                    
+                     <jsp:include page="${MP_JSP }"/>
                 </div>
             </div>
         </div>
@@ -52,6 +52,7 @@
     <section class="categories">
         <div class="container">
             <div class="row">
+           
             </div>
         </div>
     </section>

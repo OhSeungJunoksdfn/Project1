@@ -112,7 +112,7 @@ public class CocktailSupportDAO {
 			if(session!=null) session.close();
 		}
 	}
-	public static void isokUpdate(String rno)
+	public static void isokUpdate(int rno)
 	{
 		SqlSession session = null;
 		try {
@@ -127,7 +127,7 @@ public class CocktailSupportDAO {
 			if(session!=null) session.close();
 		}
 	}
-	public static void reserveDelete(String rno)
+	public static void reserveDelete(int rno)
 	{
 		SqlSession session = null;
 		try {

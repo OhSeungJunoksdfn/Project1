@@ -233,10 +233,11 @@ public class CocktailSupportModel {
 		  
 		  List<ReserveVO> list = CocktailSupportDAO.reserveMypageList(id);
 		  request.setAttribute("list", list);
+		  
 		  request.setAttribute("main_jsp", "../support/cocktailbar_reserve_mypage.jsp");
 		  return "../main/main.jsp";
 	  }
-	  @RequestMapping("reserve/cocktailbar_reserve_daminpage.do")
+	  @RequestMapping("reserve/cocktailbar_reserve_adminpage.do")
 	  public String cocktailbar_reserve_daminpage(HttpServletRequest request,
 			  HttpServletResponse response)
 	  {
@@ -255,9 +256,9 @@ public class CocktailSupportModel {
 	  {
 		  String rno = request.getParameter("rno");
 		  
-		  CocktailSupportDAO.isokUpdate(rno);
+		  CocktailSupportDAO.isokUpdate(Integer.parseInt(rno));
 		  
-		  return "../reserve/cocktailbar_reserve_daminpage.do";
+		  return "redirect:../reserve/cocktailbar_reserve_adminpage.do";
 	  }
 	  @RequestMapping("reserve/reserveDelete.do")
 	  public String reserveDelete(HttpServletRequest request,
@@ -265,7 +266,7 @@ public class CocktailSupportModel {
 	  {
 		  String rno = request.getParameter("rno");
 		  
-		  CocktailSupportDAO.reserveDelete(rno);
+		  CocktailSupportDAO.reserveDelete(Integer.parseInt(rno));
 		  
 		  return "redirect:../reserve/cocktailbar_reserve_mypage.do";
 	  }

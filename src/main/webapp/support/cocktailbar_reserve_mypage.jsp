@@ -8,33 +8,46 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table class="table">
+<section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>예약 관리</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<div class="container mt-5" style="height:100%; overflow-y:scroll">
+	<table class="table" >
 		<tr>
-			<th></th>
-			<th>업체명</th>
-			<th>예약일</th>
-			<th>시간</th>
-			<th>인원</th>
-			<th>확인</th>
+			<th class="text-center"></th>
+			<th class="text-center" >업체명</th>
+			<th class="text-center">예약일</th>
+			<th class="text-center">시간</th>
+			<th class="text-center">인원</th>
+			<th class="text-center">확인</th>
 		</tr>
 		<c:forEach var="vo" items="${list }">
 		<tr>
-			<td>${vo.cbvo.image }</td>
-			<td>${vo.cbvo.name }</td>
-			<td>${vo.day }</td>
-			<td>${vo.time }</td>
-			<td>${vo.inwon }</td>
-			<td>
+			<td class="text-center"><img src="${vo.cbvo.image }" style="width: 30px; height:30px"></td>
+			<td class="text-center">${vo.cbvo.name }</td>
+			<td class="text-center">${vo.day }</td>
+			<td class="text-center">${vo.time }</td>
+			<td class="text-center">${vo.inwon }</td>
+			<td class="text-center">
 			<c:if test="${vo.isok=='y' }">
 			<input type="button" class="btn btn-sm btn-success" id="check" value="예약성공" >
 			</c:if>
-			<c:if test="${vo.isof=='n' }">
+			<c:if test="${vo.isok=='n' }">
 			<span class="btn btn-sm btn-default"  >대기중</span>
 			</c:if>
-			<input type="button" class="btn btn-sm btn-danger" id="cancle" value="취소" >
+			<a href="../reserve/reserveDelete.do?rno=${vo.rno }" class="btn btn-sm btn-danger" id="cancle"  >취소</a>
 			</td>
 		</tr>
 		</c:forEach>
 	</table>
+	</div>
 </body>
 </html>
