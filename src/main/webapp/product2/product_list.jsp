@@ -48,10 +48,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
+
                         <ul>
  							<li><a href="#">바텐딩 도구</a></li>
                             <li><a href="#">테이블 용품</a></li>
@@ -60,21 +57,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-     
-                    </div>
-                </div>
+ 
             </div>
         </div>
     </section>
@@ -88,8 +71,7 @@
                     <div class="breadcrumb__text">
                         <h2>칵테일 용품 목록</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <span>칵테일용품</span>
+
                         </div>
                     </div>
                 </div>

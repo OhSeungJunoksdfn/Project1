@@ -179,11 +179,7 @@ $(function(){
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
                         <h2>상품 상세보기</h2>
-                        <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <a href="./index.html">shop</a>
-                            <span>상세페이지</span>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
