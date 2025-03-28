@@ -43,5 +43,31 @@
     SYSDATE,'n'
   )
  </insert>
-	<!-- 칵테일바 예약기능 끄부분-->
+ <resultMap type="reserveVO" id="reserveMap">
+ 	<result property="cbvo.name" column="name" />
+ 	<result property="cbvo.image" column="image" />
+ </resultMap>
+ <select id="reserveMypageList" resultMap="reserveMap" parameterType="String" >
+ 	SELECT rno,reserve_info.bar_no,image,day,reserve_info.time,inwon,isok
+ 	FROM reserve_info,cocktailbar,cocktail_member
+ 	WHERE cocktail_member.id=reserve_info.id
+    AND cocktailbar.bar_no = reserve_info.bar_no
+ 	AND reserve_info.id=#{id}
+ </select>
+ <select id="reserveadminpageList" resultMap="reserveMap" parameterType="String" >
+ 	SELECT rno,reserve_info.bar_no,image,day,reserve_info.time,inwon,isok
+ 	FROM reserve_info,cocktailbar,cocktail_member
+ 	WHERE cocktail_member.id=reserve_info.id
+    AND cocktailbar.bar_no = reserve_info.bar_no
+ </select>
+ <update id="isokUpdate" parameterType="String">
+ 	UPDATE reserve_info SET
+ 	isok='y'
+ 	WHERE rno=#{rno}
+ </update>
+ <delete id="reserveDelete" parameterType="String" >
+ 	DELETE FROM reserve_info
+ 	WHERE rno=#{rno}
+ </delete>
+	<!-- 칵테일바 예약기능 끝부분-->
 </mapper>

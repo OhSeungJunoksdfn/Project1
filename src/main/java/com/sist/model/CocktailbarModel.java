@@ -80,6 +80,16 @@ public class CocktailbarModel {
 	  String addr3=addr2.trim();
 	  request.setAttribute("addr", addr3);
 	  
+	  String posType = "cocktailbar";//게시물 종류 (freeboard,cocktail,cocktailbar,product1,product2)
+      Map map=new HashMap();
+      map.put("post_type", posType);
+      map.put("post_no", Integer.parseInt(bar_no));//게시물번호
+      List<CommunityCommentVO> list = CommunityCommentDAO.getCommentData(map);
+      int numberOfComment = CommunityCommentDAO.getNumberOfComment(map);
+      request.setAttribute("comment_list", list);
+      request.setAttribute("number_of_comment", numberOfComment);
+
+	  
 	  
 	  List<CocktailbarVO> cbList=CocktailbarDAO.cocktailbarHouseData12();
 	  request.setAttribute("cbList", cbList);

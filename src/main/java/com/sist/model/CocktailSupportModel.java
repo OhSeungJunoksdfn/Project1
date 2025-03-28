@@ -223,6 +223,51 @@ public class CocktailSupportModel {
 		  CocktailSupportDAO.reserveInsert(vo);
 		  return "redirect:../cocktailbar/cocktailbar_detail.do?bar_no="+bar_no;
 	  }
-	
+	  
+	  @RequestMapping("reserve/cocktailbar_reserve_mypage.do")
+	  public String cocktailbar_reserve_mypage(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		  HttpSession session = request.getSession();
+		  String id = (String)session.getAttribute("id");
+		  
+		  List<ReserveVO> list = CocktailSupportDAO.reserveMypageList(id);
+		  request.setAttribute("list", list);
+		  request.setAttribute("main_jsp", "../support/cocktailbar_reserve_mypage.jsp");
+		  return "../main/main.jsp";
+	  }
+	  @RequestMapping("reserve/cocktailbar_reserve_daminpage.do")
+	  public String cocktailbar_reserve_daminpage(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		  HttpSession session = request.getSession();
+		  String id = (String)session.getAttribute("id");
+		  
+		  List<ReserveVO> list = CocktailSupportDAO.reserveadminpageList(id);
+		  request.setAttribute("list", list);
+		  request.setAttribute("main_jsp", "../support/cocktailbar_reserve_adminpage.jsp");
+		  return "../main/main.jsp";
+	  }
+	  
+	  @RequestMapping("reserve/reserveisok_ok.do")
+	  public String reserveisok_ok(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		  String rno = request.getParameter("rno");
+		  
+		  CocktailSupportDAO.isokUpdate(rno);
+		  
+		  return "../reserve/cocktailbar_reserve_daminpage.do";
+	  }
+	  @RequestMapping("reserve/reserveDelete.do")
+	  public String reserveDelete(HttpServletRequest request,
+			  HttpServletResponse response)
+	  {
+		  String rno = request.getParameter("rno");
+		  
+		  CocktailSupportDAO.reserveDelete(rno);
+		  
+		  return "redirect:../reserve/cocktailbar_reserve_mypage.do";
+	  }
 
 }

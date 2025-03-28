@@ -112,4 +112,68 @@ public class CocktailSupportDAO {
 			if(session!=null) session.close();
 		}
 	}
+	public static void isokUpdate(String rno)
+	{
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.update("isokUpdate",rno);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+	}
+	public static void reserveDelete(String rno)
+	{
+		SqlSession session = null;
+		try {
+			session = ssf.openSession(true);
+			session.delete("reserveDelete",rno);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+	}
+	public static List<ReserveVO> reserveMypageList(String id)
+	{
+		SqlSession session = null;
+		List<ReserveVO> list = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("reserveMypageList",id);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	public static List<ReserveVO> reserveadminpageList(String id)
+	{
+		SqlSession session = null;
+		List<ReserveVO> list = null;
+		try {
+			session = ssf.openSession();
+			list = session.selectList("reserveadminpageList",id);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(session!=null) session.close();
+		}
+		return list;
+	}
 }

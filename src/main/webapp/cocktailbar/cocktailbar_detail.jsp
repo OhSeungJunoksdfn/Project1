@@ -358,11 +358,15 @@ $(function(){
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
                                     aria-selected="true">댓글</a>
+                                    
                             </li>
                         </ul>
                         <div class="tab-pane" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-									
+									<jsp:include page="../community/community_comment.jsp" >
+          									 <jsp:param name="post_type" value="cocktailbar"/>
+           								<jsp:param name="post_no" value="${vo.bar_no }"/>
+           								 </jsp:include>
                                 </div>
                             </div>
             </div>
