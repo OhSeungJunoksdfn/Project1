@@ -14,6 +14,7 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.Cocktail_ProductDAO;
 import com.sist.vo.Cocktail_ProductVO;
+import com.sist.vo.JjimVO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

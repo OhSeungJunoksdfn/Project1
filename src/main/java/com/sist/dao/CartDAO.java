@@ -32,6 +32,7 @@ public class CartDAO {
 	public static List<CartVO> cartListData(String id)
 	{
 		SqlSession session=ssf.openSession();
+		
 		List<CartVO> list=session.selectList("cartListData", id);
 		session.close();
 		return list;
@@ -39,7 +40,7 @@ public class CartDAO {
 	
 	public static void cartDelete(int cno)
 	{
-		SqlSession session=ssf.openSession();
+		SqlSession session=ssf.openSession(true);
 		try
 		{
 			session.delete("cartDelete", cno);
@@ -56,4 +57,18 @@ public class CartDAO {
 		 session.insert("buyInsert", vo);
 		 session.close();
 	 }
+	 
+//	 public static boolean cartUpdate(CartVO vo)
+//	 {
+//		 SqlSession session=ssf.openSession(true);
+//		 try
+//		 {
+//			 int rowCount=session.update("cartUpdate", vo);
+//			 return rowCount>0;
+//		 }catch(Exception e)
+//		 {
+//			 e.printStackTrace();
+//		 }
+//		 return false;
+//	 }
 }

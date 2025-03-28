@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,6 +62,7 @@ $(function(){
         
         let qtyInput = tr.find('.text-qty')
         let quantity = Number(qtyInput.val())
+        
         if(isNaN(quantity) || quantity <= 1)
         {
             quantity = 1
@@ -69,12 +70,10 @@ $(function(){
         }
         
         let total = price * quantity
-
         tr.find('.shoping__cart__total').text(total.toLocaleString() + "원")
         
         var grandTotal = 0
-        $('.shoping__cart__total').each(function()
-        		{
+        $('.shoping__cart__total').each(function(){
             var totalText = $(this).text()
             var numValue = parseFloat(totalText.replace(/원/g, '').replace(/,/g, '').trim())
             if(!isNaN(numValue))
@@ -87,57 +86,68 @@ $(function(){
     }
     
     // 플러스 버튼 클릭
-    $('.p-qty').click(function(){
+    $(document).on('click', '.p-qty', function(){
         let tr = $(this).closest('tr')
         let qtyInput = tr.find('.text-qty')
         let quantity = Number(qtyInput.val())
-        if(quantity <= 10)
+        
+        if(quantity < 10)
         {
             qtyInput.val(quantity + 1)
-        } else 
+            updateTotal(tr)
+            sendAjaxUpdate(tr)
+        }
+        else
         {
             alert("최대 수량은 10개 입니다.")
         }
-        updateTotal(tr);
     })
     
     // 마이너스 버튼 클릭
-    $('.m-qty').click(function(){
+    $(document).on('click', '.m-qty', function(){
         let tr = $(this).closest('tr')
         let qtyInput = tr.find('.text-qty')
         let quantity = Number(qtyInput.val())
-        if(quantity >= 1)
+        
+        if(quantity > 1)
         {
             qtyInput.val(quantity - 1)
-        } else {
+            updateTotal(tr)
+            sendAjaxUpdate(tr)
+        }
+        else
+        {
             alert("최소 수량은 1개 입니다.")
         }
-        updateTotal(tr)
     })
     
     // 직접 입력 시 정수 1~10 
-    $('.text-qty').on('input change', function(){
+    $(document).on('input change', '.text-qty', function(){
         let tr = $(this).closest('tr')
         let val = $(this).val()
         val = val.replace(/[^0-9]/g, '')
+
         if(val === "" || Number(val) < 1)
         {
             val = 1
-        } else if(Number(val) >= 10)
+        } 
+        else if(Number(val) > 10)
         {
             val = 10
             alert("최대 수량은 10개 입니다.")
         }
+
         $(this).val(val)
         updateTotal(tr)
+        sendAjaxUpdate(tr)
     })
-    
+
     // 페이지 로드시 각 행마다 총액과 hidden 필드 값 갱신
-    $('tr').each(function()
-    {
+    $('tr').each(function(){
         updateTotal($(this))
     })
 })
+
 </script>
 </head>
 <body>
@@ -220,10 +230,10 @@ $(function(){
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="shoping__product">상품 목록</th>
-                                    <th>상품 금액</th>
-                                    <th>상품 수량</th>
-                                    <th>총 금액</th>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -232,29 +242,29 @@ $(function(){
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img src="${vo.cpvo.poster }" style="width: 100px; height: 100px">
-                                        <span><h5>${vo.cpvo.name }</h5></span>
+                                        <h5>${vo.cpvo.name }</h5>
                                     </td>
-                                    <td class="shoping__cart__price"
-                                      data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
-                                      ${vo.cpvo.price}
-                                    </td>
-                                 <td class="shoping__cart__quantity">
-                              <div class="quantity">
-                                <button type="button" class="m-qty">-</button>
+                             <td class="shoping__cart__price" 
+                               data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
+                               ${vo.cpvo.price }
+                             </td>
+                               <td class="shoping__cart__quantity">
+                                <div class="quantity">
+                                  <button type="button" class="m-qty">-</button>
                                    <input type="text" class="text-qty" id="in-qty" value="${vo.account }">
-                                <button type="button" class="p-qty">+</button>
-                              </div>
-                                 </td>
-                                   <td class="shoping__cart__total"
-                                     data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
-                                     ${vo.cpvo.price}
-                                   </td>
+                                  <button type="button" class="p-qty">+</button>
+                                </div>
+                               </td>
+                                  <td class="shoping__cart__total" 
+                                    data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
+    							    ${vo.cpvo.price}
+                                  </td>
                                    <td class="shoping__cart__item__close">
-                                      <a href="../cart/cart_delete.do?cno="${vo.cno }>
+                                      <a href="../cart/cart_delete.do?cno=${vo.cno}" onclick="return confirm('삭제하시겠습니까?');">
                                        <span class="icon_close"></span>
                                       </a>
                                    </td>
-                                </tr>
+                                 </tr>
                                </c:forEach>
                             </tbody>
                         </table>
@@ -262,19 +272,36 @@ $(function(){
                 </div>
             </div>
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="../cocktail_product/cocktail_product_list.do" class="primary-btn cart-btn">상품 더 둘러보기</a>
+                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            Upadate Cart</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Discount Codes</h5>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>총 금액</h5>
                         <ul>
                             <li>
-                            <span class="shoping__cart__total"></span>
-							</li>
-                            <li><span class="price__endTotal"
-                              data-price="${fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', '')}">
+                            <span class="price__endTotal" 
+                              data-price="${fn:replace(fn:replace(fn:replace(vo.cpvo.price, ',', ''), '원', ''), ' ', '')}">
                               ${vo.cpvo.price}
-                            </span></li>
+                            </span>
+                            </li>
                         </ul>
-                        <a href="#" class="primary-btn">결제하기</a>
+                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>

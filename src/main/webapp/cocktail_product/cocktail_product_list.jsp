@@ -7,6 +7,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 127px; 
+	background-color: #fff;
+	z-index: 1100;
+	box-shadow: none;
+}
+
+.hero.hero-normal {
+	position: fixed;
+	top: 127px; /* 헤더 바로 아래에 위치 */
+	left: 0;
+	width: 100%;
+	height: 81px; /* hero 섹션 높이 */
+	background-color: #fff;
+	z-index: 1050;
+	box-shadow: none;
+}
+
+.breadcrumb-section {
+	margin-top: 208px;
+	border: none;
+	box-shadow: none;
+}
+
 .product__details__text .cart-icon {
 	display: inline-block;
 	font-size: 16px;
@@ -16,32 +44,101 @@
 }
 
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-function formatNumber(num) {
-	return Number(num).tolocalString('kr-KR')+"원"
-}
+let curpage=1
+let totalpage=0;
+let startPage=0;
+let endPage=0;
 $(function(){
-	var minVal=$(".price-range").data("minPrice")
-	var maxVal=$(".price-range").data("maxPrice")
+	commons(1)
 	
-	$(".price-range").slider({
-            range: true,
-            min: minVal,
-            max: maxVal,
-            values: [minVal, maxVal],
-            slide: function(event, ui) {
-                $("#minamount").val(formatNumber(ui.values[0]))
-                $("#maxamount").val(formatNumber(ui.values[1]))
-                $("#hiddenMinPrice").val(ui.values[0])
-                $("#hiddenMaxPrice").val(ui.values[1])
-            }
+	$('#findBtn').click(function(){
+		commons(1)
 	})
-	
-	$("#minamount").val(formatNumber($(".price-range").slider("values", 0)))
-    $("#maxamount").val(formatNumber($(".price-range").slider("values", 1)))
-    $("#hiddenMinPrice").val($(".price-range").slider("values", 0))
-    $("#hiddenMaxPrice").val($(".price-range").slider("values", 1))
+	$('#ss').keydown(function(e){
+		if(e.keyCode==13)
+		{
+			commons(1)
+		}
+	})
 })
+
+function prev(page)
+{
+	commons(page)
+}
+function next(page)
+{
+	commons(page)
+}
+function pageChange(page)
+{
+	commons(page)
+}
+function commons(page) {
+	let ss=$('#ss').val()
+	$.ajax({
+		type:'post',
+		url:'../cocktail_product/cocktail_product_find_ajax.do',
+		data:{"ss":ss, "page":page},
+		success:(res) => {
+			try
+			{
+				let json=JSON.parse(res)
+				console.log("서버 응답 : ", json)
+				jsonView(json.arr)
+				rView(json.arr2)
+			}catch(error)
+			{
+				console.error("파싱 오류 : ", error.message);
+				console.log("응답 내용 : ", res);
+			}
+		},
+		error: (xhr, status, error) => {
+			console.error("요청 오류 :", status, error);
+		}
+	})
+}
+document.addEventListener('DOMContentLoaded', function() {
+    loadRecommendProducts();  // 페이지 로드시 함수 호출
+  });
+
+  function loadRecommendProducts() {
+    // 실제로 호출할 Ajax URL (추천상품 리스트를 JSON으로 내려주는 곳)
+    // 예: cocktail_product_recommend_ajax.do
+    fetch('cocktail_product_recommend_ajax.do')
+      .then(response => response.json())
+      .then(data => {
+        const recommendDiv = document.getElementById('recommend-products');
+        recommendDiv.innerHTML = ''; // 기존 내용 초기화
+
+        data.forEach(vo => {
+          const productHTML = 
+            +'<div class="col-lg-4">'
+            +'<div class="product__discount__item">'
+            +'<div class="product__discount__item__pic set-bg">'
+            +'<a href="../cocktail_product/cocktail_product_detail_before.do?product_no='+vo.product_no+'&cno='+vo.cno+'">'
+            +'<img src="'+vo.poster+'" style="width: 100%; height: 200px;">'
+            +'</a>'
+            +'<ul class="product__item__pic__hover">'
+            +'<li><a href="#"><i class="fa fa-heart"></i></a></li>'
+            +'<li><a href="#"><i class="fa fa-retweet"></i></a></li>'
+            +'<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>'
+            +'</ul>'
+            +'</div>'
+            +'<div class="product__discount__item__text">'
+            +'<h5>'
+            +'<a href="../cocktail_product/cocktail_product_detail_before.do?product_no='+vo.product_no+'&cno='+vo.cno+'">'
+            +''+vo.name+''
+            +'</a>'
+            +'</h5>'
+            +'<div class="product__item__price">'+vo.price+'</div>'
+            +'</div>'
+            +'</div>'
+            +'</div>'
+          recommendDiv.innerHTML += productHTML;
+        });
 </script>
 </head>
 <body>
@@ -78,8 +175,8 @@ $(function(){
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
                                 </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
+                                <input type="text" id="ss" placeholder="What do yo u need?">
+                                <button id="findBtn" class="site-btn">검색</button>
                             </form>
                         </div>
                         <div class="hero__search__phone">
@@ -147,7 +244,7 @@ $(function(){
                         </ul>
                     </div>
                     <div class="sidebar__item">
-                        <h4>가격</h4>
+                        <h4>가격대</h4>
                         <div class="price-range-wrap">
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                                 data-min="10000" data-max="3000000">
@@ -157,8 +254,8 @@ $(function(){
                             </div>
                             <div class="range-slider">
                                 <div class="price-input">
-                                    <input type="text" id="minamount">
-                                    <input type="text" id="maxamount">
+                                    <input type="text" id="minamount" value="₩10,000">
+                                    <input type="text" id="maxamount" value="₩3,000,000">
                                 </div>
                             </div>
                         </div>
@@ -192,46 +289,30 @@ $(function(){
 
             <!-- 상품 목록 시작 -->
             <div class="col-lg-9 col-md-7">
+               
                 <div class="product__discount">
-                        <div class="section-title product__discount__title">
-                            <h2>추천 상품</h2>
-                        </div>
-                  <div class="row">      
-                            <div class="product__discount__slider owl-carousel">
-                              <c:forEach var="vo" items="${rList }" varStatus="s">
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg">
-                                          <a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }"><img src="${vo.poster }" style="width: 100%; height: 200px;"></a>
-                                            <ul class="product__item__pic__hover">
-                                                <c:if test="${sessionScope.id!=null }"><li><a href="#"><i class="fa fa-heart"></i></a></li></c:if>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <h5><a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">${vo.name }</a></h5>
-                                            <div class="product__item__price">${vo.price }</div>
-                                        </div>
-                                    </div>
-                                </div>
-                              </c:forEach>
-                            </div>
-                    </div>
-                </div>        
+    <div class="section-title product__discount__title">
+        <h2>추천 상품</h2>
+    </div>
+    <div class="row">
+        <!-- Owl Carousel 영역 -->
+        <div class="product__discount__slider owl-carousel" id="recommend-products">
+            <!-- Ajax로 불러온 추천 상품들이 여기에 추가됩니다. -->
+        </div>
+    </div>
+</div>
+
+                       
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
-                                <form method="GET" action="cocktail_product_list.do" id="sortForm">
-								   <input type="hidden" name="cno" value="${cno}"/>
-								    <input type="hidden" name="page" value="${curpage}"/>
-								      <select name="sort" onchange="document.getElementById('sortForm').submit()" style="padding:5px;">
-								         <option value="0" <c:if test="${sort == '0'}">selected</c:if>>Default</option>
-								         <option value="1" <c:if test="${sort == '1'}">selected</c:if>>Low to High</option>
-								         <option value="2" <c:if test="${sort == '2'}">selected</c:if>>Price High to Low</option>
-								      </select>
-								 </form>
+                                <span>Sort By</span>
+                                <select>
+                                    <option value="0">Default</option>
+                                    <option value="1">Price Low to High</option>
+                                    <option value="2">Price High to Low</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
@@ -247,42 +328,11 @@ $(function(){
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <c:forEach var="vo" items="${list}">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg">
-                                    <a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }"><img src="${vo.poster}" style="width: 100%; height: 200px;"></a>
-                                    <ul class="product__item__pic__hover">
-                                        <c:if test="${sessionScope.id!=null }"><li><a href="#"><i class="fa fa-heart"></i></a></li></c:if>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="../cocktail_product/cocktail_product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }">${vo.name}</a></h6>
-                                    <h5>${vo.price}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-              <div class="">
-                <div class="product__pagination">
-                    <ul class="pagination">
-                        <c:if test="${startPage>1 }">
-                        <a href="../cocktail_product/cocktail_product_list.do?cno=${cno }&page=${startPage-1 }&sort=${sort }"><i class="fa fa-long-arrow-left"></i></a>
-                        </c:if>
-                        <c:forEach var="i" begin="${startPage }" end="${endPage }">
-                        <a class="${i==curpage?'active':'' }" href="../cocktail_product/cocktail_product_list.do?cno=${cno }&page=${i }&sort=${sort }">${i }</a>
-                        </c:forEach>
-                        <c:if test="${endPage<totalpage }">
-                        <a href="../cocktail_product/cocktail_product_list.do?cno=${cno }&page=${endPage+1 }&sort=${sort }"><i class="fa fa-long-arrow-right"></i></a>
-                        </c:if>
-                    </ul>
-                </div>
-            </div>
+                
+                <div class="container">
+				  <div class="row" id="view"></div>
+				</div>
+				
           </div>
         <!-- 상품 목록 끝 -->
       </div>

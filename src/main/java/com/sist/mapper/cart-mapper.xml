@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.cart-mapper">
   <resultMap type="CartVO" id="cartMap">
+    <result property="cno" column="cno"/>
     <result property="cpvo.name" column="name"/>
     <result property="cpvo.poster" column="poster"/>
     <result property="cpvo.price" column="price"/>
     <result property="cpvo.type" column="type"/>
-    <result property="cpvo.cno" column="cno"/>
   </resultMap>
   
   <insert id="cartInsert" parameterType="CartVO">
@@ -22,18 +22,17 @@
   </insert>
   
   <select id="cartListData" resultMap="cartMap" parameterType="string">
-    SELECT c.cno, cp.name, cp.poster, cp.price, c.account
+    SELECT c.cno, c.pno, cp.name, cp.poster, cp.price, c.account
 	FROM cart c
-	JOIN cocktail_product cp
-	ON c.pno = cp.product_no
-	WHERE c.id = #{id} AND c.isbuy = 'y'
+	JOIN cocktail_product cp ON c.pno = cp.product_no
+	WHERE c.id =#{id} AND c.isbuy = 'y'
 	ORDER BY c.cno DESC
   </select>
   
   <update id="cartUpdate" parameterType="CartVO">
     UPDATE cart SET
     account=account+#{account}
-    WHERE pno=#{pno} AND id=#{id}
+    WHERE cno=#{cno} AND id=#{id}
   </update>
   
   <select id="cartCount" resultType="int" parameterType="CartVO">
