@@ -42,7 +42,8 @@
   		ORDER BY DBMS_RANDOM.RANDOM)
     	WHERE rownum&lt;=4
   </select>
-  <select id="productTotalCount" resultType="int" parameterType="hashmap">
-   		SELECT COUNT(*) FROM cocktail_product2
- </select>
+ <select id="productTotalCount" resultType="int" parameterType="hashmap">
+    SELECT COUNT(*) 
+    FROM cocktail_product2
+</select>
 </mapper>

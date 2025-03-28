@@ -12,7 +12,9 @@ import com.sist.controller.RequestMapping;
 import com.sist.dao.*;
 @Controller
 public class ReplyModel {
-	private String[] urls={"","product2/product_detail.do?product_no="};
+	private String[] urls = {"","","product2/product_detail.do?product_no="};
+	/*  private String[] urls={"","food/food_detail.do?fno=",
+		  "recipe/recipe_detail.do?no=","",""};*/
 	@RequestMapping("reply/reply_insert.do")
 	public String reply_insert(HttpServletRequest request,HttpServletResponse response)
 	{
@@ -35,6 +37,8 @@ public class ReplyModel {
 		vo.setRno(Integer.parseInt(rno));
 		
 		ReplyDAO.replyCount(vo);
+		
+		
 		return "redirect:../"+urls[Integer.parseInt(type)]+rno;
 	}
 	@RequestMapping("reply/reply_delete.do")

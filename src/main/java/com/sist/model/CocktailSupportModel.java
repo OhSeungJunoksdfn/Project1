@@ -234,7 +234,9 @@ public class CocktailSupportModel {
 		  List<ReserveVO> list = CocktailSupportDAO.reserveMypageList(id);
 		  request.setAttribute("list", list);
 		  
-		  request.setAttribute("main_jsp", "../support/cocktailbar_reserve_mypage.jsp");
+		  request.setAttribute("MP_JSP", "../support/cocktailbar_reserve_mypage.jsp");
+		  request.setAttribute("my_jsp", "../mypage/my_home.jsp");
+		  request.setAttribute("main_jsp", "../mypage/my_main.jsp");
 		  return "../main/main.jsp";
 	  }
 	  @RequestMapping("reserve/cocktailbar_reserve_adminpage.do")
@@ -246,7 +248,9 @@ public class CocktailSupportModel {
 		  
 		  List<ReserveVO> list = CocktailSupportDAO.reserveadminpageList(id);
 		  request.setAttribute("list", list);
-		  request.setAttribute("main_jsp", "../support/cocktailbar_reserve_adminpage.jsp");
+		  request.setAttribute("MP_JSP", "../support/cocktailbar_reserve_adminpage.jsp");
+		  request.setAttribute("my_jsp", "../mypage/my_home.jsp");
+		  request.setAttribute("main_jsp", "../mypage/my_main.jsp");
 		  return "../main/main.jsp";
 	  }
 	  

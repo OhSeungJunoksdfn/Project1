@@ -96,7 +96,7 @@ function jsonView(json)
 	// 이미지 
 	let html=''
 	json.map(function(product2){
-		
+		/*<a href="../product2/product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }"><img src="${vo.poster }" style="width: 100%; height: 200px;"></a>*/
 		html+='<div class="col-lg-4 col-md-6 col-sm-6">'
         +'<div class="product__item">'
         +'<div class="product__item__pic set-bg" data-setbg="'+product2.poster+'">'

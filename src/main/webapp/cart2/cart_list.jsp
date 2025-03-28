@@ -39,8 +39,8 @@
 	      <th class="text-center">${vo.pvo.price }</th>
 	      <th class="text-center">${vo.cart_price }</th>
 	      <th class="text-center">
-        <input type=button value="구매" class="btn-sm btm-primary">
-        <a href="../cart/cart_cancel.do?cno=${vo.cno }" class="btn btn-sm btm-danger">취소</a>
+        <input type="submit" value="구매" class="btn-sm btn-primary">
+        <a href="../cart2/cart_cancel.do?cno=${vo.cno }" class="btn btn-sm btm-danger">취소</a>
       </th>
      </tr>
     </c:forEach>

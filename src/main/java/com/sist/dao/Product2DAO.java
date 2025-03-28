@@ -186,7 +186,10 @@ public class Product2DAO {
 					  session.close();
 			  }
 			  return totalcount;
-		}	  
+		}	
+	  
+	  
+	  
 
 	/*
 	 *   <select id="productTotalCount" resultType="int" parameterType="hashmap">
