@@ -14,10 +14,8 @@
   </select>
   <insert id="noticeInsert" parameterType="NoticeVO">
    INSERT INTO cocktail_notice(no,type,subject,content) VALUES(
-    pn_no_seq.nextval,#{type},#{subject},#{content}
-   )
+    pn_no_seq.nextval,#{type},#{subject},#{content})
  </insert>
-
  <update id="noticeHitIncrement" parameterType="int">
   UPDATE cocktail_notice SET
   hit=hit+1
