@@ -1,0 +1,58 @@
+.notice-container {
+      width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .notice-container h2 {
+      margin-bottom: 30px;
+      color: #111;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: navy;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .msg-box {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
