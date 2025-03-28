@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body >
-    <section class="hero" style="flex:1">
+    <section class="hero" >
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
