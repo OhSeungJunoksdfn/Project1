@@ -67,6 +67,7 @@
 		background-color: blue;
 		color:white;
 	}
+	
 </style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>

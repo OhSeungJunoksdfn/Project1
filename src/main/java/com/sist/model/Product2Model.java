@@ -29,7 +29,7 @@ public class Product2Model {
 		map.put("end", curpage*12);
 		List<Product2VO> list=Product2DAO.productListData(map);
 		int totalpage=Product2DAO.productTotalPage();
-		
+		int totalcount=Product2DAO.productTotalCount(map);
 		List<Product2VO> plist=Product2DAO.RecommendData6();
 		request.setAttribute("plist", plist);
 		 
@@ -51,7 +51,7 @@ public class Product2Model {
 				}
 			}
 		}
-		int totalcount=Product2DAO.productTotalCount(map);
+		
 		request.setAttribute("clist", clist);
 		final int BLOCK=5;
 		int startPage=((curpage-1)/BLOCK*BLOCK)+1;
@@ -138,12 +138,14 @@ public class Product2Model {
 	public void product_find_ajax(HttpServletRequest request,HttpServletResponse response)
 	{
 		  String page=request.getParameter("page");
+		  
 		  String fd=request.getParameter("fd");
 		  String ss=request.getParameter("ss");
 		  int curpage=Integer.parseInt(page);
 		  Map map=new HashMap();
 		  map.put("start",(12*curpage)-11);
 		  map.put("end",12*curpage);
+		 
 		  map.put("ss",ss);
 		  map.put("fd",fd);
 		  List<Product2VO> list=Product2DAO.productFindData(map);

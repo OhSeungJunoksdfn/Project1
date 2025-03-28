@@ -31,7 +31,16 @@ public class Cart2Model {
 	  Cart2VO vo=new Cart2VO();
 	  vo.setAccount(Integer.parseInt(account));
 	  vo.setPno(Integer.parseInt(pno));
-	  vo.setCart_price(Integer.parseInt(cart_price));
+      try {
+          // cart_price가 null이 아니고, 값이 비어 있지 않다면
+          if (cart_price != null && !cart_price.trim().isEmpty()) {
+              vo.setCart_price(Integer.parseInt(cart_price));  // 정상적으로 변환
+          } else {
+              vo.setCart_price(0);  // cart_price가 null 또는 비어있으면 기본값 0 설정
+          }
+      } catch (NumberFormatException e) {
+          vo.setCart_price(0);  // 예외가 발생하면 기본값 0 설정
+      }
 	  vo.setId(id);
 	  
 	  Cart2DAO.cartInsert2(vo);
