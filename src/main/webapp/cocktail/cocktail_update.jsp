@@ -297,7 +297,7 @@ input[type=text]{
 					 <th class="text-center" width="60%">재료</th>
 					 <th class="text-center" width="15%">용량</th>
 					 <th class="text-center" width="15%">단위</th>
-					 <th class="text-center" width="10%"><input type="button" value="추가" style="float:right;" class="createBtn btn-sm btn-danger"></th>
+					 <th class="text-center" width="10%"><input type="button" value="추가"  class="createBtn btn-sm btn-danger"></th>
 					</tr>
 					<tr>
 					 <td class="text-center" width="60%" >
