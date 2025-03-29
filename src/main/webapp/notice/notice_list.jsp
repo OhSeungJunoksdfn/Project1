@@ -85,7 +85,7 @@ $(function(){
                </tr>
                <c:set var="count" value="${count-1 }"/>
               </c:forEach>
-             </table>
+             </table> 
              <table class="table">
                <tr>
                 <td class="text-right">
