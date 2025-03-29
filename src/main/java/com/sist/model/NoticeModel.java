@@ -11,11 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 // [일반공지]
   @Controller
   public class NoticeModel {
-      private String[] types = {"", "일반공지", "이벤트공지", "맛집공지", "여행공지", "레시피공지"};
+      private String[] types = {"", "일반공지", "이벤트공지", "레시피공지", "상품공지", "칵테일바공지"};
 
       @RequestMapping("admin/notice_list.do")
-      public String notice_list(HttpServletRequest request,
-                                HttpServletResponse response) {
+      public String notice_list(HttpServletRequest request, HttpServletResponse response) {
           try {
               String page = request.getParameter("page");
               if (page == null)
@@ -91,7 +90,7 @@ import jakarta.servlet.http.HttpServletResponse;
           }
       }
 
-      @RequestMapping("adminpage/notice_detail.do")
+      @RequestMapping("admin/notice_detail.do")
       public String notice_detail(HttpServletRequest request,
                                   HttpServletResponse response) {
           try {
