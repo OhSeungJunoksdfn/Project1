@@ -31,7 +31,7 @@
           success: function () {
             $('#msgBox').text("공지사항이 성공적으로 등록되었습니다.");
             setTimeout(function () {
-              location.href = "../notice/notice_list.do";
+              location.href = "../admin/notice_list.do";
             }, 2000);
           },
           error: function () {
