@@ -52,6 +52,12 @@
 	text-align: center;
 }
 
+.primary-vtn {
+	font-size: 18px;
+    letter-spacing: 2px;
+    width: 100%;
+    margin-top: 10px;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -260,7 +266,7 @@ $(function(){
     							    ${vo.cpvo.price}
                                   </td>
                                    <td class="shoping__cart__item__close">
-                                      <a href="../cart/cart_delete.do?cno=${vo.cno}" onclick="return confirm('삭제하시겠습니까?');">
+                                      <a href="../cart/cart_delete.do?cno=${vo.cno}" onclick="return confirm('해당 삼품을 삭제 하시겠습니까?');">
                                        <span class="icon_close"></span>
                                       </a>
                                    </td>
@@ -275,18 +281,12 @@ $(function(){
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
                         <a href="../cocktail_product/cocktail_product_list.do" class="primary-btn cart-btn">상품 더 둘러보기</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
+                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -301,7 +301,16 @@ $(function(){
                             </span>
                             </li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <form method="post" action="../cart/buy.do" id="buy_button">
+                         <input type="hidden" name="pno" id="product_no-hidden" value="${vo.product_no }">
+                         <input type="hidden" name="poster" id="poster-hidden" value="${vo.poster }">
+                         <input type="hidden" name="pname" id="name-hidden" value="${vo.name }">
+                         <input type="hidden" name="price" id="price-hidden" value="${vo.priceInt }">
+                         <input type="hidden" name="account" id="account-hidden" value="1">
+                         <input type="hidden" name="total-price" id="total-price-hidden-buy" value="${priceInt }">
+                         <input type="hidden" name="cno" id="cno-hidden" value="${cno }">
+                         <button type="submit" class="primary-btn">결제하기</button>
+                        </form>
                     </div>
                 </div>
             </div>

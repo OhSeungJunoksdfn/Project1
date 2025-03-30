@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CartVO {
 	private int cno, pno, account, priceInt;
-	private String id, price;
+	private String id, price, name, poster;
 	private Date regdate;
 	private Cocktail_ProductVO cpvo=new Cocktail_ProductVO();
 	private CocktailMemberVO cmvo=new CocktailMemberVO();

@@ -8,6 +8,7 @@
     <result property="cpvo.price" column="price"/>
     <result property="cpvo.type" column="type"/>
   </resultMap>
+  <resultMap type="CocktailMemberVO" id="cart"></resultMap>
   
   <insert id="cartInsert" parameterType="CartVO">
     INSERT INTO cart VALUES(
@@ -15,11 +16,13 @@
     )
   </insert>
   
-  <insert id="buyInsert" parameterType="CartVO">
-    INSERT INTO cart VALUES(
-      cart_cno_seq.nextval, #{pno}, #{id}, #{account}, #{price}, 'y', SYSDATE
-    )
-  </insert>
+  <select id="buy" parameterType="CartVO">
+    SELECT 
+    c.cno, c.id, c.account, p.product_no, p.name, p.poster, p.price
+    FROM cart c
+    JOIN cocktail_product p ON c.pno = p.product_no
+    WHERE c.id = #{id}
+  </select>
   
   <select id="cartListData" resultMap="cartMap" parameterType="string">
     SELECT c.cno, c.pno, cp.name, cp.poster, cp.price, c.account

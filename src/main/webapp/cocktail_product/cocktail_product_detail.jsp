@@ -55,81 +55,7 @@
 
 </style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript"	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript">
-//전역으로 선언하기 위해 window 객체에 추가
-// let sel=0;
-// var IMP = window.IMP; 
-// IMP.init("imp68206770"); 
-// function requestPay(json,name,price) {
-//     var IMP = window.IMP; 
-//     IMP.init("imp22605991"); // 아임포트 초기화
-
-//     IMP.request_pay({
-//         channelKey: "channel-key-39cb699d-29a2-40a9-881d-94972112a68b",
-//         pg: 'html5_inicis',  // 오타 수정 (소문자로 작성)
-//         pay_method: "card",
-//         merchant_uid: "ORD20180131-0000011",
-//         name: '당근',
-//         amount: 1222,
-//         buyer_email: abcde@abc.de,
-//         buyer_name: '길동',
-//         buyer_tel: '010-1111-1111',
-//         buyer_addr:  '마포'
-//         buyer_postcode: '53531'
-//     }, function (rsp) {
-//         if (rsp.success) {
-//             alert('결제가 완료되었습니다.');
-//         } else {
-//             alert('결제가 실패했습니다.');
-//         }
-//     });
-// };
-
-// // AJAX 요청 부분 (클릭 이벤트)
-// $(document).ready(function(){
-//     $('#buy-button').click(function(){
-//         if ($('#in-qty').val() === "0") {
-//             alert("수량 선택하세요");
-//             return;
-//         }
-
-//         let cno = $('#cno').val();
-//         let price = $('#price-hidden').val();
-//         let account = $('#account-hidden').val();
-//         let name = $('#title').text();
-
-//         $.ajax({
-//             type: 'POST',
-//             url: '/cart/buy_insert.do',
-//             data: { "cno": cno, "price": price, "account": account },
-//             success: function(result) {
-//                 try {
-//                     console.log("서버 응답: ", result); // 데이터 확인용
-//                     let json = JSON.parse(result);
-
-//                     if (!json.email || !json.name || !json.phone || !json.address || !json.post) {
-//                         alert("서버에서 유효한 데이터를 받아오지 못했습니다.");
-//                         console.error("서버에서 받아온 JSON: ", json);
-//                         return;
-//                     }
-                    
-//                     alert("서버 응답을 받았습니다.");
-//                     window.requestPay(json, name, price); // 전역 함수 호출
-//                 } catch (e) {
-//                     alert("서버 응답을 제대로 받지 못했습니다.");
-//                     console.error(e);
-//                 }
-//             },
-//             error: function(xhr, status, error) {
-//                 alert("AJAX 요청 오류 발생: " + error);
-//                 console.error("상태: " + status);
-//                 console.error("에러: " + error);
-//             }
-//         });
-//     });
-// });
-
 $(function(){
     // 총 금액 업데이트 함수
     function updateTotal(){
@@ -145,9 +71,17 @@ $(function(){
         // 화면에 표시
         $('#total').text(total.toLocaleString() + "원")
         
-        $('#account-hidden').val(quantity)
-        $('#total-price-hidden').val(total)
-        $('#price-hidden').val(price)
+        // 폼에 넣기 전 확인
+    console.log("[form#frm] 총 금액 hidden:", $('#frm #total-price-hidden-cart').val());
+    console.log("[form#buy_button] 총 금액 hidden:", $('#buy_button #total-price-hidden-buy').val());
+        
+        $('#frm #account-hidden').val(quantity)
+ 		$('#frm #price-hidden').val(price)
+        $('#frm #total-price-hidden-cart').val(total)
+        
+        $('#buy_button #account-hidden').val(quantity)
+  		$('#buy_button #price-hidden').val(price)
+        $('#buy_button #total-price-hidden-buy').val(total)
     }
     
     // 플러스 버튼 클릭 시
@@ -201,8 +135,7 @@ $(function(){
     updateTotal()
 })
 
-<!-- </script> -->
-
+</script>
 </head>
 <body>
     <!-- Breadcrumb Section Begin -->
@@ -275,14 +208,23 @@ $(function(){
                        <form method="post" action="../cart/cart_insert.do" class="heart-icon" id="frm"> 
                          <input type="hidden" name="pno" id="product_no-hidden" value="${product_no }">
                          <input type="hidden" name="poster" id="poster-hidden" value="${vo.poster }">
-                         <input type="hidden" name="name" id="name-hidden" value="${vo.name }">
+                         <input type="hidden" name="username" id="name-hidden" value="${vo.name }">
                          <input type="hidden" name="price" id="price-hidden" value="${vo.priceInt }">
                          <input type="hidden" name="account" id="account-hidden" value="1">
-                         <input type="hidden" name="total-price" id="total-price-hidden" value="${priceInt }">
+                         <input type="hidden" name="total-price" id="total-price-hidden-cart" value="${priceInt }">
                          <input type="hidden" name="cno" id="cno-hidden" value="${cno }">
                          <button type="button" class="icon_cart_alt" style="background: none; border: none;"></button>
                        </form>
-                        <a href="#" class="primary-btn">구매하기</a>
+                       <form method="post" action="../cart/buy.do" id="buy_button">
+                         <input type="hidden" name="pno" id="product_no-hidden" value="${vo.product_no }">
+                         <input type="hidden" name="poster" id="poster-hidden" value="${vo.poster }">
+                         <input type="hidden" name="pname" id="name-hidden" value="${vo.name }">
+                         <input type="hidden" name="price" id="price-hidden" value="${vo.priceInt }">
+                         <input type="hidden" name="account" id="account-hidden" value="1">
+                         <input type="hidden" name="total-price" id="total-price-hidden-buy" value="${priceInt }">
+                         <input type="hidden" name="cno" id="cno-hidden" value="${cno }">
+                         <button type="submit" class="primary-btn">바로 구매</button>
+                       </form>
                      </c:if>
                         <a href="javascript:history.back()" class="primary-btn">목록</a>  
                       
