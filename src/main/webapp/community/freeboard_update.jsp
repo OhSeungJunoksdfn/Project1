@@ -62,9 +62,7 @@ $(document).ready(function(){
                                 <input type="text" name="subject" placeholder="제목" value="${vo.subject }" style="float:left;color:black">
                             </form>
                     </div>
-                    <!-- 유저아이디 세션에서 가져오도록 처리 -->
-                    <c:set var="userid" value="user"/>
-					<div id="editor" style="height: 500px;color:black" data-postid="${vo.board_no }" data-userid="${userid }" data-filename="${vo.htmlfile }">
+					<div id="editor" style="height: 500px;color:black" data-postid="${sessionScope.id }" data-userid="${userid }" data-filename="${vo.htmlfile }">
 						<p>Hello World!</p>
 						<p>
 							Some initial <strong>bold</strong> text

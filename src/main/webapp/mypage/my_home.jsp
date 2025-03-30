@@ -18,8 +18,8 @@
                             <span>관리정보</span>
                         </div>
                         <ul>
-                            <li><a href="#">게시판관리</a></li>
-		                    <li><a href="#">댓글관리</a></li>
+                            <li><a href="../community_manage/post_manage.do?id=${sessionScope.id} ">게시판관리</a></li>
+		                    <li><a href="../community_manage/comment_manage.do?id=${sessionScope.id}">댓글관리</a></li>
 							<li><a href="#">찜관리</a></li>
 							<li><a href="#">좋아요관리</a></li>
 						    <li><a href="../mypage/mypage_cart_list.do">장바구니관리</a></li>

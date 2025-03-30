@@ -141,8 +141,7 @@ quill.on('text-change', function() {
 	$("#editor").css({"height":quill.root.scrollHeight})
 	prevHeight=contentHeight
 	
-	console.log(image_to_delete)
-	
+	console.log(quill.root.scrollHeight)
 });
 
 
@@ -159,7 +158,7 @@ const save = () =>{
 	formData.append('id', $("#editor").data('userid'));
 	formData.append('subject', $("input[name=subject]").val());
 	formData.append('tag', $("select").val());
-	formData.append('documentheight',quill.root.scrollHeight)
+	formData.append('documentheight',quill.root.scrollHeight+200)
 	formData.append('content',quill.getText())
 	const imagenames_to_delete = image_to_delete.map((image)=>{
 				return image.src.split("?image=")[1]

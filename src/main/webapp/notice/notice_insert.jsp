@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>공지사항 등록</title>
-  <link rel="stylesheet" href="../css/login.css">
+
   <link rel="stylesheet" href="../css/notice.css">
   <script src="http://code.jquery.com/jquery.js"></script>
   
@@ -31,7 +31,7 @@
           success: function () {
             $('#msgBox').text("공지사항이 성공적으로 등록되었습니다.");
             setTimeout(function () {
-              location.href = "../notice/notice_list.do";
+              location.href = "../admin/notice_list.do";
             }, 2000);
           },
           error: function () {
