@@ -36,7 +36,7 @@ public class ReplyModel {
 		vo.setType(Integer.parseInt(type));
 		vo.setRno(Integer.parseInt(rno));
 		
-		ReplyDAO.replyCount(vo);
+		ReplyDAO.replyInset(vo);
 		
 		
 		return "redirect:../"+urls[Integer.parseInt(type)]+rno;

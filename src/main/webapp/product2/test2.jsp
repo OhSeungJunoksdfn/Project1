@@ -67,119 +67,7 @@
 		background-color: blue;
 		color:white;
 	}
-		.comment_area {
-    border-bottom: 1px solid #ebebeb;
-}
-
-.single_comment_area {
-    position: relative;
-    z-index: 1;
-}
-
-.single_comment_area:after {
-    position: absolute;
-    width: 1px;
-    height: 90%;
-    background-color: #ebebeb;
-    left: 100px;
-    top: 0;
-    z-index: 2;
-    content: ''
-}
-
-.single_comment_area ol li.single_comment_area {
-    margin-left: 130px;
-}
-
-
-.single_comment_area ol li.single_comment_area:after {
-    display: none;
-}
-
-
-.comment-wrapper {
-    margin-bottom: 30px;
-}
-
-.comment-wrapper .comment-author {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-right: 60px;
-}
-
-.single_comment_area ol li.single_comment_area .comment-wrapper .comment-author {
-    margin-right: 30px;
-}
-
-.comment-wrapper .comment-author img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.comment-wrapper .comment-content {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-
-.comment-wrapper .comment-date {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.comment-wrapper .comment-content h5 {
-    font-size: 18px;
-    margin: 5px 0;
-}
-
-.comment-wrapper .comment-content a {
-    min-width: 80px;
-    height: 30px;
-    border: 1px solid #ebebeb;
-    line-height: 30px;
-    font-size: 12px;
-    text-align: center;
-    color: #232d37;
-    display: inline-block;
-}
-
-.comment-wrapper .comment-content a.active {
-    color: #fff;
-    background-color: #fc6c3f;
-}
-.comment-form .form-control,
-.comment-form .form-control {
-    border: 1px solid #ebebeb;
-    height: 50px;
-}
-
-.comment-form .form-control:focus {
-    border: 1px solid #000;
-}
-
-.comment-form textarea.form-control {
-    height: 130px;
-}
-
-.contact-btn {
-    margin-top: 50px;
-    width: 160px;
-    height: 40px;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #fff;
-    background-color: #fc6c3f;
-    border-radius: 30px;
-}
-
-.contact-btn:hover {
-    color: #fff;
-    background-color: #d43f10;
-}
+	
 </style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
@@ -222,7 +110,7 @@ function requestPay(json,name,price) {
         buyer_addr: 'json.address',
         buyer_postcode: 'json.post'
     }, function (rsp) { // callback
-    	location.href='http://localhost:8080/CocktailProject1/mypage/mypage_buy_list.do' 
+    	location.href='http://localhost/JSPLastProject/mypage/mypage_buy_list.do' 
     });
 }
 
@@ -473,7 +361,8 @@ $(function(){
         </div>
     </section>
     <!-- Related Product Section End -->
-                   <!-- Comment Area Start -->
+    
+               <!-- Comment Area Start -->
                             <div class="comment_area section_padding_50 clearfix">
                                 <h4 class="mb-30">댓글(${count })</h4>
 

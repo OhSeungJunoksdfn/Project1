@@ -23,9 +23,23 @@ public class ReplyDAO {
 	}
 	public static void replyInset(ReplyVO vo)
 	{
-		SqlSession session=ssf.openSession(true);
-		session.insert("replyInsert",vo);
-		session.close();
+		
+		SqlSession session=null;
+		try
+		{
+			session=ssf.openSession();
+			session.insert("replyInsert",vo);
+			session.commit();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally
+		{
+			if(session!=null) session.close();
+		}
+		
+		
 	}
 	 public static int replyCount(ReplyVO vo)
 	 {

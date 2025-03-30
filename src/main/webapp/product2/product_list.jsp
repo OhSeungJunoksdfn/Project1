@@ -147,7 +147,7 @@
 	                                    <div class="product__discount__item">
 	                                        <div class="product__discount__item__pic set-bg"
 	                                            data-setbg="${vo.poster }">
-	                                         <a href="../product2/product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }"><img src="${vo.poster }" style="width: 100%; height: 200px;"></a>
+	                                         <a href="../product2/product_detail_before.do?product_no=${vo.product_no }&cno=${vo.cno }"></a>
 	                                            <ul class="product__item__pic__hover">
 				                                      <li><a href="#"><i class="fa fa-heart"></i></a></li>
 				                                      <li><a href="#"><i class="fa fa-retweet"></i></a></li>

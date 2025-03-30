@@ -114,14 +114,13 @@ public class Product2Model {
 		
 		
 		/// 댓글
-		ReplyVO rvo=new ReplyVO();
-		rvo.setRno(Integer.parseInt(product_no));
-		rvo.setType(1);
-		List<ReplyVO> clist=ReplyDAO.replyListData(rvo);
-		int count=ReplyDAO.replyCount(rvo);
-		request.setAttribute("clist", clist);
-		request.setAttribute("count", count);
-		//request.setAttribute("rList", list);
+		  ReplyVO rvo=new ReplyVO();
+		  rvo.setRno(Integer.parseInt(product_no));
+		  rvo.setType(2);
+		  List<ReplyVO> list=ReplyDAO.replyListData(rvo);
+		  int count=ReplyDAO.replyCount(rvo);
+		  request.setAttribute("count", count);
+		  request.setAttribute("rList", list);
 
 		
 		request.setAttribute("main_jsp", "../product2/product_detail.jsp");

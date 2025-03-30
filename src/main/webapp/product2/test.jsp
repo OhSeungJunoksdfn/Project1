@@ -67,7 +67,9 @@
 		background-color: blue;
 		color:white;
 	}
-		.comment_area {
+	
+	
+	.comment_area {
     border-bottom: 1px solid #ebebeb;
 }
 
@@ -180,6 +182,7 @@
     color: #fff;
     background-color: #d43f10;
 }
+comment_area section_padding_50 clearfix {margi-left:30px;}
 </style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
@@ -205,28 +208,25 @@ $(function(){
 	})
 })
 //----- cart
-
 let sel=0;
 var IMP = window.IMP; 
-IMP.init("imp03326515"); 
+IMP.init("imp68206770"); 
 function requestPay(json,name,price) {
     IMP.request_pay({
         pg: "html5_inicis",
         pay_method: "card",
         merchant_uid: "ORD20180131-0000011",   // 주문번호
         name: name,
-        amount: price,        // 숫자 타입
-        buyer_email: 'json.email',
-        buyer_name: 'json.name',
-        buyer_tel:'json.phone',
-        buyer_addr: 'json.address',
-        buyer_postcode: 'json.post'
+        amount: price,         // 숫자 타입
+        buyer_email: json.email,
+        buyer_name: json.name,
+        buyer_tel:json.phone,
+        buyer_addr: json.address,
+        buyer_postcode: json.post
     }, function (rsp) { // callback
-    	location.href='http://localhost:8080/CocktailProject1/mypage/mypage_buy_list.do' 
+    	location.href='http://localhost/JSPLastProject/mypage/mypage_buy_list.do' 
     });
 }
-
-
 $(function(){
 	
 	$('#sel').change(function(){
@@ -236,12 +236,9 @@ $(function(){
 			alert("수량을 선택하세요")
 			return
 		}
-		let price2=$('#sel').attr("data-price")
-		
-		// price2 = 정수값 price3=<input type="hidden" name="price" value="${vo.price}" id="price3">
-		let total=Number(price2)*Number(account)
+		let price=$('#sel').attr("data-price")
+		let total=Number(price)*Number(account)
 		$('#total').text(total.toLocaleString()+"원")
-		//$('#aaa').attr("data-price",total);
 		$('#account').val(account)
         sel=1		
 	})
@@ -259,21 +256,19 @@ $(function(){
 			alert("수량 선택하세요")
 			return
 		}
-	
-		let pno=$('#pno').val();
-		let price2=$('#price3').val();
+		let gno=$('#pno').val();
+		let price=$('#price2').val();
 		let account=$('#account').val();
 		let name=$('#title').text()
 		$.ajax({
 			type:'post',
-			url:'../cart2/buy_insert.do',
-			data:{"pno":pno,"cart_price":price2,"account":account},
+			url:'../cart/buy_insert.do',
+			data:{"pno":pno,"price":price,"account":account},
 			success:function(result)
 			{
 				alert(result)
 				let json=JSON.parse(result)
-				//requestPay('json',name,price)
-				requestPay(json,name,price2)
+				requestPay(json,name,price)
 			}
 		})
 	})
@@ -291,11 +286,7 @@ $(function(){
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
                         <h2>상품 상세보기</h2>
-                        <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <a href="./index.html">shop</a>
-                            <span>상세페이지</span>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
@@ -421,17 +412,9 @@ $(function(){
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+                                    <p>최근에 칵테일 용품 세트를 하나 샀는데, 진짜 마음에 들어서 여러분께 추천하고 싶어요! 칵테일을 자주 즐기시는 분들이라면 이거 꼭 한 번 써보세요!
+									디자인이 너무 예뻐요! 스테인리스 재질이라 그런지 고급스럽고 튼튼하게 느껴져서 마음에 들었어요.
+									 쉐이커도 그렇고, 믹싱 글라스 같은 것들이 그냥 멋져 보이고, 주방에 두면 바에서 칵테일 만드는 느낌이 확 나요. 또 손잡이가 편안해서 사용하기도 좋고요!</p>
                                 </div>
                             </div>
                         </div>
@@ -473,6 +456,7 @@ $(function(){
         </div>
     </section>
     <!-- Related Product Section End -->
+    
                    <!-- Comment Area Start -->
                             <div class="comment_area section_padding_50 clearfix">
                                 <h4 class="mb-30">댓글(${count })</h4>
