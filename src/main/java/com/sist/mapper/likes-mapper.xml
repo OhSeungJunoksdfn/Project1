@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.likes-mapper">
+<insert id="likesInsert" parameterType="LikesVO">
+	<selectKey keyProperty="likes_no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(likes_no)+1,1) as likes_no FROM project_all_likes
+	</selectKey>
+		INSERT INTO project_all_likes
+		VALUES(#{likes_no},#{id},#{no},SYSDATE,#{type})
+	</insert>
+<delete id="likesDelete" parameterType="int">
+	DELETE FROM project_all_likes
+	WHERE likes_no=#{likes_no}
+</delete>
+<select id="likesData" resultType="int" parameterType="LikesVO" >
+	SELECT COUNT(*) FROM project_all_likes 
+	WHERE id=#{id}
+	AND no=#{no}
+	AND type=#{type}
+</select>
+</mapper>

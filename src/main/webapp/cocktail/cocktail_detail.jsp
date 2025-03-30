@@ -13,9 +13,35 @@
     <title>Ogani | Template</title>
 
 </head>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script type="text/javascript">
+	$(function(){
+		$('.insertBtn').one('click',function(){
+			let likesNum = $(".likesNum").text()
+			let no = $(".cno").val()
+			$.ajax({
+			type:'post',
+			url:"../cocktail/likes_insert.do",
+			data:{"no":no,"type":"cocktail"},
+			success:function(){
+				$(".likesNum").text(Number(likesNum)+1)
+				$(".insertBtn").html("<i class='fa fa-heart' style='color: #ff0000'></i>")
+				$(".insertBtn").removeClass("insertBtn")
+			},
+			error:function(err){
+				console.log(err)
+				
+			}
+			
+			})
+		})
+	})
+</script>
+<style>
+	.insertBtn{
+	cursor: pointer;
+	}
+</style>
 <body>
     
 
@@ -39,12 +65,21 @@
                         <p>${vo.comments }</p>
 
                         <a href="#" class="primary-btn">즐겨찾기</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <input type="hidden" class="cno" value="${vo.cocktail_no }">
+                        <c:if test="${sessionScope.id!=null }">
+                        <c:if test="${likescount==0 }">
+                        <a class="heart-icon insertBtn"><span class="icon_heart_alt"></span></a>
+                        </c:if>
+                        <c:if test="${likescount==1 }">
+                        <a class="heart-icon"><i class="fa fa-heart" style="color: #ff0000;"></i></a>
+                        </c:if>
+                        
+                        </c:if>
                         <ul>
                             <li><b>ALC</b> <span>${vo.alc }</span></li>
                             <li><b>태그</b> ㅣ<c:forEach var="tvo" items="${tags }" ><span>${tvo.ctvo.value } </span>ㅣ</c:forEach></li>
                             <li><b>조회수</b> <span>${vo.hit }</span></li>
-                            <li><b>좋아요</b> <i class="fa fa-heart" ></i> ${vo.likes } </li>
+                            <li ><b>좋아요</b> <i class="fa fa-heart" ></i> <span class="likesNum">${vo.likes }</span> </li>
                             <c:if test="${sessionScope.id==vo.id }">
                             <li><b></b><a href="../cocktail/cocktail_update.do?cno=${vo.cocktail_no }" class="primary-btn">수정하기</a>
                             <a href="../cocktail/cocktail_delete.do?cno=${vo.cocktail_no}" class="primary-btn">삭제하기</a> </li>
@@ -65,7 +100,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">댓글 <span>(1)</span></a>
+                                    aria-selected="false">댓글</a>
                             </li>
                         </ul>
                         <div class="tab-content">

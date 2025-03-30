@@ -51,7 +51,9 @@
                             <span>낭만이 흐르는 공간</span>
                             <h2 style="color:#fff">${cbvo.name }</h2>
                             <p>당신의 하루를 더욱 특별하게, ${cbvo.name }에서 만나요.</p>
-                            <a href="#" class="primary-btn">예약하기</a>
+                            <c:if test="${sessionScope.id!=null }">
+                            <a href="../reserve/cocktailbar_reserve_main.do" class="primary-btn">예약하기</a>
+                            </c:if>
                         </div>
                     </div>
                 </div>

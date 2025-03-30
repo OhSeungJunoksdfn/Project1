@@ -137,6 +137,18 @@ public class CocktailModel {
 		String[] contents = vo.getContent().split("\\d+\\.\\s*");
 		List<CocktailVO> tags = CocktailDAO.cocktailTagData(Integer.parseInt(cno));
 		List<CocktailVO> clist = CocktailDAO.cocktailData4();
+		LikesVO lvo = new LikesVO();
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		int likescount=0;
+		if(id!=null)
+		{
+			lvo.setId(id);
+			lvo.setNo(Integer.parseInt(cno));
+			lvo.setType("cocktail");
+			likescount = LikesDAO.likesData(lvo);
+			request.setAttribute("likescount", likescount);
+		}
 		
 		//댓글 기능
 		String posType = "cocktail";//게시물 종류
@@ -406,5 +418,34 @@ public class CocktailModel {
 		CocktailDAO.cocktailUpdate(vo, ing_no, unit, volume,Integer.parseInt(cocktail_no));
 		
 		return"redirect:../cocktail/cocktail_detail.do?cno="+cocktail_no;
+	}
+	
+	@RequestMapping("cocktail/likes_insert.do")
+	public void likes_insert(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session = request.getSession();
+		String id =(String) session.getAttribute("id");
+		String no = request.getParameter("no");
+		String type = request.getParameter("type");
+		
+		LikesVO vo = new LikesVO();
+		vo.setId(id);
+		vo.setNo(Integer.parseInt(no));
+		vo.setType(type);
+		
+		int likescount = LikesDAO.likesData(vo);
+		request.setAttribute("likescount", likescount);
+		LikesDAO.likesInsert(vo);
+		
+	}
+	
+	@RequestMapping("cocktail/likes_delete.do")
+	public void likes_delete(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String likes_no = request.getParameter("likes_no");
+		
+		LikesDAO.likesDelete(Integer.parseInt(likes_no));
+		
 	}
 }
