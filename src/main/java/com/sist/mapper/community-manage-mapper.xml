@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.community-manage-mapper">
+
+
+	<select id="postListData" resultType="CommunityFreeboardVO" parameterType="hashmap">
+		SELECT board_no, id, subject, tag, regdate, hit, poststate, content, num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, content, rownum as num
+		FROM (SELECT board_no, id, subject, tag, regdate, hit, poststate, content
+		FROM cocktail_board ORDER BY regdate DESC))
+		WHERE (num BETWEEN #{start} AND #{end}) AND (poststate != 'UNSAVED') AND (id=#{id})
+	</select>
+	
+	<select id="postTotalPage" resultType="int" parameterType="string">
+		SELECT CEIL(COUNT(*)/10.0) FROM cocktail_board
+		WHERE (poststate != 'UNSAVED') AND (id=#{id})
+	</select>
+	
+	<delete id="postDelete">
+		DELETE FROM cocktail_board
+  		WHERE board_no IN 
+  		<trim prefix="(" suffix=")">
+	        #{deleteList}
+	    </trim>
+	</delete>
+	
+	<select id="commentListData" resultType="CommunityCommentVO" parameterType="hashmap">
+		SELECT comment_no, content, post_type, regdate,id, num
+		FROM (SELECT comment_no, content, post_type,regdate,id, rownum as num
+		FROM (SELECT comment_no, content, post_type,regdate,id      
+		FROM community_comment ORDER BY regdate DESC))
+		WHERE (num BETWEEN #{start} AND #{end}) AND (id=#{id}) AND (content is not null)
+	</select>
+	
+	<select id="commentTotalPage" resultType="int" parameterType="string">
+		SELECT CEIL(COUNT(*)/10.0) FROM community_comment
+		WHERE (id=#{id})
+	</select>
+	
+	<delete id="commentDelete" parameterType="string">
+		UPDATE community_comment SET content='' WHERE comment_no IN	
+		<trim prefix="(" suffix=")">
+	    	<foreach item="comment" collection="array"  separator="," >
+	        	#{comment}
+	    	</foreach>
+	    </trim>
+	</delete>
+</mapper>

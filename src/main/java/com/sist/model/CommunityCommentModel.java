@@ -16,7 +16,6 @@ public class CommunityCommentModel {
         put("cocktail", "cocktail/cocktail_detail.do?cno=");
         put("cocktailbar", "cocktailbar/cocktailbar_detail.do?bar_no=");
     }};
-	//댓글 jsp include로 바꿔보기
 	@RequestMapping("comment/comment_insert.do")//댓글 쓰기
 	public String comment_insert(HttpServletRequest request, HttpServletResponse response)
 	{	

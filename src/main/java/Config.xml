@@ -47,6 +47,7 @@
     <mapper resource="com/sist/mapper/cart-mapper.xml"/>
     <mapper resource="com/sist/mapper/cart2-mapper.xml"/>
     <mapper resource="com/sist/mapper/notice-mapper.xml"/>
+    <mapper resource="com/sist/mapper/community-manage-mapper.xml"/>
     
   </mappers>
  </configuration>

@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-console.log("taggggggggggg","${tag}")
-
 </script>
 <style type="text/css">
 .button-class{
